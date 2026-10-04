@@ -1,0 +1,15 @@
+{
+  "name": "miniapp-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.5" },
+  "scripts": {
+    "start": "node --env-file=.env --disable-warning=ExperimentalWarning server.js",
+    "dev": "node --env-file=.env --disable-warning=ExperimentalWarning --watch server.js",
+    "test": "node --disable-warning=ExperimentalWarning --test test/*.test.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}
