@@ -8,7 +8,7 @@ Telegram Mini App backend for a demo funnel: **open → register (partner postba
 npm install
 cp .env.example .env      # fill BOT_TOKEN, POSTBACK_SECRET, ADMIN_KEY
 npm start                 # Node >= 22.5 (uses built-in node:sqlite)
-npm test                  # 13 tests, no server needed
+npm test                  # 18 tests, no server needed
 ```
 Local try-out without Telegram (`DEV_BYPASS_AUTH=1`, ignored in production):
 ```bash
@@ -19,9 +19,11 @@ curl -X POST -H "x-dev-user: 111:ivan" localhost:3000/api/register/start      # 
 Then open the returned link, press the buttons, and watch `/admin?key=ADMIN_KEY`.
 
 ## Status
-- `public/index.html` is the Mini App client. **Not yet wired to the API**: it still keeps the free-signal counter in the browser.
-  Next step: call `/api/me`, `/api/signal`, `/api/register/start` (see Flow below).
-- Server, postback handling, admin page and partner simulator are done and covered by tests.
+- Client (`public/index.html`) is wired to the API: state and the free-signal limit come from the server,
+  registration goes through `/api/register/start` + partner postback, the app polls `/api/me` while waiting.
+- `npm test` also runs the real client script against the real handlers (`test/client.test.js`).
+- Local run without Telegram: start the server with `DEV_BYPASS_AUTH=1`, open `http://localhost:3000/?dev=111:ivan`.
+- Still to do: Google Sheets / Telegram notification sinks, deploy, real partner link.
 
 ## Flow
 ```

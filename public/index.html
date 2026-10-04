@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0E1A14">
-<title>DEMO MINI APP</title>
+<title>Andromeda AI (demo)</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
@@ -157,6 +157,8 @@ nav{position:fixed;left:0;right:0;bottom:0;max-width:448px;margin:0 auto;backgro
 nav button{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:3px;font:500 10px system-ui;color:var(--mute2);padding:4px 8px;cursor:pointer;transition:transform .15s}nav button:active{transform:scale(.92)}nav button.on{color:var(--gold)}nav button.on i{color:var(--gold)}
 nav .c{margin-top:-26px;color:var(--mute)}nav .c.on{color:var(--gold)}nav .c i.nav-center-icon{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));display:grid;place-items:center;box-shadow:var(--halo-strong);color:#0E1A14}nav .c i.nav-center-icon svg{color:#0E1A14!important}
 
+/* Demo chip + waiting spinner */
+.chip.demo{background:rgba(212,175,55,.15);color:var(--gold);border:1px solid var(--line-gold);margin-left:4px}
 /* Free-quota gate */
 .quota{display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;color:var(--mute);margin-top:14px}
 .quota i{color:var(--gold);display:inline-flex}.quota b{color:var(--gold);font-family:var(--mono)}
@@ -251,39 +253,39 @@ var I18N = {
     stTotal: "Всего", stTaken: "Взято", stSkipped: "Пропущено",
     langTitle: "Язык", tzTitle: "Часовой пояс", unbindBtn: "Отвязать PocketOption ID",
     depTitle: "Необходим депозит", depRec: "Рекомендуем: $25",
-    depDesc: "Минимальный депозит для доступа к сигналам — $11 USD. Выгоднее внести $25 и получить +60% по промокоду SIG10.",
-    depBtn: "$ Пополнить счёт", checkBtn: "Я пополнил — проверить",
-    promoTitle: "+60% к вашему балансу!", promoSub: "При пополнении от $25 введите промокод",
+    depDesc: "—",
+    depBtn: "$ Пополнить счёт", checkBtn: "Проверить статус",
+    promoTitle: "—", promoSub: "—",
     marketOpen: "Рынок открыт", marketOtc: "OTC РЫНОК", tfTitle: "Выбор таймфрейма", searchPlaceholder: "Поиск...",
     analyzing: "Анализируем ликвидность…", setupTitle: "Институциональный сетап", asset: "Актив", timeframe: "Таймфрейм",
     prob: "Вероятность отработки", sigStrength: "Сила сигнала", weakSig: "слабая", strongSig: "сильная",
     riskTitle: "Риск-предупреждение", riskDesc: "Сила сигнала низкая (<40%). Воздержитесь от входа в сделку или смените параметры анализа.",
     dirTitle: "Направление:", sigValid: "Сигнал действителен", take: "Взять в работу", skip: "Пропустить",
     idleHint: "Выберите актив и таймфрейм для формирования сигнала", avgWinrate: "Средний винрейт сегодня", getSignalBtn: "Get Signal",
-    proCardTitle: "Wall Street PRO Club", proCardDesc: "Доступ к закрытым аналитическим каналам и высокой точности AI-моделей.", footerHint: "Закрытый аналитический алгоритм Signal AI.",
+    proCardTitle: "Andromeda AI PRO", proCardDesc: "Демо-карточка: платных подписок в этом проекте нет.", footerHint: "Демо-алгоритм Andromeda AI. Не торговая рекомендация.",
     histTitle: "История сетапов", histEmpty: "История пока пуста. Запросите первый сигнал.", inWork: "в работе", skipped: "пропущен",
-    aiTitle: "AI-Помощник", aiWelcome: "Приветствуем в Wall Street Club! Какой вопрос по рынку вас интересует?", aiPlaceholder: "Задайте вопрос аналитику…", send: "Отправить",
-    supTitle: "Закрытая поддержка", vipConcierge: "VIP Консьерж", resp247: "На связи 24/7", kbTitle: "База знаний",
+    aiTitle: "AI-Помощник", aiWelcome: "Привет! Это демо-чат Andromeda AI: ответы шаблонные и не являются торговыми рекомендациями.", aiPlaceholder: "Задайте вопрос аналитику…", send: "Отправить",
+    supTitle: "Поддержка", vipConcierge: "VIP Консьерж", resp247: "На связи 24/7", kbTitle: "База знаний",
     minSuffix: "мин",
     minOptions: ["1 мин", "2 мин", "3 мин", "5 мин", "10 мин", "15 мин", "30 мин"],
-    copied: "Промокод SIG10 скопирован!", inWorkToast: "Записано: в работе", skipToast: "Записано: пропущено",
-    depRedirect: "Переход к пополнению...", depCheck: "Проверка баланса...", unboundToast: "ID отвязан",
+    copied: "—", inWorkToast: "Записано: в работе", skipToast: "Записано: пропущено",
+    depRedirect: "Переход к пополнению...", depCheck: "Проверяем статус…", unboundToast: "ID отвязан",
     regPromptText: "Зарегистрируйтесь, чтобы получать бесплатные AI-сигналы",
     regBtnText: "Зарегистрироваться",
     enterIdToast: "Введите ваш PocketOption ID",
-    modal3Title: "AI-сигналы — бесплатно! 🎯",
-    modal3Desc: "Наш бот анализирует рынок в реальном времени и выдаёт точные сигналы для входа в сделку",
-    modal3Item1: "Бесплатные сигналы 24/7",
-    modal3Item2: "AI-анализ 50+ валютных пар",
-    modal3Item3: "90%+ точность на сильных трендах",
+    modal3Title: "Бесплатные сигналы (демо) 🎯",
+    modal3Desc: "Демо-проект: сигналы генерируются алгоритмом для показа интерфейса и не являются торговой рекомендацией",
+    modal3Item1: "3 бесплатных сигнала в день",
+    modal3Item2: "Без ограничений после регистрации",
+    modal3Item3: "Сигналы сгенерированы, это не рекомендации",
     modal3Next: "Как это работает? &rarr;",
-    modal4Title: "Почему бот бесплатный? 🤝",
-    modal4Desc: "И зачем нам ваш ID",
-    modal4Info: "Мы зарабатываем 2% от оборота нашей команды на PocketOption. Нам важно не брать деньги с людей, а зарабатывать с платформы. Поэтому мы заинтересованы в том, чтобы вы зарабатывали.",
-    modal4WinWin: "WIN-WIN! Мы мотивированы, чтобы вы были в плюсе.",
+    modal4Title: "Как это работает? 🤝",
+    modal4Desc: "И что записывается",
+    modal4Info: "Регистрация идёт по партнёрской ссылке PocketOption: проект получает партнёрское вознаграждение за зарегистрированных пользователей. Записываются ваш Telegram ID и действия в приложении. Сигналы в демо сгенерированы и не являются торговой рекомендацией.",
+    modal4WinWin: "Это демонстрационный проект",
     modal4Next: "Понятно, что делать? &rarr;",
     modal5Title: "Шаг 1: Регистрация",
-    modal5Desc: "Нажмите кнопку ниже, чтобы создать аккаунт на PocketOption. Это займёт 1 минуту",
+    modal5Desc: "Нажмите кнопку ниже: откроется страница регистрации PocketOption. Приложение само узнает о регистрации.",
     modal5RegBtn: "Зарегистрироваться на PocketOption",
     modal5Return: "После регистрации вернитесь сюда",
     modal5Next: "Готово, что дальше? &rarr;",
@@ -295,14 +297,35 @@ var I18N = {
     modal6Submit: "Отправить на проверку &rarr;",
     modalContactSupport: "Связаться с поддержкой",
     modal7Title: "Регистрация успешна! ✅",
-    modal7Desc: "Остался один шаг — пополните баланс для доступа к AI-сигналам",
+    modal7Desc: "Сигналы без ограничений открыты. Пополнение счёта необязательно.",
     modal7MinDep: "Минимальный депозит:",
-    modal7Bonus: "💡 <b>Пополните $25 с промокодом SIG10 и получите +60% бонус!</b><br>$25 &rarr; $40 · $50 &rarr; $80",
+    modal7Bonus: "—",
     modal7DepBtn: "$ Пополнить баланс",
     modal7CheckBtn: "Проверить баланс",
     quotaLeft: "Бесплатных попыток сегодня:",
     gateTitle: "Для получения бесплатных сигналов пройдите регистрацию",
-    gateSub: "Дневной лимит бесплатных попыток исчерпан. Лимит обновится завтра."
+    gateSub: "Дневной лимит бесплатных попыток исчерпан. Лимит обновится завтра.",
+    accTitleFree: "Доступ к сигналам",
+    accDescFree: "Без регистрации доступно 3 бесплатных сигнала в день. После регистрации — без ограничений.",
+    accTitleReg: "Регистрация подтверждена",
+    accDescReg: "Сигналы без ограничений открыты. Пополнение счёта на сайте партнёра необязательно, но его событие будет учтено автоматически.",
+    accTitleDep: "Депозит подтверждён",
+    accDescDep: "Партнёр подтвердил первое пополнение.",
+    accBadgeOk: "OK",
+    waitTitle: "Ждём подтверждения…",
+    waitDesc: "Завершите регистрацию на странице партнёра. Мы автоматически увидим её и откроем доступ, это может занять около минуты.",
+    waitOpenAgain: "Открыть страницу регистрации",
+    waitCheck: "Проверить статус",
+    modal7Done: "К сигналам",
+    authErrorText: "Откройте приложение из Telegram через бота.",
+    loadingText: "Загрузка…",
+    netError: "Нет связи с сервером. Попробуйте ещё раз.",
+    statusUpdated: "Статус обновлён",
+    statusSame: "Изменений пока нет",
+    stRegistered: "Зарегистрирован",
+    stDeposited: "Пополнил",
+    supDemo: "Демо: поддержка не подключена",
+    demoNote: "Демонстрационный проект"
   },
   en: {
     navProfile: "Profile", navHistory: "History", navSignals: "Signals", navAi: "AI Assistant", navSupport: "Support",
@@ -310,39 +333,39 @@ var I18N = {
     stTotal: "Total", stTaken: "Taken", stSkipped: "Skipped",
     langTitle: "Language", tzTitle: "Timezone", unbindBtn: "Unlink PocketOption ID",
     depTitle: "Deposit required", depRec: "Recommended: $25",
-    depDesc: "Minimum deposit for signal access is $11 USD. Deposit $25 to claim +60% bonus with promo SIG10.",
-    depBtn: "$ Deposit Funds", checkBtn: "I deposited — Verify",
-    promoTitle: "+60% to your balance!", promoSub: "For deposits over $25 use promo code",
+    depDesc: "—",
+    depBtn: "$ Deposit Funds", checkBtn: "Check status",
+    promoTitle: "—", promoSub: "—",
     marketOpen: "MARKET OPEN", marketOtc: "OTC MARKET", tfTitle: "Select Timeframe", searchPlaceholder: "Search...",
     analyzing: "Analyzing liquidity…", setupTitle: "Institutional Setup", asset: "Asset", timeframe: "Timeframe",
     prob: "Execution Probability", sigStrength: "Signal Strength", weakSig: "weak", strongSig: "strong",
     riskTitle: "Risk Warning", riskDesc: "Signal strength is low (<40%). Avoid entering or select different analysis parameters.",
     dirTitle: "Direction:", sigValid: "Signal expires in", take: "Execute Signal", skip: "Skip Signal",
     idleHint: "Select an asset and timeframe to generate a signal", avgWinrate: "Today's Avg Winrate", getSignalBtn: "Get Signal",
-    proCardTitle: "Wall Street PRO Club", proCardDesc: "Access private analytical channels and high-accuracy AI models.", footerHint: "Proprietary Signal AI analytical engine.",
+    proCardTitle: "Andromeda AI PRO", proCardDesc: "Demo card: there are no paid subscriptions in this project.", footerHint: "Andromeda AI demo algorithm. Not trading advice.",
     histTitle: "Setup History", histEmpty: "History is empty. Request your first signal.", inWork: "active", skipped: "skipped",
-    aiTitle: "AI Assistant", aiWelcome: "Welcome to Wall Street Club! What market questions do you have?", aiPlaceholder: "Ask the analyst a question…", send: "Send",
-    supTitle: "VIP Support", vipConcierge: "VIP Concierge", resp247: "24/7 Available", kbTitle: "Knowledge Base",
+    aiTitle: "AI Assistant", aiWelcome: "Hi! This is the Andromeda AI demo chat: replies are canned and are not trading advice.", aiPlaceholder: "Ask the analyst a question…", send: "Send",
+    supTitle: "Support", vipConcierge: "VIP Concierge", resp247: "24/7 Available", kbTitle: "Knowledge Base",
     minSuffix: "min",
     minOptions: ["1 min", "2 min", "3 min", "5 min", "10 min", "15 min", "30 min"],
-    copied: "Promo code SIG10 copied!", inWorkToast: "Saved: Active", skipToast: "Saved: Skipped",
-    depRedirect: "Redirecting to deposit...", depCheck: "Checking balance...", unboundToast: "ID unlinked",
+    copied: "—", inWorkToast: "Saved: Active", skipToast: "Saved: Skipped",
+    depRedirect: "Redirecting to deposit...", depCheck: "Checking status…", unboundToast: "ID unlinked",
     regPromptText: "Register to receive free AI signals",
     regBtnText: "Register Now",
     enterIdToast: "Enter your PocketOption ID",
-    modal3Title: "AI Signals — Free! 🎯",
-    modal3Desc: "Our bot analyzes the market in real time and provides accurate entry signals",
-    modal3Item1: "Free 24/7 Signals",
-    modal3Item2: "AI Analysis for 50+ Currency Pairs",
-    modal3Item3: "90%+ Accuracy on Strong Trends",
+    modal3Title: "Free signals (demo) 🎯",
+    modal3Desc: "Demo project: signals are generated by an algorithm to showcase the interface and are not trading advice",
+    modal3Item1: "3 free signals per day",
+    modal3Item2: "Unlimited after registration",
+    modal3Item3: "Signals are generated, not recommendations",
     modal3Next: "How does it work? &rarr;",
-    modal4Title: "Why is the bot free? 🤝",
-    modal4Desc: "And why do we need your ID",
-    modal4Info: "We earn 2% from our team's trading volume on PocketOption. Instead of charging users, we earn from the platform. That is why we want you to succeed.",
-    modal4WinWin: "WIN-WIN! We are motivated to keep you profitable.",
+    modal4Title: "How does it work? 🤝",
+    modal4Desc: "And what gets recorded",
+    modal4Info: "Registration uses a PocketOption partner link: the project receives a partner commission for registered users. Your Telegram ID and in-app actions are recorded. Signals in this demo are generated and are not trading advice.",
+    modal4WinWin: "This is a demo project",
     modal4Next: "Got it, what to do? &rarr;",
     modal5Title: "Step 1: Registration",
-    modal5Desc: "Click the button below to create an account on PocketOption. It takes 1 minute",
+    modal5Desc: "Tap the button below: the PocketOption registration page will open. The app will detect the registration automatically.",
     modal5RegBtn: "Register on PocketOption",
     modal5Return: "Return here after registration",
     modal5Next: "Done, what next? &rarr;",
@@ -354,39 +377,60 @@ var I18N = {
     modal6Submit: "Submit for Verification &rarr;",
     modalContactSupport: "Contact Support",
     modal7Title: "Registration Successful! ✅",
-    modal7Desc: "One step left — deposit funds to unlock AI signals",
+    modal7Desc: "Unlimited signals are unlocked. Funding your account is optional.",
     modal7MinDep: "Minimum deposit:",
-    modal7Bonus: "💡 <b>Deposit $25 with promo SIG10 to get a +60% bonus!</b><br>$25 &rarr; $40 · $50 &rarr; $80",
+    modal7Bonus: "—",
     modal7DepBtn: "$ Deposit Funds",
     modal7CheckBtn: "Check Balance",
     quotaLeft: "Free attempts today:",
     gateTitle: "Register to get free signals",
-    gateSub: "Daily free attempts used up. The limit resets tomorrow."
+    gateSub: "Daily free attempts used up. The limit resets tomorrow.",
+    accTitleFree: "Signal access",
+    accDescFree: "Without registration you get 3 free signals per day. After registration: unlimited.",
+    accTitleReg: "Registration confirmed",
+    accDescReg: "Unlimited signals are unlocked. Funding on the partner site is optional, but the event is tracked automatically.",
+    accTitleDep: "Deposit confirmed",
+    accDescDep: "The partner confirmed the first deposit.",
+    accBadgeOk: "OK",
+    waitTitle: "Waiting for confirmation…",
+    waitDesc: "Finish registration on the partner page. We will detect it automatically and unlock access; it may take about a minute.",
+    waitOpenAgain: "Open registration page",
+    waitCheck: "Check status",
+    modal7Done: "Go to signals",
+    authErrorText: "Please open the app from Telegram via the bot.",
+    loadingText: "Loading…",
+    netError: "No connection to the server. Please try again.",
+    statusUpdated: "Status updated",
+    statusSame: "No changes yet",
+    stRegistered: "Registered",
+    stDeposited: "Deposited",
+    supDemo: "Demo: support is not connected",
+    demoNote: "Demonstration project"
   }
 };
 
 var FAQ_RU = [
-  ["1. Как работают сигналы?", "Наш AI анализирует рыночные данные в реальном времени и генерирует торговые сигналы с направлением и уровнем уверенности."],
-  ["2. Какая точность сигналов?", "Наши сигналы имеют среднюю точность 85-92% на основе исторических данных. Всегда используйте правильный риск-менеджмент."],
-  ["3. Какие брокеры поддерживаются?", "Сигналы работают с PocketOption и любым другим брокером, который предлагает анализируемые нами валютные пары."],
+  ["1. Как работают сигналы?", "Это демонстрационный проект: направление и сила сигнала генерируются алгоритмом для показа интерфейса и не основаны на реальном анализе рынка."],
+  ["2. Какая точность сигналов?", "Точность не измеряется: сигналы сгенерированы для демонстрации и не являются торговой рекомендацией. Торговля сопряжена с риском потери средств."],
+  ["3. Какие брокеры поддерживаются?", "В демо используется партнёрская ссылка PocketOption, чтобы проверить регистрацию и отслеживание событий."],
   ["4. Как использовать сигналы?", "Выберите валютную пару и таймфрейм, нажмите «Получить сигнал», затем решите взять или пропустить сигнал. Результаты отслеживаются в Истории."],
-  ["5. Зачем вам мой ID?", "Ваш PocketOption ID используется для верификации аккаунта и привязки торговых сигналов к вашему профилю. Мы не получаем доступ к вашим средствам или настройкам аккаунта."],
-  ["6. У меня уже есть аккаунт, что делать?", "Если у вас уже есть аккаунт PocketOption, просто введите свой ID при регистрации. Если ID был ранее привязан, обратитесь в поддержку для повторной привязки."],
+  ["5. Зачем вам мой ID?", "Регистрация у партнёра связывается с вашим профилем через уникальную ссылку и уведомление от партнёра (постбек). Доступа к вашим средствам и настройкам аккаунта у нас нет. Записываются ваш Telegram ID и действия в приложении."],
+  ["6. У меня уже есть аккаунт, что делать?", "Привязка срабатывает только для новых аккаунтов, созданных по ссылке из приложения. Если аккаунт уже есть, уведомление может не прийти: обратитесь к организатору демо."],
   ["7. Что такое Сила тренда?", "Сила тренда — это индикатор от 0 до 100, показывающий насколько сильный текущий тренд на рынке. Чем выше значение, тем увереннее направление сигнала."]
 ];
 
 var FAQ_EN = [
-  ["1. How do signals work?", "Our AI analyzes real-time market data and generates trading setups with direction and confidence level."],
-  ["2. What is signal accuracy?", "Our setups achieve an average accuracy of 85-92% based on historical data. Always enforce strict risk management."],
-  ["3. Which brokers are supported?", "Signals work seamlessly with PocketOption and any broker providing our analyzed currency pairs."],
+  ["1. How do signals work?", "This is a demo project: signal direction and strength are generated by an algorithm to showcase the interface and are not based on real market analysis."],
+  ["2. What is signal accuracy?", "Accuracy is not measured: signals are generated for demonstration and are not trading advice. Trading involves the risk of losing funds."],
+  ["3. Which brokers are supported?", "The demo uses a PocketOption partner link to test registration and event tracking."],
   ["4. How to use signals?", "Select pair and timeframe, tap 'Get Signal', then choose to execute or skip. Track performance in History."],
-  ["5. Why do you need my ID?", "Your PocketOption ID verifies your account and binds trading signals. We never access your funds or account settings."],
-  ["6. I already have an account, what to do?", "If you already hold a PocketOption account, simply enter your ID during registration. Contact support if relinking is needed."],
+  ["5. Why do you need my ID?", "Your partner registration is linked to your profile through a unique link and a partner notification (postback). We have no access to your funds or account settings. Your Telegram ID and in-app actions are recorded."],
+  ["6. I already have an account, what to do?", "Linking only works for new accounts created via the link from this app. If you already have an account, the notification may not arrive: contact the demo organizer."],
   ["7. What is Trend Strength?", "Trend Strength is a 0-100 metric measuring active momentum. Higher values signify higher conviction setups."]
 ];
 
-var BOT_RU = ["AI-помощник Wall Street Club анализирует ключевые пулы ликвидности.", "Сила сигнала указывает на математическое преимущество покупателей или продавцов.", "Смените актив или таймфрейм для формирования нового торгового сетапа.", "Не рискуйте более 1-2% от депозита на одну сделку и фиксируйте стоп-лосс."];
-var BOT_EN = ["Wall Street Club AI analyzes key liquidity pools.", "Signal strength indicates mathematical probability advantage.", "Switch asset or timeframe to form a new market setup.", "Never risk more than 1-2% per trade and always maintain strict protective stops."];
+var BOT_RU = ["AI-помощник Andromeda AI анализирует ключевые пулы ликвидности.", "Сила сигнала указывает на математическое преимущество покупателей или продавцов.", "Смените актив или таймфрейм для формирования нового торгового сетапа.", "Не рискуйте более 1-2% от депозита на одну сделку и фиксируйте стоп-лосс."];
+var BOT_EN = ["Andromeda AI AI analyzes key liquidity pools.", "Signal strength indicates mathematical probability advantage.", "Switch asset or timeframe to form a new market setup.", "Never risk more than 1-2% per trade and always maintain strict protective stops."];
 
 var CH_RU = [["Как работает Signal AI?","Вы выбираете актив и таймфрейм, алгоритм рассчитывает вероятность успеха и формирует сетап."], ["Что такое сила сигнала?","Это расчётная вероятность отработки. Высокая сила означает благоприятную точку входа."], ["Как соблюдать риски?","Не рискуйте более 1-2% от капитала и всегда выставляйте защитные ордера."]];
 var CH_EN = [["How does Signal AI work?","Select asset and timeframe, the algorithm computes probability and outputs setup."], ["What is Signal Strength?","It is calculated execution edge. High strength highlights optimal entry."], ["How to manage risk?","Never risk over 1-2% per trade and always maintain strict protective stops."]];
@@ -407,6 +451,8 @@ var S={
   assetSearch:"",
   poId:"",
   isAuthorized: false,
+  loaded: false, authError: false, netFail: false,
+  srv: null, freeLeft: null, freeLimit: 3, partnerUrl: "", busy: false,
   tempInputId: "",
   tz:"UTC+3 (MSK)"
 };
@@ -418,17 +464,67 @@ if(S.lang=="en" && S.tf=="3 мин") S.tf="3 min";
 function save(){try{localStorage.setItem("ws_signal_h4",JSON.stringify(S.hist.slice(0,50)))}catch(e){} }
 function t(key){return (I18N[S.lang]&&I18N[S.lang][key])||key}
 
-/* Free quota: unregistered users get FREE_LIMIT signal requests per day.
-   DEMO: counter lives in the browser. In the server version this check moves
-   to POST /api/signal (keyed by verified Telegram ID); the client only displays it. */
-var FREE_LIMIT = 3;
-function todayKey(){var d=new Date();return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)}
-S.free = {d: todayKey(), n: 0};
-try{var fq=JSON.parse(localStorage.getItem("ws_free_quota")||"null");if(fq&&fq.d===todayKey()&&fq.n>0)S.free=fq}catch(e){}
-function freeUsed(){if(S.free.d!==todayKey())S.free={d:todayKey(),n:0};return S.free.n}
-function freeLeft(){return Math.max(0,FREE_LIMIT-freeUsed())}
-function freeUse(){freeUsed();S.free.n++;try{localStorage.setItem("ws_free_quota",JSON.stringify(S.free))}catch(e){}}
-function isGated(){return !S.isAuthorized&&freeLeft()===0&&S.ph==="idle"}
+/* ---- Server API layer ----
+   Free-signal limit, registration status and events live on the server (see server.js).
+   The client only displays state. Local testing without Telegram: open the page with ?dev=111:ivan
+   (works only if the server runs with DEV_BYPASS_AUTH=1). */
+function api(path, opts){
+  opts = opts || {};
+  var hdr = {"Content-Type":"application/json"};
+  var init = (window.Telegram && Telegram.WebApp && Telegram.WebApp.initData) || "";
+  if(init){ hdr["Authorization"] = "tma " + init; }
+  else { var dev = new URLSearchParams(location.search).get("dev"); if(dev) hdr["x-dev-user"] = dev; }
+  return fetch(path, {method: opts.method || "GET", headers: hdr, body: opts.body ? JSON.stringify(opts.body) : undefined})
+    .then(function(r){ return r.json().catch(function(){return {}}).then(function(b){ return {status:r.status, body:b}; }); });
+}
+function applyServer(b){
+  S.srv = b;
+  S.isAuthorized = !!b.unlimited;
+  S.poId = b.traderId || "";
+  S.freeLeft = b.freeLeft;
+  S.freeLimit = b.freeLimit || 3;
+}
+function track(action, details){ api("/api/track", {method:"POST", body:{action:action, details:details||null}}).catch(function(){}); }
+function freeLeft(){ return S.freeLeft == null ? 0 : S.freeLeft; }
+function isGated(){ return !S.isAuthorized && freeLeft() === 0 && S.ph === "idle"; }
+
+function openExternal(u){
+  try{ if(window.Telegram && Telegram.WebApp && Telegram.WebApp.openLink){ Telegram.WebApp.openLink(u); return; } }catch(e){}
+  window.open(u, "_blank");
+}
+var POLL = null;
+function stopPolling(){ if(POLL){ clearInterval(POLL); POLL = null; } }
+function startPolling(){ stopPolling(); POLL = setInterval(function(){ checkStatus(false); }, 6000); }
+function checkStatus(manual){
+  return api("/api/me").then(function(r){
+    if(r.status === 401){ S.authError = true; S.loaded = false; stopPolling(); R(); return; }
+    if(r.status !== 200) return;
+    var prev = S.srv ? S.srv.status : null, wasAuth = S.isAuthorized;
+    applyServer(r.body);
+    var changed = prev !== r.body.status;
+    if(!wasAuth && S.isAuthorized){
+      stopPolling();
+      if($("modalOverlay").classList.contains("active")) openStep(7);
+      R();
+    } else if(changed){ R(); }
+    if(manual) toast(changed ? t("statusUpdated") : t("statusSame"));
+  }).catch(function(){ if(manual) toast(t("netError")); });
+}
+function openPartner(){
+  if(S.partnerUrl){ openExternal(S.partnerUrl); return; }
+  return api("/api/register/start", {method:"POST"}).then(function(r){
+    if(r.status === 200){ S.partnerUrl = r.body.url; openExternal(r.body.url); } else { toast(t("netError")); }
+  }).catch(function(){ toast(t("netError")); });
+}
+function startRegistration(){
+  api("/api/register/start", {method:"POST"}).then(function(r){
+    if(r.status !== 200){ toast(t("netError")); return; }
+    S.partnerUrl = r.body.url;
+    openExternal(r.body.url);
+    openStep(6);
+    startPolling();
+  }).catch(function(){ toast(t("netError")); });
+}
 
 function strHash(s) {
   var h = 0;
@@ -462,10 +558,18 @@ function toast(msg){var e=$("ts");e.textContent=msg;e.style.display="block";setT
 function reset(){clearInterval(S.tm);S.ph="idle";S.r=null}
 
 function start(){
-  if(!S.isAuthorized){
-    if(freeLeft()===0){R();return}
-    freeUse();
-  }
+  if(S.busy) return;
+  S.busy = true;
+  api("/api/signal", {method:"POST", body:{asset:S.asset, timeframe:S.tf}}).then(function(r){
+    S.busy = false;
+    if(r.status === 401){ S.authError = true; S.loaded = false; R(); return; }
+    if(r.body && r.body.status) applyServer(r.body);
+    if(r.status !== 200){ R(); return; }   // 403 = daily limit reached -> redraw (blurred block)
+    runSignal();
+  }).catch(function(){ S.busy = false; toast(t("netError")); });
+}
+
+function runSignal(){
   hap();
   clearInterval(S.tm);
   S.ph="load";
@@ -489,6 +593,7 @@ function start(){
 
 function decide(st){
   clearInterval(S.tm);
+  track("signal_decision", {st:st, asset:S.r.a, tf:S.r.tf});
   S.hist.unshift({a:S.r.a, tf:S.r.tf, p:S.r.p, m:S.r.m, st:st, date:new Date().toLocaleTimeString()});
   save();
   toast(st=="ok" ? t("inWorkToast") : t("skipToast"));
@@ -674,37 +779,20 @@ function openStep(step) {
       <div class="modal-icon-box">${ic("user-check", 24)}</div>
       <div class="modal-title">${t("modal5Title")}</div>
       <div class="modal-desc">${t("modal5Desc")}</div>
-      
-      <a href="https://pocketoption.com" target="_blank" class="btn" style="margin-bottom: 10px;" onclick="enableNextStep()">
+      <button class="btn" style="margin-bottom: 10px;" onclick="startRegistration()">
         ${ic("external-link", 16)} ${t("modal5RegBtn")}
-      </a>
-
-      <div class="modal-desc" style="margin-bottom: 10px;">${t("modal5Return")}</div>
-
-      <button id="nextBtn" class="btn dk" onclick="openStep(6)" disabled style="opacity: 0.4;">
-        ${t("modal5Next")}
       </button>
+      <div class="modal-desc" style="margin-bottom: 10px;">${t("modal5Return")}</div>
     `;
   } else if (step === 6) {
     modal.innerHTML = `
-      <button class="modal-close" onclick="closeModal()">${ic("x", 18)}</button>
-      <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot active"></div></div>
-      <div class="modal-icon-box">${ic("check-circle-2", 24)}</div>
-      <div class="modal-title">${t("modal6Title")}</div>
-      <div class="modal-desc">${t("modal6Desc")}</div>
-      
-      <div class="info-card">
-        <b>${t("modal6WhyTitle")}</b><br>
-        ${t("modal6WhyText")}
-      </div>
-
-      <div style="text-align: left; margin-bottom: 8px;">
-        <span style="font-size: 11px; color: var(--mute);">${t("modal6InputLabel")}</span>
-        <input type="text" id="pocketInput" placeholder="12345678" style="text-align:center; font-family:var(--mono);" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-      </div>
-
-      <button class="btn" onclick="submitCheck()">${t("modal6Submit")}</button>
-      <div class="support-btn" onclick="closeModal(); S.tab='s'; R();">
+      <button class="modal-close" onclick="stopPolling();closeModal()">${ic("x", 18)}</button>
+      <div class="modal-icon-box">${ic("refresh-cw", 24)}</div>
+      <div class="modal-title">${t("waitTitle")}</div>
+      <div class="modal-desc">${t("waitDesc")}</div>
+      <button class="btn" onclick="openPartner()">${ic("external-link", 16)} ${t("waitOpenAgain")}</button>
+      <button class="btn dk" style="margin-top: 10px;" onclick="checkStatus(true)">${ic("refresh-cw", 14)} ${t("waitCheck")}</button>
+      <div class="support-btn" onclick="stopPolling();closeModal(); S.tab='s'; R();">
         ${ic("message-square", 14)} ${t("modalContactSupport")}
       </div>
     `;
@@ -716,51 +804,14 @@ function openStep(step) {
       </div>
       <div class="modal-title">${t("modal7Title")}</div>
       <div class="modal-desc">${t("modal7Desc")}</div>
-
-      <div class="info-card" style="text-align: center;">${t("modal7MinDep")} <b>$11 USD</b></div>
-
-      <div class="info-card" style="border-color: var(--line-gold); color: var(--gold);">
-        ${t("modal7Bonus")}
-      </div>
-
-      <a href="https://pocketoption.com" target="_blank" class="btn" style="margin-bottom: 10px;">
-        ${t("modal7DepBtn")}
-      </a>
-      <button class="btn dk" onclick="finishAuth()">
-        ${ic("refresh-cw", 14)} ${t("modal7CheckBtn")}
-      </button>
-      <div class="support-btn" onclick="closeModal(); S.tab='s'; R();">
-        ${ic("message-square", 14)} ${t("modalContactSupport")}
-      </div>
+      <button class="btn" onclick="finishAuth()">${t("modal7Done")}</button>
     `;
   }
   if(window.lucide) lucide.createIcons();
 }
 
-function enableNextStep() {
-  const btn = $('nextBtn');
-  if (btn) {
-    btn.disabled = false;
-    btn.style.opacity = '1';
-    btn.classList.remove('dk');
-  }
-}
-
-function submitCheck() {
-  const input = $('pocketInput');
-  if (input && input.value.trim().length > 0) {
-    S.tempInputId = input.value.trim();
-    openStep(7);
-  } else {
-    toast(t("enterIdToast"));
-  }
-}
-
 function finishAuth() {
-  S.isAuthorized = true;
-  if (S.tempInputId) {
-    S.poId = S.tempInputId;
-  }
+  stopPolling();
   closeModal();
   R();
 }
@@ -769,6 +820,7 @@ function setLanguage(lang) {
   hap();
   S.lang = lang;
   try { localStorage.setItem('ws_lang', lang); } catch(e){}
+  track('language_change', {lang: lang});
   if (S.lang == 'en' && S.tf == '3 мин') S.tf = '3 min';
   if (S.lang == 'ru' && S.tf == '3 min') S.tf = '3 мин';
   R();
@@ -776,39 +828,45 @@ function setLanguage(lang) {
 
 function R(){
   var hd=$("hd"), v=$("v"), nav=$("nav");
-  hd.innerHTML='<div class="brand">DEMO <span class="g">MINI APP</span> '+ic("sparkles", 16)+'</div>';
+  hd.innerHTML='<div class="brand">ANDROMEDA <span class="g">AI</span> '+ic("sparkles", 16)+' <span class="chip demo">DEMO</span></div>';
 
+  if(!S.loaded){
+    v.innerHTML='<div class="card center" style="margin-top:40px">'+(S.authError?t("authErrorText"):S.netFail?t("netError"):t("loadingText"))+'</div>';
+    nav.innerHTML="";
+    return;
+  }
   var h="";
   if(S.tab=="f"){
     h+='<div class="dep-card">';
     h+='<div class="dep-header">';
     h+='<div class="dep-icon">$</div>';
     h+='<div>';
-    h+='<div class="dep-title">'+t("depTitle")+' <span class="badge-rec">'+t("depRec")+'</span></div>';
-    h+='<div class="dep-desc">'+t("depDesc")+'</div>';
+    if(!S.isAuthorized){
+      h+='<div class="dep-title">'+t("accTitleFree")+'</div>';
+      h+='<div class="dep-desc">'+t("accDescFree")+'</div>';
+    } else if(S.srv && S.srv.status==="deposited"){
+      h+='<div class="dep-title">'+t("accTitleDep")+' <span class="badge-rec">'+t("accBadgeOk")+'</span></div>';
+      h+='<div class="dep-desc">'+t("accDescDep")+'</div>';
+    } else {
+      h+='<div class="dep-title">'+t("accTitleReg")+' <span class="badge-rec">'+t("accBadgeOk")+'</span></div>';
+      h+='<div class="dep-desc">'+t("accDescReg")+'</div>';
+    }
     h+='</div>';
     h+='</div>';
     h+='<div class="dep-btns">';
-    h+='<button class="btn" onclick="hap();window.open(\'https://broker-qx.pro/sign-up/?lid=975662\', \'_blank\')">'+t("depBtn")+'</button>';
-    h+='<button class="btn dk" onclick="hap();toast(\''+t("depCheck")+'\')">'+t("checkBtn")+'</button>';
-    h+='</div>';
-    h+='</div>';
-
-    h+='<div class="promo-card">';
-    h+='<div class="promo-title">'+ic("gift", 18)+' '+t("promoTitle")+'</div>';
-    h+='<div class="mute" style="margin-top:4px;">'+t("promoSub")+'</div>';
-    h+='<div class="promo-code" onclick="hap();navigator.clipboard.writeText(\'SIG10\');toast(\''+t("copied")+'\')">SIG10 '+ic("copy", 14)+'</div>';
-    h+='<div class="promo-grid">';
-    h+='<div class="promo-item">$25 <b>+$15</b></div>';
-    h+='<div class="promo-item">$50 <b>+$30</b></div>';
-    h+='<div class="promo-item">$100 <b>+$60</b></div>';
+    if(!S.isAuthorized){
+      h+='<button class="btn" onclick="openStep(3)">'+t("regBtnText")+'</button>';
+    } else if(!(S.srv && S.srv.status==="deposited")){
+      h+='<button class="btn" onclick="hap();openPartner()">'+t("depBtn")+'</button>';
+      h+='<button class="btn dk" onclick="hap();checkStatus(true)">'+t("checkBtn")+'</button>';
+    }
     h+='</div>';
     h+='</div>';
 
     /* РАМКА И КНОПКИ ВЫБОРА С ПЛАВНЫМ СВОРАЧИВАНИЕМ И БЕЗ ПЕРЕЗАГРУЗОК */
     var gated = isGated();
     if(!S.isAuthorized && !gated){
-      h+='<div class="quota">'+ic("ticket", 14)+' '+t("quotaLeft")+' <b>'+freeLeft()+'/'+FREE_LIMIT+'</b></div>';
+      h+='<div class="quota">'+ic("ticket", 14)+' '+t("quotaLeft")+' <b>'+freeLeft()+'/'+S.freeLimit+'</b></div>';
     }
     if(gated){ h+='<div class="gate"><div class="gate-inner" inert>'; }
     h+='<div class="pills" style="margin-top:14px;">';
@@ -903,9 +961,9 @@ function R(){
       h+='<div class="prof-user-card">';
       h+='<div style="display:flex;align-items:center;gap:12px;">';
       h+='<div class="prof-avatar">'+ic("user", 22)+'</div>';
-      h+='<div><div style="font-weight:800;font-size:15px;">ID: '+S.poId+'</div><div class="mute" style="margin-top:2px;">'+t("myProfile")+'</div></div>';
+      h+='<div><div style="font-weight:800;font-size:15px;">ID: '+(S.poId||'—')+'</div><div class="mute" style="margin-top:2px;">'+t("myProfile")+'</div></div>';
       h+='</div>';
-      h+='<span class="tag">VIP</span>';
+      h+='<span class="tag">'+(S.srv && S.srv.status==="deposited" ? t("stDeposited") : t("stRegistered"))+'</span>';
       h+='</div>';
 
       var totalCount = S.hist.length;
@@ -935,8 +993,6 @@ function R(){
       h+='<option '+(S.tz.includes('UTC+0')?'selected':'')+'>UTC+0 (GMT)</option>';
       h+='</select>';
       h+='</div>';
-
-      h+='<button class="btn danger" style="margin-top:14px;" onclick="hap();S.isAuthorized=false;S.poId=\'\';R();toast(\''+t("unboundToast")+'\')">'+ic("log-out", 16)+' '+t("unbindBtn")+'</button>';
     } else {
       h+='<div class="prof-user-card">';
       h+='<div style="display:flex;align-items:center;gap:12px;">';
@@ -999,8 +1055,8 @@ function R(){
     h+='<h3>'+t("supTitle")+'</h3>';
     
     h+='<div class="top">';
-    h+='<a class="card" href="https://t.me/signalaisuppbot" target="_blank" onclick="hap()">'+ic("message-square", 22)+'<b>Telegram</b><small>@signalaisuppbot</small></a>';
-    h+='<div class="card" style="cursor:default">'+ic("clock", 22)+'<b>24/7</b><small>Круглосуточная поддержка</small></div>';
+    h+='<div class="card" style="cursor:default">'+ic("message-square", 22)+'<b>Telegram</b><small>'+t("supDemo")+'</small></div>';
+    h+='<div class="card" style="cursor:default">'+ic("clock", 22)+'<b>DEMO</b><small>'+t("demoNote")+'</small></div>';
     h+='</div>';
 
     h+='<h3 style="margin-top:20px;">'+t("kbTitle")+'</h3>';
@@ -1019,11 +1075,11 @@ function R(){
   }
 
   nav.innerHTML=`
-    <button class="${S.tab=='p'?'on':''}" onclick="hap('s');S.tab='p';reset();R()">${ic("user")}<span>${t("navProfile")}</span></button>
-    <button class="${S.tab=='h'?'on':''}" onclick="hap('s');S.tab='h';reset();R()">${ic("history")}<span>${t("navHistory")}</span></button>
-    <button class="c ${S.tab=='f'?'on':''}" onclick="hap('s');S.tab='f';reset();R()"><i class="nav-center-icon">${ic("sparkles", 22)}</i><span>${t("navSignals")}</span></button>
-    <button class="${S.tab=='a'?'on':''}" onclick="hap('s');S.tab='a';reset();R()">${ic("bot")}<span>${t("navAi")}</span></button>
-    <button class="${S.tab=='s'?'on':''}" onclick="hap('s');S.tab='s';reset();R()">${ic("help-circle")}<span>${t("navSupport")}</span></button>
+    <button class="${S.tab=='p'?'on':''}" onclick="hap('s');S.tab='p';track('tab_view',{tab:'p'});reset();R()\">${ic("user")}<span>${t("navProfile")}</span></button>
+    <button class="${S.tab=='h'?'on':''}" onclick="hap('s');S.tab='h';track('tab_view',{tab:'h'});reset();R()\">${ic("history")}<span>${t("navHistory")}</span></button>
+    <button class="c ${S.tab=='f'?'on':''}" onclick="hap('s');S.tab='f';track('tab_view',{tab:'f'});reset();R()\"><i class="nav-center-icon">${ic("sparkles", 22)}</i><span>${t("navSignals")}</span></button>
+    <button class="${S.tab=='a'?'on':''}" onclick="hap('s');S.tab='a';track('tab_view',{tab:'a'});reset();R()\">${ic("bot")}<span>${t("navAi")}</span></button>
+    <button class="${S.tab=='s'?'on':''}" onclick="hap('s');S.tab='s';track('tab_view',{tab:'s'});reset();R()\">${ic("help-circle")}<span>${t("navSupport")}</span></button>
   `;
 
   if(window.lucide){
@@ -1031,7 +1087,11 @@ function R(){
   }
 }
 
-R();
+R();   // shows "Loading…" until the server answers
+api("/api/me?open=1").then(function(r){
+  if(r.status === 200){ applyServer(r.body); S.loaded = true; } else { S.authError = true; }
+  R();
+}).catch(function(){ S.netFail = true; R(); });
 </script>
 </body>
 </html>
