@@ -78,6 +78,7 @@ h2,h3{margin:0;font-weight:800;color:var(--text)}h2{font-size:24px;margin-top:6p
 .pill .ic-dn{transition:transform .3s cubic-bezier(.2,.8,.2,1);display:inline-flex;}
 .pill.on .ic-dn{transform:rotate(180deg)}
 
+/* Плавный выпадающий блок */
 .dropdown-wrapper{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s cubic-bezier(.2,.8,.2,1);}
 .dropdown-wrapper.open{grid-template-rows:1fr;}
 .dropdown-inner{overflow:hidden;}
@@ -131,6 +132,7 @@ h2,h3{margin:0;font-weight:800;color:var(--text)}h2{font-size:24px;margin-top:6p
 .chat div.m{padding:10px 14px;border-radius:18px;margin:8px 0;max-width:86%;font-size:14px;line-height:1.45}.chat .a{background:var(--card);border:1px solid var(--line);color:var(--text)}.chat .u{background:linear-gradient(135deg, var(--gold), var(--gold2));color:#0E1A14;font-weight:600;margin-left:auto}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.chips button{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 12px;font:12px system-ui;color:var(--text);cursor:pointer;transition:border-color .2s,color .2s}.chips button:hover{border-color:var(--gold);color:var(--gold)}
 
+/* Profile Screen Custom UI */
 .prof-user-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;display:flex;align-items:center;justify-content:space-between;margin-top:12px}
 .prof-avatar{width:44px;height:44px;border-radius:50%;background:rgba(212,175,55,0.12);border:1px solid var(--line-gold);display:grid;place-items:center;color:var(--gold)}
 .prof-stats-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}
@@ -155,6 +157,7 @@ nav{position:fixed;left:0;right:0;bottom:0;max-width:448px;margin:0 auto;backgro
 nav button{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:3px;font:500 10px system-ui;color:var(--mute2);padding:4px 8px;cursor:pointer;transition:transform .15s}nav button:active{transform:scale(.92)}nav button.on{color:var(--gold)}nav button.on i{color:var(--gold)}
 nav .c{margin-top:-26px;color:var(--mute)}nav .c.on{color:var(--gold)}nav .c i.nav-center-icon{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));display:grid;place-items:center;box-shadow:var(--halo-strong);color:#0E1A14}nav .c i.nav-center-icon svg{color:#0E1A14!important}
 
+/* Free-quota gate */
 .quota{display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;color:var(--mute);margin-top:14px}
 .quota i{color:var(--gold);display:inline-flex}.quota b{color:var(--gold);font-family:var(--mono)}
 .gate{position:relative;margin-top:14px;border-radius:20px;overflow:hidden}
@@ -165,6 +168,7 @@ nav .c{margin-top:-26px;color:var(--mute)}nav .c.on{color:var(--gold)}nav .c i.n
 .gate-title{font-weight:800;font-size:16px;line-height:1.35;color:var(--text)}
 .gate-sub{font-size:12px;color:var(--mute);line-height:1.45}
 
+/* MODALS */
 .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(11, 20, 16, 0.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:none;justify-content:center;align-items:center;padding:16px;z-index:100;}
 .modal-overlay.active{display:flex;}
 .modal-card{background:var(--card);border:1px solid var(--line-gold);border-radius:24px;width:100%;max-width:380px;padding:20px;position:relative;box-shadow:var(--halo-strong);}
@@ -192,53 +196,14 @@ nav .c{margin-top:-26px;color:var(--mute)}nav .c.on{color:var(--gold)}nav .c i.n
 <nav id="nav"></nav>
 <div class="toast" id="ts"></div>
 
+<!-- MODAL OVERLAY -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal-card" id="modalContent"></div>
 </div>
 
 <script>
-var tg = window.Telegram?.WebApp || {};
-try {
-  tg.ready();
-  tg.expand();
-  try { tg.setHeaderColor("#0E1A14"); tg.setBackgroundColor("#0E1A14"); } catch(x) {}
-} catch(e) {}
-
-// Функция отправки действий на бэкенд (Railway + MySQL)
-function sendServerAction(actionType, extraData = {}) {
-  try {
-    const initData = tg.initData || "";
-    const user = tg.initDataUnsafe?.user || { id: "test_user_id", first_name: "TestUser" };
-
-    const payload = {
-      user_id: user.id,
-      username: user.username || "",
-      first_name: user.first_name || "",
-      action: actionType,
-      timestamp: new Date().toISOString(),
-      initData: initData,
-      ...extraData
-    };
-
-   // Отправка запроса на ваш сервер в Railway
-  fetch('/api/track', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'tma ' + initData // <--- Передаем initData в заголовке авторизации
-    },
-    body: JSON.stringify(payload)
-  }).catch(err => {
-    console.warn("Server action tracking warning:", err);
-  });
-}
-
-// При старте приложения логируем вход пользователя
-window.addEventListener('DOMContentLoaded', () => {
-  sendServerAction('app_launch', { tab: 'f' });
-});
-
-function hap(t){try{t=="s"?tg.HapticFeedback?.selectionChanged():tg.HapticFeedback?.impactOccurred("medium")}catch(e){}}
+try{var tg=Telegram.WebApp;tg.ready();tg.expand();try{tg.setHeaderColor("#0E1A14");tg.setBackgroundColor("#0E1A14")}catch(x){}}catch(e){}
+function hap(t){try{t=="s"?tg.HapticFeedback.selectionChanged():tg.HapticFeedback.impactOccurred("medium")}catch(e){}}
 function $(i){return document.getElementById(i)}
 
 function ic(name, s){
@@ -504,9 +469,6 @@ function start(){
   S.r=null;
   closeMenuSmoothly();
   R();
-  
-  sendServerAction('request_signal', { asset: S.asset, timeframe: S.tf });
-
   setTimeout(function(){
     S.r=calc(S.asset,S.tf);
     S.ph="res";
@@ -527,9 +489,6 @@ function decide(st){
   S.hist.unshift({a:S.r.a, tf:S.r.tf, p:S.r.p, m:S.r.m, st:st, date:new Date().toLocaleTimeString()});
   save();
   toast(st=="ok" ? t("inWorkToast") : t("skipToast"));
-  
-  sendServerAction('signal_decision', { asset: S.r.a, timeframe: S.r.tf, decision: st });
-  
   reset();
   R();
 }
@@ -630,7 +589,6 @@ function updateSelectedAsset(asset) {
   });
   closeMenuSmoothly();
   reset();
-  sendServerAction('change_asset', { asset: asset });
 }
 
 function updateSelectedTF(tf) {
@@ -646,7 +604,6 @@ function updateSelectedTF(tf) {
   });
   closeMenuSmoothly();
   reset();
-  sendServerAction('change_timeframe', { timeframe: tf });
 }
 
 function bindListEvents(){
@@ -676,8 +633,6 @@ function openStep(step) {
   var modal = $('modalContent');
   overlay.classList.add('active');
 
-  sendServerAction('modal_step', { step: step });
-
   if (step === 3) {
     modal.innerHTML = `
       <button class="modal-close" onclick="closeModal()">${ic("x", 18)}</button>
@@ -699,7 +654,9 @@ function openStep(step) {
       <div class="modal-icon-box">${ic("users", 24)}</div>
       <div class="modal-title">${t("modal4Title")}</div>
       <div class="modal-desc">${t("modal4Desc")}</div>
-      <div class="info-card">${t("modal4Info")}</div>
+      <div class="info-card">
+        ${t("modal4Info")}
+      </div>
       <div class="info-card" style="border-color: var(--line-gold); color: var(--gold); text-align: center; font-weight: 700;">
         ${t("modal4WinWin")}
       </div>
@@ -713,7 +670,7 @@ function openStep(step) {
       <div class="modal-title">${t("modal5Title")}</div>
       <div class="modal-desc">${t("modal5Desc")}</div>
       
-      <a href="https://u3.shortink.io/register?utm_campaign=868474&utm_source=affiliate&utm_medium=cpa&utm_term=15&a=vwXVkTJSRVBhht&al=1802224&ac=andromedacpa&cid=985006&oid=15" target="_blank" class="btn" style="margin-bottom: 10px;" onclick="enableNextStep(); sendServerAction('click_registration');">
+      <a href="https://u3.shortink.io/register?utm_campaign=868474&utm_source=affiliate&utm_medium=cpa&utm_term=15&a=vwXVkTJSRVBhht&al=1802224&ac=andromedacpa&cid=985006&oid=15" target="_blank" class="btn" style="margin-bottom: 10px;" onclick="enableNextStep()">
         ${ic("external-link", 16)} ${t("modal5RegBtn")}
       </a>
 
@@ -732,7 +689,8 @@ function openStep(step) {
       <div class="modal-desc">${t("modal6Desc")}</div>
       
       <div class="info-card">
-        <b>${t("modal6WhyTitle")}</b><br>${t("modal6WhyText")}
+        <b>${t("modal6WhyTitle")}</b><br>
+        ${t("modal6WhyText")}
       </div>
 
       <div style="text-align: left; margin-bottom: 8px;">
@@ -755,9 +713,12 @@ function openStep(step) {
       <div class="modal-desc">${t("modal7Desc")}</div>
 
       <div class="info-card" style="text-align: center;">${t("modal7MinDep")} <b>$11 USD</b></div>
-      <div class="info-card" style="border-color: var(--line-gold); color: var(--gold);">${t("modal7Bonus")}</div>
 
-      <a href="https://u3.shortink.io/register?utm_campaign=868474&utm_source=affiliate&utm_medium=cpa&utm_term=15&a=vwXVkTJSRVBhht&al=1802224&ac=andromedacpa&cid=985006&oid=15" target="_blank" class="btn" style="margin-bottom: 10px;" onclick="sendServerAction('click_deposit_link');">
+      <div class="info-card" style="border-color: var(--line-gold); color: var(--gold);">
+        ${t("modal7Bonus")}
+      </div>
+
+      <a href="https://u3.shortink.io/register?utm_campaign=868474&utm_source=affiliate&utm_medium=cpa&utm_term=15&a=vwXVkTJSRVBhht&al=1802224&ac=andromedacpa&cid=985006&oid=15" target="_blank" class="btn" style="margin-bottom: 10px;">
         ${t("modal7DepBtn")}
       </a>
       <button class="btn dk" onclick="finishAuth()">
@@ -784,7 +745,6 @@ function submitCheck() {
   const input = $('pocketInput');
   if (input && input.value.trim().length > 0) {
     S.tempInputId = input.value.trim();
-    sendServerAction('submit_pocket_id', { pocket_id: S.tempInputId });
     openStep(7);
   } else {
     toast(t("enterIdToast"));
@@ -796,7 +756,6 @@ function finishAuth() {
   if (S.tempInputId) {
     S.poId = S.tempInputId;
   }
-  sendServerAction('finish_auth', { pocket_id: S.poId });
   closeModal();
   R();
 }
@@ -807,7 +766,6 @@ function setLanguage(lang) {
   try { localStorage.setItem('ws_lang', lang); } catch(e){}
   if (S.lang == 'en' && S.tf == '3 мин') S.tf = '3 min';
   if (S.lang == 'ru' && S.tf == '3 min') S.tf = '3 мин';
-  sendServerAction('change_language', { lang: lang });
   R();
 }
 
@@ -818,7 +776,6 @@ function askAi(qText) {
     ans = BOT_EN[Math.floor(Math.random() * BOT_EN.length)];
   }
   S.chat.push({u: qText, a: ans});
-  sendServerAction('ask_ai', { question: qText });
   R();
 }
 
@@ -838,13 +795,6 @@ function toggleFaq(idx) {
   }
 }
 
-function switchTab(tabName) {
-  hap();
-  S.tab = tabName;
-  sendServerAction('switch_tab', { tab: tabName });
-  R();
-}
-
 function R(){
   var hd=$("hd"), v=$("v"), nav=$("nav");
   hd.innerHTML='<div class="brand">Andromeda <span class="g">AI SIGNALS</span> '+ic("sparkles", 16)+'</div>';
@@ -860,15 +810,15 @@ function R(){
     h+='</div>';
     h+='</div>';
     h+='<div class="dep-btns">';
-    h+='<button class="btn" onclick="hap(); window.open(\'https://u3.shortink.io/register?utm_campaign=868474&utm_source=affiliate&utm_medium=cpa&utm_term=15&a=vwXVkTJSRVBhht&al=1802224&ac=andromedacpa&cid=985006&oid=15\', \'_blank\'); sendServerAction(\'click_deposit_banner\');">'+t("depBtn")+'</button>';
-    h+='<button class="btn dk" onclick="hap(); toast(\''+t("depCheck")+'\'); sendServerAction(\'check_balance_click\');">'+t("checkBtn")+'</button>';
+    h+='<button class="btn" onclick="hap();window.open(\'https://u3.shortink.io/register?utm_campaign=868474&utm_source=affiliate&utm_medium=cpa&utm_term=15&a=vwXVkTJSRVBhht&al=1802224&ac=andromedacpa&cid=985006&oid=15\', \'_blank\')">'+t("depBtn")+'</button>';
+    h+='<button class="btn dk" onclick="hap();toast(\''+t("depCheck")+'\')">'+t("checkBtn")+'</button>';
     h+='</div>';
     h+='</div>';
 
     h+='<div class="promo-card">';
     h+='<div class="promo-title">'+ic("gift", 18)+' '+t("promoTitle")+'</div>';
     h+='<div class="mute" style="margin-top:4px;">'+t("promoSub")+'</div>';
-    h+='<div class="promo-code" onclick="hap(); navigator.clipboard.writeText(\'SIG10\'); toast(\''+t("copied")+'\'); sendServerAction(\'copy_promo\');">SIG10 '+ic("copy", 14)+'</div>';
+    h+='<div class="promo-code" onclick="hap();navigator.clipboard.writeText(\'SIG10\');toast(\''+t("copied")+'\')">SIG10 '+ic("copy", 14)+'</div>';
     h+='<div class="promo-grid">';
     h+='<div class="promo-item">$25 <b>+$15</b></div>';
     h+='<div class="promo-item">$50 <b>+$30</b></div>';
@@ -998,7 +948,7 @@ function R(){
 
       h+='<div class="prof-section" style="margin-top:12px;">';
       h+='<div class="prof-sec-title">'+ic("clock", 14)+' '+t("tzTitle")+'</div>';
-      h+='<select class="select-box" onchange="S.tz=this.value; toast(\'Timezone updated\'); sendServerAction(\'change_timezone\', {timezone: S.tz});">';
+      h+='<select class="select-box" onchange="S.tz=this.value; toast(\'Timezone updated\')">';
       h+='<option '+(S.tz.includes("MSK")?'selected':'')+'>UTC+3 (MSK)</option>';
       h+='<option '+(S.tz.includes("UTC+0")?'selected':'')+'>UTC+0 (GMT)</option>';
       h+='<option '+(S.tz.includes("UTC+2")?'selected':'')+'>UTC+2 (EEΤ)</option>';
@@ -1006,7 +956,7 @@ function R(){
       h+='</select>';
       h+='</div>';
 
-      h+='<button class="btn danger" style="margin-top:14px;" onclick="S.isAuthorized=false; S.poId=\'\'; hap(); sendServerAction(\'unbind_account\'); R(); toast(\''+t("unboundToast")+'\')">'+t("unbindBtn")+'</button>';
+      h+='<button class="btn danger" style="margin-top:14px;" onclick="S.isAuthorized=false; S.poId=\'\'; hap(); R(); toast(\''+t("unboundToast")+'\')">'+t("unbindBtn")+'</button>';
     } else {
       h+='<div class="card center" style="margin-top:20px; padding: 24px;">';
       h+='<div class="modal-icon-box">'+ic("user-x", 24)+'</div>';
@@ -1049,8 +999,8 @@ function R(){
   else if(S.tab=="s"){
     h+='<h3>'+t("supTitle")+'</h3>';
     h+='<div class="top">';
-    h+='<a class="card" href="https://t.me/" target="_blank" onclick="sendServerAction(\'click_support\')">'+ic("headphones", 22)+'<b>'+t("vipConcierge")+'</b><small>'+t("resp247")+'</small></a>';
-    h+='<a class="card" href="https://t.me/" target="_blank" onclick="sendServerAction(\'click_kb\')">'+ic("book-open", 22)+'<b>'+t("kbTitle")+'</b><small>Telegram</small></a>';
+    h+='<a class="card" href="https://t.me/" target="_blank">'+ic("headphones", 22)+'<b>'+t("vipConcierge")+'</b><small>'+t("resp247")+'</small></a>';
+    h+='<a class="card" href="https://t.me/" target="_blank">'+ic("book-open", 22)+'<b>'+t("kbTitle")+'</b><small>Telegram</small></a>';
     h+='</div>';
     h+='<h3 style="margin-top:20px;margin-bottom:8px;">FAQ</h3>';
     var faqArr = S.lang=="en"? FAQ_EN : FAQ_RU;
@@ -1065,11 +1015,11 @@ function R(){
   v.innerHTML=h;
   if(window.lucide) lucide.createIcons();
 
-  var navH='<button class="'+(S.tab=="p"?"on":"")+'" onclick="switchTab(\'p\')">'+ic("user", 20)+'<span>'+t("navProfile")+'</span></button>';
-  navH+='<button class="'+(S.tab=="h"?"on":"")+'" onclick="switchTab(\'h\')">'+ic("history", 20)+'<span>'+t("navHistory")+'</span></button>';
-  navH+='<button class="c '+(S.tab=="f"?"on":"")+'" onclick="switchTab(\'f\')"><i class="nav-center-icon">'+ic("zap", 24)+'</i><span>'+t("navSignals")+'</span></button>';
-  navH+='<button class="'+(S.tab=="ai"?"on":"")+'" onclick="switchTab(\'ai\')">'+ic("bot", 20)+'<span>'+t("navAi")+'</span></button>';
-  navH+='<button class="'+(S.tab=="s"?"on":"")+'" onclick="switchTab(' + "'s'" + ')">'+ic("headphones", 20)+'<span>'+t("navSupport")+'</span></button>';
+  var navH='<button class="'+(S.tab=="p"?"on":"")+'" onclick="hap();S.tab=\'p\';R()">'+ic("user", 20)+'<span>'+t("navProfile")+'</span></button>';
+  navH+='<button class="'+(S.tab=="h"?"on":"")+'" onclick="hap();S.tab=\'h\';R()">'+ic("history", 20)+'<span>'+t("navHistory")+'</span></button>';
+  navH+='<button class="c '+(S.tab=="f"?"on":"")+'" onclick="hap();S.tab=\'f\';R()"><i class="nav-center-icon">'+ic("zap", 24)+'</i><span>'+t("navSignals")+'</span></button>';
+  navH+='<button class="'+(S.tab=="ai"?"on":"")+'" onclick="hap();S.tab=\'ai\';R()">'+ic("bot", 20)+'<span>'+t("navAi")+'</span></button>';
+  navH+='<button class="'+(S.tab=="s"?"on":"")+'" onclick="hap();S.tab=\'s\';R()">'+ic("headphones", 20)+'<span>'+t("navSupport")+'</span></button>';
   nav.innerHTML=navH;
   if(window.lucide) lucide.createIcons();
 }
