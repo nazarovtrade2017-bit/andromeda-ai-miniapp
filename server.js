@@ -23,7 +23,8 @@ app.use((req, res, next) => {
   const start = Date.now();
   res.on('finish', () => {
     const duration = Date.now() - start;
-    console.log(`[HTTP] ${req.method} ${req.originalUrl} -> ${res.statusCode} (${duration}ms)`);
+    // path only: query strings can contain secrets (secret=..., key=...)
+    console.log(`[HTTP] ${req.method} ${req.path} -> ${res.statusCode} (${duration}ms)`);
   });
   next();
 });
@@ -34,7 +35,8 @@ const sendJson = (res, r) => res.status(r.status).json(r.body);
 // --- Partner postback (server-to-server, protected by shared secret) ---
 app.get('/postback', async (req, res) => {
   try {
-    console.log('Incoming postback query:', req.query);
+    const { secret: _s, ...safeQuery } = req.query;   // never log the shared secret
+    console.log('Incoming postback query:', safeQuery);
     const result = await h.postback(ctx, req.query, req.ip);
     send(res, result);
   } catch (err) {
