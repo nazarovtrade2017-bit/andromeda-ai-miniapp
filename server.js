@@ -1,13 +1,26 @@
 import express from 'express';
 import crypto from 'node:crypto';
+import mysql from 'mysql2/promise';
 import { loadConfig } from './lib/config.js';
-import { openDb } from './lib/db.js';
 import { makeAuth } from './lib/auth.js';
 import * as h from './lib/handlers.js';
 import { renderAdmin } from './lib/admin.js';
 
 const config = loadConfig();
-const ctx = { db: openDb(config.dbPath), config, sinks: [] };
+
+// Создание пула подключений к MySQL / Railway
+const pool = mysql.createPool({
+  host: process.env.MYSQLHOST || config.dbHost || 'localhost',
+  user: process.env.MYSQLUSER || config.dbUser || 'root',
+  password: process.env.MYSQLPASSWORD || config.dbPassword || '',
+  database: process.env.MYSQLDATABASE || config.dbName || 'railway',
+  port: process.env.MYSQLPORT || config.dbPort || 3306,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
+
+const ctx = { db: pool, config, sinks: [] };
 // Later: ctx.sinks.push(googleSheetsSink, telegramNotifySink);
 
 const app = express();
@@ -18,31 +31,38 @@ const send = (res, r) => res.status(r.status).send(r.body);
 const sendJson = (res, r) => res.status(r.status).json(r.body);
 
 // --- Partner postback (server-to-server, protected by shared secret) ---
-app.get('/postback', (req, res) => send(res, h.postback(ctx, req.query, req.ip)));
+app.get('/postback', async (req, res) => {
+  try {
+    const result = await h.postback(ctx, req.query, req.ip);
+    send(res, result);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
 
 // --- Mini App API (every route requires valid Telegram initData) ---
 const api = express.Router();
 api.use(makeAuth(config));
-api.get('/me', (req, res) => sendJson(res, h.me(ctx, req.tgUser, { open: req.query.open === '1' })));
-api.post('/signal', (req, res) => sendJson(res, h.signal(ctx, req.tgUser, req.body)));
-api.post('/track', (req, res) => sendJson(res, h.track(ctx, req.tgUser, req.body)));
-api.post('/register/start', (req, res) => sendJson(res, h.registerStart(ctx, req.tgUser)));
+api.get('/me', async (req, res) => sendJson(res, await h.me(ctx, req.tgUser, { open: req.query.open === '1' })));
+api.post('/signal', async (req, res) => sendJson(res, await h.signal(ctx, req.tgUser, req.body)));
+api.post('/track', async (req, res) => sendJson(res, await h.track(ctx, req.tgUser, req.body)));
+api.post('/register/start', async (req, res) => sendJson(res, await h.registerStart(ctx, req.tgUser)));
 app.use('/api', api);
 
 // --- Admin view (protected by ADMIN_KEY) ---
-app.get('/admin', (req, res) => {
+app.get('/admin', async (req, res) => {
   const given = Buffer.from(String(req.query.key ?? ''));
   const want = Buffer.from(config.adminKey);
   if (!want.length || given.length !== want.length || !crypto.timingSafeEqual(given, want)) return res.sendStatus(403);
-  res.type('html').send(renderAdmin(ctx.db));
+  const adminHtml = await renderAdmin(ctx.db);
+  res.type('html').send(adminHtml);
 });
 
-// --- Partner simulator (only when ENABLE_SIM=1): fires the SAME /postback logic server-side,
-//     so the shared secret never reaches the browser. ---
+// --- Partner simulator (only when ENABLE_SIM=1) ---
 if (config.enableSim) {
-  app.get('/sim/fire', (req, res) => {
+  app.get('/sim/fire', async (req, res) => {
     const { event, click_id, trader_id, sum, country } = req.query;
-    const r = h.postback(ctx, { event, click_id, trader_id, sum, country, dt: new Date().toISOString(), src: 'sim', secret: config.postbackSecret }, req.ip);
+    const r = await h.postback(ctx, { event, click_id, trader_id, sum, country, dt: new Date().toISOString(), src: 'sim', secret: config.postbackSecret }, req.ip);
     send(res, r);
   });
 }
