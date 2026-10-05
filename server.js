@@ -1,24 +1,15 @@
 import express from 'express';
 import crypto from 'node:crypto';
-import mysql from 'mysql2/promise';
 import { loadConfig } from './lib/config.js';
+import { openDb } from './lib/db.js';
 import { makeAuth } from './lib/auth.js';
 import * as h from './lib/handlers.js';
 import { renderAdmin } from './lib/admin.js';
 
 const config = loadConfig();
 
-// Создание пула подключений к MySQL / Railway
-const pool = mysql.createPool({
-  host: process.env.MYSQLHOST || config.dbHost || 'localhost',
-  user: process.env.MYSQLUSER || config.dbUser || 'root',
-  password: process.env.MYSQLPASSWORD || config.dbPassword || '',
-  database: process.env.MYSQLDATABASE || config.dbName || 'railway',
-  port: Number(process.env.MYSQLPORT || config.dbPort || 3306),
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
+// Инициализация пула подключений к MySQL и автоматическое создание таблиц через openDb
+const pool = openDb(config);
 
 const ctx = { db: pool, config, sinks: [] };
 // Later: ctx.sinks.push(googleSheetsSink, telegramNotifySink);
