@@ -220,19 +220,17 @@ function sendServerAction(actionType, extraData = {}) {
       ...extraData
     };
 
-    // Отправка запроса на ваш сервер в Railway (замените путь, если нужно)
-    fetch('/api/track', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    }).catch(err => {
-      console.warn("Server action tracking warning:", err);
-    });
-  } catch (ex) {
-    console.error("Failed to send action:", ex);
-  }
+   // Отправка запроса на ваш сервер в Railway
+  fetch('/api/track', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${initData}` // <--- Передаем initData в заголовке авторизации
+    },
+    body: JSON.stringify(payload)
+  }).catch(err => {
+    console.warn("Server action tracking warning:", err);
+  });
 }
 
 // При старте приложения логируем вход пользователя
