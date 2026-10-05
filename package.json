@@ -1,15 +1,14 @@
 {
-  "name": "miniapp-server",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "engines": { "node": ">=22.5" },
+  "name": "mysql-conversion-tracker",
+  "version": "1.0.0",
+  "description": "Node.js application with mysql2 for Railway deployment",
+  "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --env-file=.env --disable-warning=ExperimentalWarning --watch server.js",
-    "test": "node --disable-warning=ExperimentalWarning --test test/*.test.js"
+    "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.21.0"
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mysql2": "^3.9.2"
   }
 }
