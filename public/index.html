@@ -221,13 +221,14 @@ function sendServerAction(actionType, extraData = {}) {
     };
 
    // Отправка запроса на ваш сервер в Railway
-  fetch('/api/track', {
+ fetch('/api/track', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${initData}` // <--- Передаем initData в заголовке авторизации
+      'Authorization': `tma ${initData}` // <--- Обязательно с префиксом "tma "
     },
     body: JSON.stringify(payload)
+  })
   }).catch(err => {
     console.warn("Server action tracking warning:", err);
   });
