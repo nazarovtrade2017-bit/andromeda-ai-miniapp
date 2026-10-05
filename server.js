@@ -80,3 +80,10 @@ app.listen(PORT, '0.0.0.0', () => {
   if (!config.botToken && !config.devBypass) console.warn('WARNING: BOT_TOKEN is empty - all /api calls will return 401');
   if (!config.postbackSecret) console.warn('WARNING: POSTBACK_SECRET is empty - /postback rejects everything');
 });
+process.on('uncaughtException', (err) => {
+  console.error('UNCAUGHT EXCEPTION:', err);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('UNHANDLED REJECTION:', reason);
+});
