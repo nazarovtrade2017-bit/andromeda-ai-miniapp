@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Node.js application with mysql2 for Railway deployment",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node server.js"
   },
