@@ -18,15 +18,27 @@ const app = express();
 app.set('trust proxy', 1);
 app.use(express.json({ limit: '10kb' }));
 
+// --- Middleware для логирования всех входящих запросов ---
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    const duration = Date.now() - start;
+    console.log(`[HTTP] ${req.method} ${req.originalUrl} -> ${res.statusCode} (${duration}ms)`);
+  });
+  next();
+});
+
 const send = (res, r) => res.status(r.status).send(r.body);
 const sendJson = (res, r) => res.status(r.status).json(r.body);
 
 // --- Partner postback (server-to-server, protected by shared secret) ---
 app.get('/postback', async (req, res) => {
   try {
+    console.log('Incoming postback query:', req.query);
     const result = await h.postback(ctx, req.query, req.ip);
     send(res, result);
   } catch (err) {
+    console.error('Postback error:', err);
     res.status(500).send(err.message);
   }
 });
@@ -61,7 +73,7 @@ if (config.enableSim) {
 app.use(express.static('public'));
 app.get('/healthz', (_req, res) => res.send('ok'));
 
-// Обязательно указываем порт из окружения Railway (или config.port) и '0.0.0.0' для внешних запросов
+// Обязательно берем порт из окружения Railway (process.env.PORT)
 const PORT = Number(process.env.PORT) || config.port || 8080;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on 0.0.0.0:${PORT}  devBypass=${config.devBypass}  sim=${config.enableSim}`);
