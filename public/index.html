@@ -225,7 +225,7 @@ function sendServerAction(actionType, extraData = {}) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `tma ${initData}` // <--- Передаем initData в заголовке авторизации
+      'Authorization': 'tma ' + initData // <--- Передаем initData в заголовке авторизации
     },
     body: JSON.stringify(payload)
   }).catch(err => {
