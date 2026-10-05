@@ -14,7 +14,7 @@ const pool = mysql.createPool({
   user: process.env.MYSQLUSER || config.dbUser || 'root',
   password: process.env.MYSQLPASSWORD || config.dbPassword || '',
   database: process.env.MYSQLDATABASE || config.dbName || 'railway',
-  port: process.env.MYSQLPORT || config.dbPort || 3306,
+  port: Number(process.env.MYSQLPORT || config.dbPort || 3306),
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
@@ -70,8 +70,10 @@ if (config.enableSim) {
 app.use(express.static('public'));
 app.get('/healthz', (_req, res) => res.send('ok'));
 
-app.listen(config.port, () => {
-  console.log(`Server on :${config.port}  devBypass=${config.devBypass}  sim=${config.enableSim}`);
+// Обязательно указываем порт из окружения Railway (или config.port) и '0.0.0.0' для внешних запросов
+const PORT = Number(process.env.PORT) || config.port || 8080;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on 0.0.0.0:${PORT}  devBypass=${config.devBypass}  sim=${config.enableSim}`);
   if (!config.botToken && !config.devBypass) console.warn('WARNING: BOT_TOKEN is empty - all /api calls will return 401');
   if (!config.postbackSecret) console.warn('WARNING: POSTBACK_SECRET is empty - /postback rejects everything');
 });
