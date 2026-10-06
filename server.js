@@ -59,7 +59,9 @@ app.get('/admin', async (req, res) => {
   const given = Buffer.from(String(req.query.key ?? ''));
   const want = Buffer.from(config.adminKey);
   if (!want.length || given.length !== want.length || !crypto.timingSafeEqual(given, want)) return res.sendStatus(403);
-  const adminHtml = await renderAdmin(ctx.db);
+  
+  // Передаем req.query в renderAdmin, чтобы работали вкладки и параметры
+  const adminHtml = await renderAdmin(ctx.db, req.query);
   res.type('html').send(adminHtml);
 });
 
