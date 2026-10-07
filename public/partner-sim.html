@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Имитатор партнёрки</title>
+<style>
+  :root{--bg:#f6f3e8;--card:#fff;--ink:#14261e;--mute:#6b7a72;--ok:#0a7a55;--line:#e3dfcc}
+  *{box-sizing:border-box}body{margin:0;font:15px system-ui,sans-serif;background:var(--bg);color:var(--ink);padding:20px}
+  .box{max-width:460px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px}
+  .tag{display:inline-block;background:#fff4d6;color:#8a5a00;border-radius:8px;padding:3px 8px;font-size:12px;font-weight:600}
+  h1{font-size:18px;margin:12px 0 4px}p{color:var(--mute);margin:4px 0 14px;line-height:1.45}
+  label{display:block;font-size:12px;color:var(--mute);margin:10px 0 4px}
+  input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font:inherit}
+  button{width:100%;margin-top:10px;padding:12px;border:0;border-radius:12px;background:var(--ok);color:#fff;font:600 15px system-ui;cursor:pointer}
+  button.alt{background:#fff;color:var(--ok);border:1px solid var(--ok)}
+  pre{background:#f4f1e4;border-radius:10px;padding:10px;font-size:12px;white-space:pre-wrap;min-height:44px}
+</style>
+</head>
+<body>
+<div class="box">
+  <span class="tag">ИМИТАТОР · не настоящий сервис</span>
+  <h1>Тестовая партнёрская платформа</h1>
+  <p>Каждая кнопка отправляет на сервер постбек в том же формате, что и настоящий партнёр.</p>
+
+  <label>click_id (из ссылки)</label>
+  <input id="click" readonly>
+  <label>trader_id</label>
+  <input id="trader">
+  <label>Сумма депозита, USD</label>
+  <input id="sum" type="number" value="25" min="1">
+
+  <button onclick="fire('reg')">Зарегистрироваться (reg)</button>
+  <button onclick="fire('ftd')">Первый депозит (ftd)</button>
+  <button class="alt" onclick="fire('dep')">Повторный депозит (dep)</button>
+
+  <label>Ответ сервера</label>
+  <pre id="out">—</pre>
+</div>
+<script>
+  const q = new URLSearchParams(location.search);
+  document.getElementById('click').value = q.get('click_id') || '';
+  document.getElementById('trader').value = String(Math.floor(10000000 + Math.random() * 89999999));
+  async function fire(event) {
+    const p = new URLSearchParams({
+      event,
+      click_id: document.getElementById('click').value,
+      trader_id: document.getElementById('trader').value,
+      sum: event === 'reg' ? '' : document.getElementById('sum').value,
+      country: 'UA'
+    });
+    const r = await fetch('/sim/fire?' + p);
+    document.getElementById('out').textContent = event + ' → ' + r.status + ' ' + (await r.text());
+  }
+</script>
+</body>
+</html>
