@@ -306,7 +306,7 @@ var I18N = {
     accTitleReg: "Регистрация подтверждена",
     accDescReg: "Сигналы без ограничений открыты. Для комфортной торговли пополните депозит от 11$",
     accTitleDep: "Депозит подтверждён",
-    accDescDep: "Партнёр подтвердил пополнение.",
+    accDescDep: "Вам открыты все возможности Andromeda",
     accBadgeOk: "OK",
     waitTitle: "Ждём подтверждения…",
     waitDesc: "Завершите регистрацию на странице партнёра. Мы автоматически увидим её и откроем доступ, это может занять около минуты.",
@@ -386,7 +386,7 @@ var I18N = {
     accTitleReg: "Registration Confirmed",
     accDescReg: "Unlimited signals unlocked. For comfortable trading, top up your deposit with $11 or more.",
     accTitleDep: "Deposit Confirmed",
-    accDescDep: "Partner confirmed the top-up.",
+    accDescDep: "All Andromeda features are unlocked for you",
     accBadgeOk: "OK",
     waitTitle: "Waiting for confirmation…",
     waitDesc: "Complete registration on the partner page. We will automatically detect it and grant access, which may take about a minute.",
@@ -824,7 +824,7 @@ function setLanguage(lang) {
 
 function R(){
   var hd=$("hd"), v=$("v"), nav=$("nav");
-  hd.innerHTML='<div class="brand">ANDROMEDA <span class="g">AI</span> '+ic("sparkles", 16)+' <span class="chip demo"> </span></div>';
+  hd.innerHTML='<div class="brand">ANDROMEDA <span class="g">AI</span> '+ic("sparkles", 16)+'</div>';
 
   if(!S.loaded){
     v.innerHTML='<div class="card center" style="margin-top:40px">'+(S.authError?t("authErrorText"):S.netFail?t("netError"):t("loadingText"))+'</div>';
