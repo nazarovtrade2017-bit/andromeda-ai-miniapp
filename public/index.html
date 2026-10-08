@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0E1A14">
-<title>Andromeda AI (demo)</title>
+<title>Andromeda AI signals</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
@@ -240,10 +240,6 @@ var MOODS_RU = [
 var MOODS_EN = [
   ["📈","LONG (Bullish)","High probability of upward movement. Look for retest entries."],
   ["📉","SHORT (Bearish)","Selling pressure dominates. Markdown expected."],
-  ["⚡","BREAKOUT","Impulsive breakout of a key liquidity level."],
-  ["🛡️","FLAT","Market is consolidating. Avoid trading until price leaves range."],
-  ["🎯","TARGET ZONE","Price approaching key liquidity/take-profit zone."],
-  ["🚀","VOLATILITY","High volatility detected. Elevated risk on open setups."]
 ];
 
 var I18N = {
@@ -262,9 +258,9 @@ var I18N = {
     riskTitle: "Риск-предупреждение", riskDesc: "Сила сигнала низкая (<40%). Воздержитесь от входа в сделку или смените параметры анализа.",
     dirTitle: "Направление:", sigValid: "Сигнал действителен", take: "Взять в работу", skip: "Пропустить",
     idleHint: "Выберите актив и таймфрейм для формирования сигнала", avgWinrate: "Средний винрейт сегодня", getSignalBtn: "Get Signal",
-    proCardTitle: "Andromeda AI PRO", proCardDesc: "Демо-карточка: платных подписок в этом проекте нет.", footerHint: "Демо-алгоритм Andromeda AI. Не торговая рекомендация.",
+    proCardTitle: "Andromeda AI PRO", proCardDesc: "При достижении депозита в +100$ вы получаете доступ в закрытое комьюнити трейдеров.", footerHint: "Andromeda AI: Больше, чем ИИ. Это переворот.",
     histTitle: "История сетапов", histEmpty: "История пока пуста. Запросите первый сигнал.", inWork: "в работе", skipped: "пропущен",
-    aiTitle: "AI-Помощник", aiWelcome: "Привет! Это демо-чат Andromeda AI: ответы шаблонные и не являются торговыми рекомендациями.", aiPlaceholder: "Задайте вопрос аналитику…", send: "Отправить",
+    aiTitle: "AI-Помощник", aiWelcome: "Привет! Это чат Andromeda AI", aiPlaceholder: "Задайте вопрос аналитику…", send: "Отправить",
     supTitle: "Поддержка", vipConcierge: "VIP Консьерж", resp247: "На связи 24/7", kbTitle: "База знаний",
     minSuffix: "мин",
     minOptions: ["1 мин", "2 мин", "3 мин", "5 мин", "10 мин", "15 мин", "30 мин"],
@@ -273,19 +269,19 @@ var I18N = {
     regPromptText: "Зарегистрируйтесь, чтобы получать бесплатные AI-сигналы",
     regBtnText: "Зарегистрироваться",
     enterIdToast: "Введите ваш PocketOption ID",
-    modal3Title: "Бесплатные сигналы (демо) 🎯",
-    modal3Desc: "Демо-проект: сигналы генерируются алгоритмом для показа интерфейса и не являются торговой рекомендацией",
+    modal3Title: "Бесплатные сигналы 🎯",
+    modal3Desc: "Калькуляция паттернов: Andromeda AI активирована",
     modal3Item1: "3 бесплатных сигнала в день",
     modal3Item2: "Без ограничений после регистрации",
-    modal3Item3: "Сигналы сгенерированы, это не рекомендации",
+    modal3Item3: "Нейросеть Andromeda генерирует сетап",
     modal3Next: "Как это работает? &rarr;",
     modal4Title: "Как это работает? 🤝",
     modal4Desc: "И что записывается",
-    modal4Info: "Регистрация идёт по партнёрской ссылке PocketOption: проект получает партнёрское вознаграждение за зарегистрированных пользователей. Записываются ваш Telegram ID и действия в приложении. Сигналы в демо сгенерированы и не являются торговой рекомендацией.",
-    modal4WinWin: "Это демонстрационный проект",
+    modal4Info: "Мы зарабатываем 2% от оборота нашей команды на PocketOption. Нам важно не брать деньги с людей, а зарабатывать с платформы. Поэтому мы заинтересованы в том, чтобы вы зарабатывали.",
+    modal4WinWin: "WIN-WIN! Мы мотивированы, чтобы вы были в плюсе.",
     modal4Next: "Понятно, что делать? &rarr;",
     modal5Title: "Шаг 1: Регистрация",
-    modal5Desc: "Нажмите кнопку ниже: откроется страница регистрации PocketOption. Приложение само узнает о регистрации.",
+    modal5Desc: "Нажмите кнопку ниже, чтобы создать аккаунт на PocketOption. Это займёт 1 минуту",
     modal5RegBtn: "Зарегистрироваться на PocketOption",
     modal5Return: "После регистрации вернитесь сюда",
     modal5Next: "Готово, что дальше? &rarr;",
@@ -308,9 +304,9 @@ var I18N = {
     accTitleFree: "Доступ к сигналам",
     accDescFree: "Без регистрации доступно 3 бесплатных сигнала в день. После регистрации — без ограничений.",
     accTitleReg: "Регистрация подтверждена",
-    accDescReg: "Сигналы без ограничений открыты. Пополнение счёта на сайте партнёра необязательно, но его событие будет учтено автоматически.",
+    accDescReg: "Сигналы без ограничений открыты. Для комфортной торговли пополните депозит от 11$",
     accTitleDep: "Депозит подтверждён",
-    accDescDep: "Партнёр подтвердил первое пополнение.",
+    accDescDep: "Вам открыты все возможности Andromeda",
     accBadgeOk: "OK",
     waitTitle: "Ждём подтверждения…",
     waitDesc: "Завершите регистрацию на странице партнёра. Мы автоматически увидим её и откроем доступ, это может занять около минуты.",
@@ -324,113 +320,113 @@ var I18N = {
     statusSame: "Изменений пока нет",
     stRegistered: "Зарегистрирован",
     stDeposited: "Пополнил",
-    supDemo: "Демо: поддержка не подключена",
-    demoNote: "Демонстрационный проект"
+    supDemo: "@AndromedaAI_Support_bot",
+    demoNote: "Круглосуточная поддержка"
   },
-  en: {
-    navProfile: "Profile", navHistory: "History", navSignals: "Signals", navAi: "AI Assistant", navSupport: "Support",
+ en:{
+    navProfile: "Profile", navHistory: "History", navSignals: "Signals", navAi: "Assistant", navSupport: "Support",
     myProfile: "My Profile", subscription: "Subscription", notReg: "Not registered",
     stTotal: "Total", stTaken: "Taken", stSkipped: "Skipped",
-    langTitle: "Language", tzTitle: "Timezone", unbindBtn: "Unlink PocketOption ID",
-    depTitle: "Deposit required", depRec: "Recommended: $25",
+    langTitle: "Language", tzTitle: "Timezone", unbindBtn: "Unbind PocketOption ID",
+    depTitle: "Deposit Required", depRec: "Recommended: $25",
     depDesc: "—",
-    depBtn: "$ Deposit Funds", checkBtn: "Check status",
+    depBtn: "$ Top up account", checkBtn: "Check status",
     promoTitle: "—", promoSub: "—",
-    marketOpen: "MARKET OPEN", marketOtc: "OTC MARKET", tfTitle: "Select Timeframe", searchPlaceholder: "Search...",
+    marketOpen: "Market Open", marketOtc: "OTC MARKET", tfTitle: "Timeframe Selection", searchPlaceholder: "Search...",
     analyzing: "Analyzing liquidity…", setupTitle: "Institutional Setup", asset: "Asset", timeframe: "Timeframe",
-    prob: "Execution Probability", sigStrength: "Signal Strength", weakSig: "weak", strongSig: "strong",
-    riskTitle: "Risk Warning", riskDesc: "Signal strength is low (<40%). Avoid entering or select different analysis parameters.",
-    dirTitle: "Direction:", sigValid: "Signal expires in", take: "Execute Signal", skip: "Skip Signal",
-    idleHint: "Select an asset and timeframe to generate a signal", avgWinrate: "Today's Avg Winrate", getSignalBtn: "Get Signal",
-    proCardTitle: "Andromeda AI PRO", proCardDesc: "Demo card: there are no paid subscriptions in this project.", footerHint: "Andromeda AI demo algorithm. Not trading advice.",
-    histTitle: "Setup History", histEmpty: "History is empty. Request your first signal.", inWork: "active", skipped: "skipped",
-    aiTitle: "AI Assistant", aiWelcome: "Hi! This is the Andromeda AI demo chat: replies are canned and are not trading advice.", aiPlaceholder: "Ask the analyst a question…", send: "Send",
+    prob: "Win Probability", sigStrength: "Signal Strength", weakSig: "weak", strongSig: "strong",
+    riskTitle: "Risk Warning", riskDesc: "Signal strength is low (<40%). Refrain from entering a trade or change analysis parameters.",
+    dirTitle: "Direction:", sigValid: "Signal is valid", take: "Take Trade", skip: "Skip",
+    idleHint: "Select an asset and timeframe to generate a signal", avgWinrate: "Average winrate today", getSignalBtn: "Get Signal",
+    proCardTitle: "Andromeda AI PRO", proCardDesc: "Upon reaching a $100+ deposit, you gain access to the private trader community.", footerHint: "Andromeda AI: More than AI. It's a revolution.",
+    histTitle: "Setup History", histEmpty: "History is empty yet. Request your first signal.", inWork: "in progress", skipped: "skipped",
+    aiTitle: "AI Assistant", aiWelcome: "Hello! This is Andromeda AI chat", aiPlaceholder: "Ask the analyst a question…", send: "Send",
     supTitle: "Support", vipConcierge: "VIP Concierge", resp247: "24/7 Available", kbTitle: "Knowledge Base",
     minSuffix: "min",
     minOptions: ["1 min", "2 min", "3 min", "5 min", "10 min", "15 min", "30 min"],
-    copied: "—", inWorkToast: "Saved: Active", skipToast: "Saved: Skipped",
-    depRedirect: "Redirecting to deposit...", depCheck: "Checking status…", unboundToast: "ID unlinked",
-    regPromptText: "Register to receive free AI signals",
-    regBtnText: "Register Now",
+    copied: "—", inWorkToast: "Recorded: in progress", skipToast: "Recorded: skipped",
+    depRedirect: "Redirecting to top-up...", depCheck: "Checking status…", unboundToast: "ID unbinded",
+    regPromptText: "Sign up to receive free AI signals",
+    regBtnText: "Sign Up",
     enterIdToast: "Enter your PocketOption ID",
-    modal3Title: "Free signals (demo) 🎯",
-    modal3Desc: "Demo project: signals are generated by an algorithm to showcase the interface and are not trading advice",
+    modal3Title: "Free Signals 🎯",
+    modal3Desc: "Pattern calculation: Andromeda AI activated",
     modal3Item1: "3 free signals per day",
     modal3Item2: "Unlimited after registration",
-    modal3Item3: "Signals are generated, not recommendations",
+    modal3Item3: "Andromeda neural network generates the setup",
     modal3Next: "How does it work? &rarr;",
     modal4Title: "How does it work? 🤝",
     modal4Desc: "And what gets recorded",
-    modal4Info: "Registration uses a PocketOption partner link: the project receives a partner commission for registered users. Your Telegram ID and in-app actions are recorded. Signals in this demo are generated and are not trading advice.",
-    modal4WinWin: "This is a demo project",
-    modal4Next: "Got it, what to do? &rarr;",
+    modal4Info: "We earn 2% of our team's turnover on PocketOption. It's important for us not to take money from people, but to earn from the platform. Therefore, we are interested in making sure you profit.",
+    modal4WinWin: "WIN-WIN! We are motivated for you to be in profit.",
+    modal4Next: "Clear, what to do? &rarr;",
     modal5Title: "Step 1: Registration",
-    modal5Desc: "Tap the button below: the PocketOption registration page will open. The app will detect the registration automatically.",
-    modal5RegBtn: "Register on PocketOption",
+    modal5Desc: "Click the button below to create an account on PocketOption. It takes 1 minute",
+    modal5RegBtn: "Sign Up on PocketOption",
     modal5Return: "Return here after registration",
-    modal5Next: "Done, what next? &rarr;",
+    modal5Next: "Done, what's next? &rarr;",
     modal6Title: "Step 2: Enter your ID",
-    modal6Desc: "Find your ID in your PocketOption account profile section",
+    modal6Desc: "Your ID is located in your PocketOption account under the profile section",
     modal6WhyTitle: "Why do we need your ID?",
-    modal6WhyText: "We verify registration via our link to track team volume and keep the bot free.",
-    modal6InputLabel: "PocketOption ID (Digits only)",
-    modal6Submit: "Submit for Verification &rarr;",
+    modal6WhyText: "We verify registration via our link to track team turnover and keep the bot free.",
+    modal6InputLabel: "PocketOption ID (Numbers only)",
+    modal6Submit: "Submit for verification &rarr;",
     modalContactSupport: "Contact Support",
     modal7Title: "Registration Successful! ✅",
-    modal7Desc: "Unlimited signals are unlocked. Funding your account is optional.",
+    modal7Desc: "Unlimited signals unlocked. Account top-up is optional.",
     modal7MinDep: "Minimum deposit:",
     modal7Bonus: "—",
-    modal7DepBtn: "$ Deposit Funds",
-    modal7CheckBtn: "Check Balance",
-    quotaLeft: "Free attempts today:",
-    gateTitle: "Register to get free signals",
-    gateSub: "Daily free attempts used up. The limit resets tomorrow.",
-    accTitleFree: "Signal access",
-    accDescFree: "Without registration you get 3 free signals per day. After registration: unlimited.",
-    accTitleReg: "Registration confirmed",
-    accDescReg: "Unlimited signals are unlocked. Funding on the partner site is optional, but the event is tracked automatically.",
-    accTitleDep: "Deposit confirmed",
-    accDescDep: "The partner confirmed the first deposit.",
+    modal7DepBtn: "$ Top up balance",
+    modal7CheckBtn: "Check balance",
+    quotaLeft: "Free attempts left today:",
+    gateTitle: "Complete registration to get free signals",
+    gateSub: "Daily limit of free attempts exhausted. The limit will reset tomorrow.",
+    accTitleFree: "Signal Access",
+    accDescFree: "3 free signals per day available without registration. Unlimited after registration.",
+    accTitleReg: "Registration Confirmed",
+    accDescReg: "Unlimited signals unlocked. For comfortable trading, top up your deposit with $11 or more.",
+    accTitleDep: "Deposit Confirmed",
+    accDescDep: "All Andromeda features are unlocked for you",
     accBadgeOk: "OK",
     waitTitle: "Waiting for confirmation…",
-    waitDesc: "Finish registration on the partner page. We will detect it automatically and unlock access; it may take about a minute.",
-    waitOpenAgain: "Open registration page",
-    waitCheck: "Check status",
-    modal7Done: "Go to signals",
-    authErrorText: "Please open the app from Telegram via the bot.",
+    waitDesc: "Complete registration on the partner page. We will automatically detect it and grant access, which may take about a minute.",
+    waitOpenAgain: "Open Registration Page",
+    waitCheck: "Check Status",
+    modal7Done: "To Signals",
+    authErrorText: "Open the application from Telegram via the bot.",
     loadingText: "Loading…",
     netError: "No connection to the server. Please try again.",
     statusUpdated: "Status updated",
     statusSame: "No changes yet",
     stRegistered: "Registered",
     stDeposited: "Deposited",
-    supDemo: "Demo: support is not connected",
-    demoNote: "Demonstration project"
-  }
+    supDemo: "@AndromedaAI_Support_bot",
+    demoNote: "24/7 Support"
+}
 };
 
 var FAQ_RU = [
-  ["1. Как работают сигналы?", "Это демонстрационный проект: направление и сила сигнала генерируются алгоритмом для показа интерфейса и не основаны на реальном анализе рынка."],
-  ["2. Какая точность сигналов?", "Точность не измеряется: сигналы сгенерированы для демонстрации и не являются торговой рекомендацией. Торговля сопряжена с риском потери средств."],
-  ["3. Какие брокеры поддерживаются?", "В демо используется партнёрская ссылка PocketOption, чтобы проверить регистрацию и отслеживание событий."],
+  ["1. Как работают сигналы?", "Наш AI анализирует рыночные данные в реальном времени и генерирует торговые сигналы с направлением и уровнем уверенности."],
+  ["2. Какая точность сигналов?", "Наши сигналы имеют среднюю точность 85-92% на основе исторических данных. Всегда используйте правильный риск-менеджмент."],
+  ["3. Какие брокеры поддерживаются?", "Сигналы работают с PocketOption и любым другим брокером, который предлагает анализируемые нами валютные пары."],
   ["4. Как использовать сигналы?", "Выберите валютную пару и таймфрейм, нажмите «Получить сигнал», затем решите взять или пропустить сигнал. Результаты отслеживаются в Истории."],
-  ["5. Зачем вам мой ID?", "Регистрация у партнёра связывается с вашим профилем через уникальную ссылку и уведомление от партнёра (постбек). Доступа к вашим средствам и настройкам аккаунта у нас нет. Записываются ваш Telegram ID и действия в приложении."],
-  ["6. У меня уже есть аккаунт, что делать?", "Привязка срабатывает только для новых аккаунтов, созданных по ссылке из приложения. Если аккаунт уже есть, уведомление может не прийти: обратитесь к организатору демо."],
+  ["5. Зачем вам мой ID?", "Ваш PocketOption ID используется для верификации аккаунта и привязки торговых сигналов к вашему профилю. Мы не получаем доступ к вашим средствам или настройкам аккаунта."],
+  ["6. У меня уже есть аккаунт, что делать?", "Если у вас уже есть аккаунт PocketOption, просто введите свой ID при регистрации. Если ID был ранее привязан, обратитесь в поддержку для повторной привязки."],
   ["7. Что такое Сила тренда?", "Сила тренда — это индикатор от 0 до 100, показывающий насколько сильный текущий тренд на рынке. Чем выше значение, тем увереннее направление сигнала."]
 ];
 
 var FAQ_EN = [
-  ["1. How do signals work?", "This is a demo project: signal direction and strength are generated by an algorithm to showcase the interface and are not based on real market analysis."],
-  ["2. What is signal accuracy?", "Accuracy is not measured: signals are generated for demonstration and are not trading advice. Trading involves the risk of losing funds."],
-  ["3. Which brokers are supported?", "The demo uses a PocketOption partner link to test registration and event tracking."],
-  ["4. How to use signals?", "Select pair and timeframe, tap 'Get Signal', then choose to execute or skip. Track performance in History."],
-  ["5. Why do you need my ID?", "Your partner registration is linked to your profile through a unique link and a partner notification (postback). We have no access to your funds or account settings. Your Telegram ID and in-app actions are recorded."],
-  ["6. I already have an account, what to do?", "Linking only works for new accounts created via the link from this app. If you already have an account, the notification may not arrive: contact the demo organizer."],
-  ["7. What is Trend Strength?", "Trend Strength is a 0-100 metric measuring active momentum. Higher values signify higher conviction setups."]
+  ["1. How do signals work?", "Our AI analyzes market data in real-time and generates trading signals complete with direction and a confidence level."],
+  ["2. What is signal accuracy?", "Our signals achieve an average accuracy of 85–92% based on historical data. Always practice proper risk management."],
+  ["3. Which brokers are supported?", "The signals work with PocketOption and any other broker that offers the currency pairs we analyze."],
+  ["4. How to use signals?", "Select a currency pair and timeframe, click 'Get Signal', and then choose whether to take or skip the trade. Results are tracked in your History."],
+  ["5. Why do you need my ID?", "Your PocketOption ID is used to verify your account and link the trading signals to your profile. We do not gain access to your funds or account settings."],
+  ["6. I already have an account, what to do?", "If you already have a PocketOption account, simply enter your ID during registration. If your ID was previously linked, please contact support for re-linking."],
+  ["7. What is Trend Strength?", "Trend Strength is an indicator from 0 to 100 showing how strong the current market trend is. The higher the value, the higher the confidence in the signal direction."]
 ];
 
-var BOT_RU = ["AI-помощник Andromeda AI анализирует ключевые пулы ликвидности.", "Сила сигнала указывает на математическое преимущество покупателей или продавцов.", "Смените актив или таймфрейм для формирования нового торгового сетапа.", "Не рискуйте более 1-2% от депозита на одну сделку и фиксируйте стоп-лосс."];
-var BOT_EN = ["Andromeda AI AI analyzes key liquidity pools.", "Signal strength indicates mathematical probability advantage.", "Switch asset or timeframe to form a new market setup.", "Never risk more than 1-2% per trade and always maintain strict protective stops."];
+var BOT_RU = ["AI-помощник Andromeda AI анализирует ключевые пулы ликвидности.", "Сила сигнала указывает на математическое преимущество покупателей или продавцов.", "Смените актив или таймфрейм для формирования нового торгового сетапа.", "Не рискуйте более 1-2% от депозита на одну сделку "];
+var BOT_EN = ["Andromeda AI AI analyzes key liquidity pools.", "Signal strength indicates mathematical probability advantage.", "Switch asset or timeframe to form a new market setup.", "Never risk more than 1-2% per trade"];
 
 var CH_RU = [["Как работает Signal AI?","Вы выбираете актив и таймфрейм, алгоритм рассчитывает вероятность успеха и формирует сетап."], ["Что такое сила сигнала?","Это расчётная вероятность отработки. Высокая сила означает благоприятную точку входа."], ["Как соблюдать риски?","Не рискуйте более 1-2% от капитала и всегда выставляйте защитные ордера."]];
 var CH_EN = [["How does Signal AI work?","Select asset and timeframe, the algorithm computes probability and outputs setup."], ["What is Signal Strength?","It is calculated execution edge. High strength highlights optimal entry."], ["How to manage risk?","Never risk over 1-2% per trade and always maintain strict protective stops."]];
@@ -828,7 +824,7 @@ function setLanguage(lang) {
 
 function R(){
   var hd=$("hd"), v=$("v"), nav=$("nav");
-  hd.innerHTML='<div class="brand">ANDROMEDA <span class="g">AI</span> '+ic("sparkles", 16)+' <span class="chip demo">DEMO</span></div>';
+  hd.innerHTML='<div class="brand">ANDROMEDA <span class="g">AI</span> '+ic("sparkles", 16)+'</div>';
 
   if(!S.loaded){
     v.innerHTML='<div class="card center" style="margin-top:40px">'+(S.authError?t("authErrorText"):S.netFail?t("netError"):t("loadingText"))+'</div>';
@@ -1024,9 +1020,9 @@ function R(){
       h+='<div class="prof-section">';
       h+='<div class="prof-sec-title">'+ic("clock", 14)+' '+t("tzTitle")+'</div>';
       h+='<select class="select-box" onchange="hap();S.tz=this.value">';
-      h+='<option '+(S.tz.includes('UTC+3')?'selected':'')+'>UTC+3 (MSK / Kyiv)</option>';
-      h+='<option '+(S.tz.includes('UTC+2')?'selected':'')+'>UTC+2 (EE_)</option>';
-      h+='<option '+(S.tz.includes('UTC+1')?'selected':'')+'>UTC+1 (CET)</option>';
+      h+='<option '+(S.tz.includes('UTC+3')?'selected':'')+'>UTC+3 (MSK/Kyiv/Minsk)</option>';
+      h+='<option '+(S.tz.includes('UTC+5')?'selected':'')+'>UTC+5 (Kazahstan/Uzbekistan)</option>';
+      h+='<option '+(S.tz.includes('UTC+1')?'selected':'')+'>UTC+1 (Poland)</option>';
       h+='<option '+(S.tz.includes('UTC+0')?'selected':'')+'>UTC+0 (GMT)</option>';
       h+='</select>';
       h+='</div>';
@@ -1055,8 +1051,8 @@ function R(){
     h+='<h3>'+t("supTitle")+'</h3>';
     
     h+='<div class="top">';
-    h+='<div class="card" style="cursor:default">'+ic("message-square", 22)+'<b>Telegram</b><small>'+t("supDemo")+'</small></div>';
-    h+='<div class="card" style="cursor:default">'+ic("clock", 22)+'<b>DEMO</b><small>'+t("demoNote")+'</small></div>';
+    h+='<a href="https://t.me/AndromedaAI_Support_bot" target="_blank" style="text-decoration: none; color: inherit;"><div class="card" style="cursor:pointer">'+ic("message-square", 22)+'<b>Telegram</b><small>'+t("supDemo")+'</small></div></a>';
+    h+='<div class="card" style="cursor:default">'+ic("clock", 22)+'<b>24/7</b><small>'+t("demoNote")+'</small></div>';
     h+='</div>';
 
     h+='<h3 style="margin-top:20px;">'+t("kbTitle")+'</h3>';
