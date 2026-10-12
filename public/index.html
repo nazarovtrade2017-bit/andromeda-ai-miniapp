@@ -7,6 +7,7 @@
 <title>Andromeda AI signals</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
+<script src="icons.js"></script>
 <style>
 :root {
   --bg: #0E1A14;
@@ -48,7 +49,7 @@ main{padding:8px 0 110px}main.in>*{animation:up .35s cubic-bezier(.2,.8,.2,1)}@k
 .dep-card{background:var(--card);border:1px solid var(--line-gold);border-radius:20px;padding:16px;margin-top:10px;box-shadow:var(--halo)}
 .dep-header{display:flex;gap:12px;align-items:flex-start}
 .dep-icon{width:36px;height:36px;border-radius:10px;background:var(--sand);border:1px solid var(--line);display:grid;place-items:center;color:var(--gold);flex:none;font-weight:700;font-size:18px}
-.dep-title{display:flex;align-items:center;gap:8px;font-weight:800;font-size:15px}
+.dep-title{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;font-weight:800;font-size:15px}
 .badge-rec{background:rgba(212, 175, 55, 0.15);color:var(--gold);border:1px solid var(--line-gold);font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;letter-spacing:.04em;text-transform:uppercase}
 .dep-desc{font-size:12px;color:var(--mute);line-height:1.45;margin-top:6px}
 .dep-btns{display:grid;gap:8px;margin-top:14px}
@@ -91,7 +92,7 @@ h2,h3{margin:0;font-weight:800;color:var(--text)}h2{font-size:24px;margin-top:6p
 
 .list-group-title{font-size:11px;font-weight:800;color:var(--gold);letter-spacing:.08em;padding:8px 8px 4px;text-transform:uppercase;}
 
-.flat-list{display:flex;flex-direction:column;max-height:260px;overflow-y:auto;padding-right:2px;}
+.flat-list{display:flex;flex-direction:column;max-height:300px;overflow-y:auto;padding-right:2px;}
 .flat-list::-webkit-scrollbar{width:4px}
 .flat-list::-webkit-scrollbar-thumb{background:var(--line-gold);border-radius:4px}
 
@@ -99,8 +100,6 @@ h2,h3{margin:0;font-weight:800;color:var(--text)}h2{font-size:24px;margin-top:6p
 .list-item:last-child{border-bottom:0}
 .list-item:active,.list-item:hover{background:rgba(212, 175, 55, 0.08)}
 .list-item.on{background:rgba(212, 175, 55, 0.18);color:var(--gold);font-weight:700;}
-.list-item .p-code{font-size:10px;font-weight:800;color:var(--gold);background:var(--sand);border:1px solid var(--line);padding:2px 5px;border-radius:5px;text-transform:uppercase;min-width:24px;text-align:center;}
-.list-item.on .p-code{background:var(--gold);color:#0E1A14;border-color:var(--gold);}
 
 .btn{width:100%;border:0;border-radius:16px;padding:14px;font:700 14px system-ui;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;color:#0E1A14;background:linear-gradient(135deg, var(--gold), var(--gold2));box-shadow:var(--halo-strong);transition:transform .15s,box-shadow .2s,filter .2s;text-decoration:none}
 .btn:hover{filter:brightness(1.1);box-shadow:0 0 30px rgba(212,175,55,0.5)}.btn:active{transform:scale(.97)}
@@ -170,10 +169,55 @@ nav .c{margin-top:-26px;color:var(--mute)}nav .c.on{color:var(--gold)}nav .c i.n
 .gate-title{font-weight:800;font-size:16px;line-height:1.35;color:var(--text)}
 .gate-sub{font-size:12px;color:var(--mute);line-height:1.45}
 
+/* Asset list: schedule state */
+.list-item .it-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.list-item .it-st{font-size:10px;font-weight:600;color:var(--ok);white-space:nowrap}
+.list-item .otc-tag{font-size:9px;font-weight:800;color:var(--mute);border:1px solid var(--line);border-radius:5px;padding:1px 4px;margin-left:6px}
+.list-item.closed{opacity:.5;cursor:default}
+.list-item.closed .it-st{color:var(--mute)}
+.sched-link{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px auto 0;font:600 12px system-ui;color:var(--mute);cursor:pointer;background:none;border:0;padding:6px 10px}
+.sched-link:hover{color:var(--gold)}.sched-link i{display:inline-flex;color:var(--gold)}
+.sched-row{background:var(--card-dark);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px;text-align:left}
+.sched-name{font-weight:800;font-size:13px}
+.sched-hours{font-family:var(--mono);color:var(--gold);font-size:13px;font-weight:700;margin-top:6px}
+.day-chips{display:flex;gap:4px;margin-top:8px}
+.day-chip{flex:1;text-align:center;font:700 10px system-ui;padding:5px 0;border-radius:6px;border:1px solid var(--line);color:var(--mute2)}
+.day-chip.on{background:rgba(16,185,129,.14);border-color:rgba(16,185,129,.4);color:var(--ok)}
+.day-chip.now{box-shadow:0 0 0 1px var(--gold)}
+.promo-inline{display:inline-block;font-family:var(--mono);font-weight:800;color:var(--gold);border:1px dashed var(--gold);border-radius:6px;padding:0 6px;cursor:pointer}
+.pop{animation:pop .6s cubic-bezier(.2,.8,.2,1)}@keyframes pop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+
+/* Asset icons (drawn by icons.js) */
+.ai{position:relative;display:inline-grid;place-items:center;flex:none;border-radius:50%;overflow:hidden;background:var(--sand);box-shadow:inset 0 0 0 1px rgba(255,255,255,.10)}
+.ai>svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.ai-t{position:relative;font-weight:800;color:#fff;letter-spacing:-.02em;line-height:1;white-space:nowrap}
+.ai-img{width:100%;height:100%;object-fit:cover;display:block}
+.ai-pair{display:inline-flex;align-items:center;flex:none}
+.ai-pair .ai-b{box-shadow:0 0 0 2px var(--card),inset 0 0 0 1px rgba(255,255,255,.10)}
+.ai-tab{flex:none;display:block}
+.pill-asset{display:inline-flex;align-items:center;gap:8px;min-width:0}
+.pill-asset>span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#lbl-asset{min-width:0;overflow:hidden}
+.h-ico{display:flex;align-items:center;gap:10px}
+
+/* Asset picker: sections, rows, favourites */
+.cat-tabs{position:relative;display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}
+.cat-tabs::-webkit-scrollbar{display:none}
+.cat-tab{flex:none;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--card-dark);color:var(--mute);border-radius:12px;padding:8px 11px;font:700 11px system-ui;cursor:pointer;white-space:nowrap;transition:border-color .2s,color .2s,background .2s}
+.cat-tab:active{transform:scale(.96)}
+.cat-tab.on{background:rgba(212,175,55,.16);border-color:var(--gold);color:var(--gold)}
+.cat-tab.sched{border-style:dashed}
+.cat-tabs.searching .cat-tab.on{background:var(--card-dark);border-color:var(--line);color:var(--mute)}
+.list-item{user-select:none;-webkit-user-select:none}
+.list-item .it-ico{width:52px;display:flex;align-items:center;flex:none}
+.list-item .fav-btn{background:none;border:0;padding:5px;margin:-5px 0 -5px -6px;color:var(--mute2);cursor:pointer;display:inline-grid;place-items:center;flex:none;transition:color .15s,transform .15s}
+.list-item .fav-btn:active{transform:scale(.8)}
+.list-item .fav-btn.on{color:var(--gold)}.list-item .fav-btn.on svg{fill:currentColor}
+
 /* MODALS */
 .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(11, 20, 16, 0.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:none;justify-content:center;align-items:center;padding:16px;z-index:100;}
 .modal-overlay.active{display:flex;}
-.modal-card{background:var(--card);border:1px solid var(--line-gold);border-radius:24px;width:100%;max-width:380px;padding:20px;position:relative;box-shadow:var(--halo-strong);}
+.modal-card{background:var(--card);border:1px solid var(--line-gold);border-radius:24px;width:100%;max-width:380px;padding:20px;position:relative;box-shadow:var(--halo-strong);max-height:88vh;overflow-y:auto;}
 .modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--mute);cursor:pointer;}
 
 .dots{display:flex;justify-content:center;gap:6px;margin-bottom:16px;}
@@ -213,25 +257,6 @@ function ic(name, s){
   return '<i data-lucide="' + name + '" style="width:' + s + 'px; height:' + s + 'px; stroke-width:1.8px;"></i>';
 }
 
-var ASSETS_STD = [
-  "EUR/USD", "GBP/USD", "USD/JPY", "AUD/USD", "USD/CAD", "USD/CHF", "EUR/GBP", "EUR/JPY",
-  "EUR/CHF", "EUR/AUD", "EUR/CAD", "EUR/NOK", "EUR/SEK", "EUR/TRY", "EUR/SGD", "EUR/HKD",
-  "EUR/ZAR", "EUR/MXN", "EUR/PLN", "EUR/HUF", "GBP/JPY", "GBP/AUD", "GBP/CAD", "GBP/CHF",
-  "AUD/JPY", "AUD/CAD", "AUD/CHF", "CAD/JPY", "CAD/CHF", "CHF/JPY", "CHF/NOK", "CHF/SEK",
-  "USD/SGD", "USD/HKD", "USD/TRY", "USD/ZAR", "USD/MXN", "USD/NOK", "USD/SEK", "USD/PLN",
-  "USD/HUF", "USD/CZK", "USD/DKK", "USD/THB", "USD/INR", "USD/CNH", "USD/RUB", "USD/BRL",
-  "USD/CLP", "USD/COP", "USD/ILS", "NZD/USD", "NZD/JPY", "AUD/NZD", "EUR/NZD"
-];
-
-var ASSETS_OTC = [
-  "EUR/USD-OTC", "GBP/USD-OTC", "USD/JPY-OTC", "AUD/USD-OTC", "USD/CAD-OTC", "USD/CHF-OTC",
-  "EUR/GBP-OTC", "EUR/JPY-OTC", "EUR/CHF-OTC", "EUR/CAD-OTC", "EUR/AUD-OTC", "GBP/JPY-OTC",
-  "GBP/AUD-OTC", "GBP/CAD-OTC", "GBP/CHF-OTC", "AUD/JPY-OTC", "AUD/CAD-OTC", "AUD/CHF-OTC",
-  "CAD/JPY-OTC", "CAD/CHF-OTC", "CHF/JPY-OTC", "CHF/NOK-OTC", "USD/SGD-OTC", "USD/HKD-OTC",
-  "USD/TRY-OTC", "USD/ZAR-OTC", "USD/MXN-OTC", "USD/NOK-OTC", "USD/SEK-OTC", "EUR/NZD-OTC",
-  "EUR/RUB-OTC", "EUR/HUF-OTC", "EUR/TRY-OTC", "AUD/NZD-OTC", "NZD/USD-OTC", "NZD/JPY-OTC"
-];
-
 var MOODS_RU = [
   ["📈","LONG (Бычий)","Высокая вероятность движения вверх. Ищите точки входа на ретесте."],
   ["📉","SHORT (Медвежий)","Давление продавцов преобладает. Возможно падение актива."],
@@ -248,11 +273,11 @@ var I18N = {
     myProfile: "Мой профиль", subscription: "Подписка", notReg: "Не зарегистрирован",
     stTotal: "Всего", stTaken: "Взято", stSkipped: "Пропущено",
     langTitle: "Язык", tzTitle: "Часовой пояс", unbindBtn: "Отвязать PocketOption ID",
-    depTitle: "Необходим депозит", depRec: "Рекомендуем: $25",
+    depTitle: "Необходим депозит", depRec: "Рекомендуем: ${rec}",
     depDesc: "—",
     depBtn: "$ Пополнить счёт", checkBtn: "Проверить статус",
     promoTitle: "—", promoSub: "—",
-    marketOpen: "Рынок открыт", marketOtc: "OTC РЫНОК", tfTitle: "Выбор таймфрейма", searchPlaceholder: "Поиск...",
+    marketOpen: "Основной рынок", marketOtc: "OTC РЫНОК", tfTitle: "Выбор таймфрейма", searchPlaceholder: "Поиск...",
     analyzing: "Анализируем ликвидность…", setupTitle: "Институциональный сетап", asset: "Актив", timeframe: "Таймфрейм",
     prob: "Вероятность отработки", sigStrength: "Сила сигнала", weakSig: "слабая", strongSig: "сильная",
     riskTitle: "Риск-предупреждение", riskDesc: "Сила сигнала низкая (<40%). Воздержитесь от входа в сделку или смените параметры анализа.",
@@ -272,8 +297,8 @@ var I18N = {
     modal3Title: "Бесплатные сигналы 🎯",
     modal3Desc: "Калькуляция паттернов: Andromeda AI активирована",
     modal3Item1: "3 бесплатных сигнала в день",
-    modal3Item2: "Без ограничений после регистрации",
-    modal3Item3: "Нейросеть Andromeda генерирует сетап",
+    modal3Item2: "+{n} бесплатных сигналов после регистрации",
+    modal3Item3: "Безлимит после первого пополнения",
     modal3Next: "Как это работает? &rarr;",
     modal4Title: "Как это работает? 🤝",
     modal4Desc: "И что записывается",
@@ -293,16 +318,16 @@ var I18N = {
     modal6Submit: "Отправить на проверку &rarr;",
     modalContactSupport: "Связаться с поддержкой",
     modal7Title: "Регистрация успешна! ✅",
-    modal7Desc: "Сигналы без ограничений открыты. Пополнение счёта необязательно.",
+    modal7Desc: "У вас на сегодня есть {n} бесплатных сигналов. После пополнения откроется полный доступ с безлимитными сигналами.",
     modal7MinDep: "Минимальный депозит:",
     modal7Bonus: "—",
     modal7DepBtn: "$ Пополнить баланс",
     modal7CheckBtn: "Проверить баланс",
     quotaLeft: "Бесплатных попыток сегодня:",
-    gateTitle: "Для получения бесплатных сигналов пройдите регистрацию",
-    gateSub: "Дневной лимит бесплатных попыток исчерпан. Лимит обновится завтра.",
-    accTitleFree: "Доступ к сигналам",
-    accDescFree: "Без регистрации доступно 3 бесплатных сигнала в день. После регистрации — без ограничений.",
+    gateTitle: "Бесплатные сигналы закончились. Зарегистрируйтесь и получите ещё {n} сегодня",
+    gateSub: "Регистрация на PocketOption занимает около минуты. Лимит без регистрации обновится завтра.",
+    accTitleFree: "Бесплатные сигналы",
+    accDescFree: "3 бесплатных сигнала в день. После регистрации на PocketOption — ещё {n} в день, а после пополнения — безлимит.",
     accTitleReg: "Регистрация подтверждена",
     accDescReg: "Сигналы без ограничений открыты. Для комфортной торговли пополните депозит от 11$",
     accTitleDep: "Депозит подтверждён",
@@ -318,6 +343,34 @@ var I18N = {
     netError: "Нет связи с сервером. Попробуйте ещё раз.",
     statusUpdated: "Статус обновлён",
     statusSame: "Изменений пока нет",
+    regOkTitle: "Регистрация успешна ✅",
+    regOkDesc: "У вас на сегодня есть {n} из {m} бесплатных сигналов. После пополнения откроется полный доступ с безлимитными сигналами.",
+    depNeedDesc: "Бесплатные сигналы на сегодня закончились. После пополнения откроется полный доступ с безлимитными сигналами.",
+    depOffer: "Минимальный депозит для доступа к сигналам — ${min} USD. Выгоднее внести ${rec} и получить +{pct}% по промокоду {code}.",
+    depTopUp: "Пополнить счёт",
+    depCheckBtn: "Я пополнил — проверить",
+    depNotYet: "Депозит пока не поступил. Обычно это занимает 1–2 минуты.",
+    promoCopied: "Промокод скопирован",
+    quotaUnlimited: "Безлимитные сигналы",
+    gateDepTitle: "Бесплатные сигналы на сегодня закончились",
+    gateDepSub: "Пополните счёт — откроется полный доступ с безлимитными сигналами.",
+    modal8Title: "Депозит подтверждён! 🚀",
+    modal8Desc: "Полный доступ открыт: безлимитные сигналы в любое время.",
+    closedToast: "Актив закрыт. Откроется: {t}",
+    closingSoon: "Рынок закроется через {n} мин — выберите таймфрейм короче или другой актив.",
+    assetSwitched: "{a} сейчас закрыт — выбран {b}",
+    openUntil: "до {t}", opensAt: "откроется {t}", open247: "24/7", openNow: "открыт", closedLbl: "закрыт",
+    today: "сегодня", tomorrow: "завтра", days: ["Вс","Пн","Вт","Ср","Чт","Пт","Сб"],
+    nothingFound: "Ничего не найдено", assetsErr: "Не удалось загрузить список активов",
+    cat_forex: "Валюты", cat_crypto: "Криптовалюты", cat_index: "Индексы", cat_commodity: "Сырьевые товары", cat_stock: "Акции", cat_fav: "Избранное",
+    favEmpty: "Здесь появятся активы, отмеченные звёздочкой", favToggle: "В избранное",
+    schedBtn: "Расписание торгов", schedTitle: "Расписание торгов",
+    schedNow: "Сейчас у вас", schedOpenCnt: "Открыто: {a} из {b} основных · {c} OTC",
+    schedNote: "Время пересчитано в ваш часовой пояс ({tz}). PocketOption публикует расписание по серверному времени UTC+2.",
+    grp_forex: "Валютные пары", grp_index: "Индексы", grp_stock: "Акции", grp_crypto: "Криптовалюты", grp_otc: "OTC — все активы",
+    sched24: "Круглосуточно, 24/7", schedLate: "{ids} — с {t}",
+    schedFoot: "В выходные основной рынок закрыт (работает только крипто). OTC-активы доступны и в выходные.",
+    schedDone: "Понятно",
     stRegistered: "Зарегистрирован",
     stDeposited: "Пополнил",
     supDemo: "@AndromedaAI_Support_bot",
@@ -328,11 +381,11 @@ var I18N = {
     myProfile: "My Profile", subscription: "Subscription", notReg: "Not registered",
     stTotal: "Total", stTaken: "Taken", stSkipped: "Skipped",
     langTitle: "Language", tzTitle: "Timezone", unbindBtn: "Unbind PocketOption ID",
-    depTitle: "Deposit Required", depRec: "Recommended: $25",
+    depTitle: "Deposit Required", depRec: "Recommended: ${rec}",
     depDesc: "—",
     depBtn: "$ Top up account", checkBtn: "Check status",
     promoTitle: "—", promoSub: "—",
-    marketOpen: "Market Open", marketOtc: "OTC MARKET", tfTitle: "Timeframe Selection", searchPlaceholder: "Search...",
+    marketOpen: "Regular market", marketOtc: "OTC MARKET", tfTitle: "Timeframe Selection", searchPlaceholder: "Search...",
     analyzing: "Analyzing liquidity…", setupTitle: "Institutional Setup", asset: "Asset", timeframe: "Timeframe",
     prob: "Win Probability", sigStrength: "Signal Strength", weakSig: "weak", strongSig: "strong",
     riskTitle: "Risk Warning", riskDesc: "Signal strength is low (<40%). Refrain from entering a trade or change analysis parameters.",
@@ -352,8 +405,8 @@ var I18N = {
     modal3Title: "Free Signals 🎯",
     modal3Desc: "Pattern calculation: Andromeda AI activated",
     modal3Item1: "3 free signals per day",
-    modal3Item2: "Unlimited after registration",
-    modal3Item3: "Andromeda neural network generates the setup",
+    modal3Item2: "+{n} free signals after registration",
+    modal3Item3: "Unlimited after your first deposit",
     modal3Next: "How does it work? &rarr;",
     modal4Title: "How does it work? 🤝",
     modal4Desc: "And what gets recorded",
@@ -373,16 +426,16 @@ var I18N = {
     modal6Submit: "Submit for verification &rarr;",
     modalContactSupport: "Contact Support",
     modal7Title: "Registration Successful! ✅",
-    modal7Desc: "Unlimited signals unlocked. Account top-up is optional.",
+    modal7Desc: "You have {n} free signals for today. After a deposit you get full access with unlimited signals.",
     modal7MinDep: "Minimum deposit:",
     modal7Bonus: "—",
     modal7DepBtn: "$ Top up balance",
     modal7CheckBtn: "Check balance",
     quotaLeft: "Free attempts left today:",
-    gateTitle: "Complete registration to get free signals",
-    gateSub: "Daily limit of free attempts exhausted. The limit will reset tomorrow.",
-    accTitleFree: "Signal Access",
-    accDescFree: "3 free signals per day available without registration. Unlimited after registration.",
+    gateTitle: "Free signals used up. Sign up and get {n} more today",
+    gateSub: "Signing up on PocketOption takes about a minute. The no-signup limit resets tomorrow.",
+    accTitleFree: "Free signals",
+    accDescFree: "3 free signals per day. After signing up on PocketOption — {n} more per day, and unlimited after a deposit.",
     accTitleReg: "Registration Confirmed",
     accDescReg: "Unlimited signals unlocked. For comfortable trading, top up your deposit with $11 or more.",
     accTitleDep: "Deposit Confirmed",
@@ -398,6 +451,34 @@ var I18N = {
     netError: "No connection to the server. Please try again.",
     statusUpdated: "Status updated",
     statusSame: "No changes yet",
+    regOkTitle: "Registration successful ✅",
+    regOkDesc: "You have {n} of {m} free signals for today. After a deposit you get full access with unlimited signals.",
+    depNeedDesc: "Today's free signals are used up. After a deposit you get full access with unlimited signals.",
+    depOffer: "Minimum deposit for signal access is ${min} USD. Better deposit ${rec} and get +{pct}% with promo code {code}.",
+    depTopUp: "Top up account",
+    depCheckBtn: "I've topped up — check",
+    depNotYet: "Deposit not received yet. It usually takes 1–2 minutes.",
+    promoCopied: "Promo code copied",
+    quotaUnlimited: "Unlimited signals",
+    gateDepTitle: "Today's free signals are used up",
+    gateDepSub: "Top up your account to unlock full access with unlimited signals.",
+    modal8Title: "Deposit confirmed! 🚀",
+    modal8Desc: "Full access unlocked: unlimited signals any time.",
+    closedToast: "Asset is closed. Opens: {t}",
+    closingSoon: "The market closes in {n} min — pick a shorter timeframe or another asset.",
+    assetSwitched: "{a} is closed now — switched to {b}",
+    openUntil: "until {t}", opensAt: "opens {t}", open247: "24/7", openNow: "open", closedLbl: "closed",
+    today: "today", tomorrow: "tomorrow", days: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
+    nothingFound: "Nothing found", assetsErr: "Could not load the asset list",
+    cat_forex: "Currencies", cat_crypto: "Cryptocurrencies", cat_index: "Indices", cat_commodity: "Commodities", cat_stock: "Stocks", cat_fav: "Favorites",
+    favEmpty: "Assets you star will appear here", favToggle: "Add to favorites",
+    schedBtn: "Trading schedule", schedTitle: "Trading schedule",
+    schedNow: "Now for you", schedOpenCnt: "Open: {a} of {b} regular · {c} OTC",
+    schedNote: "Times are converted to your time zone ({tz}). PocketOption publishes the schedule in server time, UTC+2.",
+    grp_forex: "Currency pairs", grp_index: "Indices", grp_stock: "Stocks", grp_crypto: "Cryptocurrencies", grp_otc: "OTC — all assets",
+    sched24: "Around the clock, 24/7", schedLate: "{ids} — from {t}",
+    schedFoot: "The regular market is closed on weekends (only crypto trades). OTC assets are available on weekends too.",
+    schedDone: "Got it",
     stRegistered: "Registered",
     stDeposited: "Deposited",
     supDemo: "@AndromedaAI_Support_bot",
@@ -446,11 +527,13 @@ var S={
   openMenu:null,
   assetSearch:"",
   poId:"",
-  isAuthorized: false,
+  registered: false, unlimited: false,
+  offer: {minDeposit:11, recDeposit:25, promoCode:'SIG10', promoBonusPct:60, regFreeLimit:5, freeLimit:3},
   loaded: false, authError: false, netFail: false,
   srv: null, freeLeft: null, freeLimit: 3, partnerUrl: "", busy: false,
   tempInputId: "",
-  tz:"UTC+3 (MSK)"
+  assets: [], windows: {}, groups: [], srvOff: 120, clockSkew: 0, assetsErr: false, cat: "forex",
+  paywallShown: "", tzOff: 180
 };
 
 try{S.hist=JSON.parse(localStorage.getItem("ws_signal_h4")||"[]")}catch(e){}
@@ -459,6 +542,45 @@ if(S.lang=="en" && S.tf=="3 мин") S.tf="3 min";
 
 function save(){try{localStorage.setItem("ws_signal_h4",JSON.stringify(S.hist.slice(0,50)))}catch(e){} }
 function t(key){return (I18N[S.lang]&&I18N[S.lang][key])||key}
+function tp(key, p){ var s = t(key); for(var k in (p||{})) s = s.split("{"+k+"}").join(p[k]); return s; }
+function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function disp(id){ return String(id).replace("-OTC", " OTC"); }
+
+/* ---- time zone: schedule is shown in the user's own zone (default: the device's) ---- */
+var TZ_LIST = [0, 60, 120, 180, 240, 300, 360];
+var TZ_NAMES = {0:"GMT", 60:"CET / Poland", 120:"Kyiv / Baltics", 180:"MSK / Minsk", 240:"Dubai / Baku", 300:"Kazakhstan / Uzbekistan", 360:"Bishkek / Omsk"};
+function tzLabel(m){ var h = m/60; return "UTC" + (h >= 0 ? "+" : "−") + Math.abs(h) + (TZ_NAMES[m] ? " (" + TZ_NAMES[m] + ")" : ""); }
+S_initTz();
+function S_initTz(){
+  var off = -new Date().getTimezoneOffset();
+  try{ var v = localStorage.getItem("ws_tz"); if(v !== null && v !== "" && !isNaN(parseInt(v,10))) off = parseInt(v,10); }catch(e){}
+  S.tzOff = off;
+}
+function setTz(v){ S.tzOff = parseInt(v,10); try{ localStorage.setItem("ws_tz", String(S.tzOff)); }catch(e){} hap("s"); R(); }
+function tzSelectHtml(){
+  var list = TZ_LIST.slice();
+  if(list.indexOf(S.tzOff) < 0){ list.push(S.tzOff); list.sort(function(a,b){ return a-b; }); }
+  var h = '<select class="select-box" onchange="setTz(this.value)">';
+  list.forEach(function(m){ h += '<option value="'+m+'"'+(m===S.tzOff?' selected':'')+'>'+tzLabel(m)+'</option>'; });
+  return h + '</select>';
+}
+function pad2(n){ return (n<10?"0":"")+n; }
+function nowSrv(){ return Date.now() + S.clockSkew; }
+function fmtT(ms){ var d = new Date(ms + S.tzOff*60000); return pad2(d.getUTCHours()) + ":" + pad2(d.getUTCMinutes()); }
+function dayIdx(ms){ return Math.floor((ms + S.tzOff*60000) / 86400000); }
+function fmtDT(ms){
+  var diff = dayIdx(ms) - dayIdx(nowSrv());
+  if(diff === 0) return t("today") + " " + fmtT(ms);
+  if(diff === 1) return t("tomorrow") + " " + fmtT(ms);
+  return t("days")[new Date(ms + S.tzOff*60000).getUTCDay()] + " " + fmtT(ms);
+}
+/* minutes since SERVER midnight -> "HH:MM" in the user's zone (+1 / −1 marks the neighbouring day) */
+function fmtSrvMin(m){
+  var v = m + (S.tzOff - S.srvOff), shift = 0;
+  while(v < 0){ v += 1440; shift--; }
+  while(v >= 1440){ v -= 1440; shift++; }
+  return pad2(Math.floor(v/60)) + ":" + pad2(v%60) + (shift ? (shift > 0 ? " +1" : " −1") : "");
+}
 
 /* ---- Server API layer ----
    Free-signal limit, registration status and events live on the server (see server.js).
@@ -475,35 +597,46 @@ function api(path, opts){
 }
 function applyServer(b){
   S.srv = b;
-  S.isAuthorized = !!b.unlimited;
+  S.unlimited = !!b.unlimited;      // deposited -> unlimited signals
+  S.registered = !!b.registered;    // registered (or deposited)
   S.poId = b.traderId || "";
   S.freeLeft = b.freeLeft;
   S.freeLimit = b.freeLimit || 3;
+  if(b.offer) S.offer = b.offer;
 }
 function track(action, details){ api("/api/track", {method:"POST", body:{action:action, details:details||null}}).catch(function(){}); }
 function freeLeft(){ return S.freeLeft == null ? 0 : S.freeLeft; }
-function isGated(){ return !S.isAuthorized && freeLeft() === 0 && S.ph === "idle"; }
+function isGated(){ return !S.unlimited && freeLeft() === 0 && S.ph === "idle"; }
 
 function openExternal(u){
   try{ if(window.Telegram && Telegram.WebApp && Telegram.WebApp.openLink){ Telegram.WebApp.openLink(u); return; } }catch(e){}
   window.open(u, "_blank");
 }
+
+/* The partner postback is the only thing that moves a user forward, so while the user is registered but has not
+   deposited we keep asking the server. The moment `ftd` arrives the banner disappears and signals become unlimited. */
 var POLL = null;
 function stopPolling(){ if(POLL){ clearInterval(POLL); POLL = null; } }
-function startPolling(){ stopPolling(); POLL = setInterval(function(){ checkStatus(false); }, 6000); }
+function startPolling(){ stopPolling(); POLL = setInterval(function(){ if(!document.hidden) checkStatus(false); }, 6000); }
+function syncPolling(){
+  if(S.unlimited){ stopPolling(); return; }
+  if(S.loaded && S.registered && !POLL) startPolling();
+}
 function checkStatus(manual){
   return api("/api/me").then(function(r){
     if(r.status === 401){ S.authError = true; S.loaded = false; stopPolling(); R(); return; }
     if(r.status !== 200) return;
-    var prev = S.srv ? S.srv.status : null, wasAuth = S.isAuthorized;
+    var wasReg = S.registered, wasUnl = S.unlimited, prevLeft = S.freeLeft;
     applyServer(r.body);
-    var changed = prev !== r.body.status;
-    if(!wasAuth && S.isAuthorized){
-      stopPolling();
-      if($("modalOverlay").classList.contains("active")) openStep(7);
-      R();
-    } else if(changed){ R(); }
-    if(manual) toast(changed ? t("statusUpdated") : t("statusSame"));
+    if(!wasUnl && S.unlimited){            // first deposit confirmed by the partner
+      stopPolling(); hap(); openStep(8); R(); return;
+    }
+    if(!wasReg && S.registered){           // registration confirmed by the partner; keep polling for the deposit
+      hap(); openStep(7); R(); syncPolling(); return;
+    }
+    var changed = prevLeft !== S.freeLeft;
+    if(changed) R();
+    if(manual) toast(S.registered && !S.unlimited ? t("depNotYet") : (changed ? t("statusUpdated") : t("statusSame")));
   }).catch(function(){ if(manual) toast(t("netError")); });
 }
 function openPartner(){
@@ -520,6 +653,61 @@ function startRegistration(){
     openStep(6);
     startPolling();
   }).catch(function(){ toast(t("netError")); });
+}
+function openDeposit(){
+  hap();
+  api("/api/deposit/start", {method:"POST"}).then(function(r){
+    if(r.status === 200){ openExternal(r.body.url); syncPolling(); }
+    else if(r.status === 409){ checkStatus(false); }
+    else { toast(t("netError")); }
+  }).catch(function(){ toast(t("netError")); });
+}
+function copyPromo(){
+  var c = S.offer.promoCode;
+  function ok(){ hap("s"); toast(t("promoCopied")); }
+  try{ if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(c).then(ok, ok); return; } }catch(e){}
+  var ta = document.createElement("textarea"); ta.value = c; document.body.appendChild(ta); ta.select();
+  try{ document.execCommand("copy"); }catch(e){}
+  document.body.removeChild(ta); ok();
+}
+
+/* ---- Trading schedule (server-side source of truth: lib/schedule.js) ---- */
+function findAssetC(id){ for(var i=0;i<S.assets.length;i++){ if(S.assets[i].id === id) return S.assets[i]; } return null; }
+function isOpen(a){
+  if(a.open) return a.closesAt == null || nowSrv() < a.closesAt;
+  return a.opensAt != null && nowSrv() >= a.opensAt;
+}
+function statusText(a){
+  if(isOpen(a)) return a.open && a.closesAt != null ? tp("openUntil", {t: fmtT(a.closesAt)}) : (a.win === "all" ? t("open247") : t("openNow"));
+  return a.opensAt != null && !a.open ? tp("opensAt", {t: fmtDT(a.opensAt)}) : t("closedLbl");
+}
+function pickDefaultAsset(){
+  if(S.ph !== "idle") return false;
+  var cur = findAssetC(S.asset);
+  if(cur && isOpen(cur)) return false;
+  var pick = null;
+  ["EUR/USD", "EUR/USD-OTC"].forEach(function(id){ if(pick) return; var a = findAssetC(id); if(a && isOpen(a)) pick = a; });
+  if(!pick){ for(var i=0;i<S.assets.length;i++){ if(isOpen(S.assets[i])){ pick = S.assets[i]; break; } } }
+  if(pick && pick.id !== S.asset){ S.asset = pick.id; return true; }
+  return false;
+}
+function loadAssets(){
+  return api("/api/assets").then(function(r){
+    if(r.status !== 200 || !r.body || !r.body.assets){ S.assetsErr = true; return false; }
+    S.assetsErr = false;
+    S.assets = r.body.assets; S.windows = r.body.windows; S.groups = r.body.groups;
+    S.srvOff = r.body.serverOffsetMin; S.clockSkew = r.body.now - Date.now();
+    return pickDefaultAsset();
+  }).catch(function(){ S.assetsErr = true; return false; });
+}
+function refreshAssets(){
+  var prev = S.asset;
+  return loadAssets().then(function(changed){
+    if(!S.loaded) return;
+    if(changed && prev !== S.asset){ toast(tp("assetSwitched", {a: disp(prev), b: disp(S.asset)})); R(); return; }
+    setAssetLabel();
+    if(S.openMenu === "asset") refreshAssetList();
+  });
 }
 
 function strHash(s) {
@@ -549,18 +737,27 @@ function getDailyWinrate() {
     return Math.floor(dayPseudoRandom * (max - min + 1)) + min;
 }
 
-function toast(msg){var e=$("ts");e.textContent=msg;e.style.display="block";setTimeout(function(){e.style.display="none"},1800)}
+function toast(msg){var e=$("ts");e.textContent=msg;e.style.display="block";clearTimeout(S.tt);S.tt=setTimeout(function(){e.style.display="none"},Math.max(1800,Math.min(4500,String(msg).length*55)))}
 
 function reset(){clearInterval(S.tm);S.ph="idle";S.r=null}
 
 function start(){
   if(S.busy) return;
+  var cur = findAssetC(S.asset);
+  if(cur && !isOpen(cur)){ toast(tp("closedToast", {t: cur.opensAt ? fmtDT(cur.opensAt) : "—"})); refreshAssets(); return; }
   S.busy = true;
   api("/api/signal", {method:"POST", body:{asset:S.asset, timeframe:S.tf}}).then(function(r){
     S.busy = false;
     if(r.status === 401){ S.authError = true; S.loaded = false; R(); return; }
     if(r.body && r.body.status) applyServer(r.body);
-    if(r.status !== 200){ R(); return; }   // 403 = daily limit reached -> redraw (blurred block)
+    if(r.status === 409){                       // market closed / closes before expiry: no attempt was spent
+      var e = r.body && r.body.error;
+      if(e === "closing_soon") toast(tp("closingSoon", {n: r.body.minutesLeft}));
+      else { toast(tp("closedToast", {t: r.body.opensAt ? fmtDT(r.body.opensAt) : "—"})); refreshAssets(); }
+      R(); return;
+    }
+    if(r.status === 400){ toast(t("netError")); refreshAssets(); return; }
+    if(r.status !== 200){ R(); return; }        // 403 = free limit reached -> redraw (paywall)
     runSignal();
   }).catch(function(){ S.busy = false; toast(t("netError")); });
 }
@@ -597,28 +794,95 @@ function decide(st){
   R();
 }
 
-function getCode(pair){return pair.substring(0,2).toUpperCase();}
+/* ---- Asset picker: sections, icons, favourites ---- */
+var TABS = ["forex", "crypto", "index", "commodity", "stock", "fav"];
+S.favs = [];
+try{ S.favs = JSON.parse(localStorage.getItem("ws_fav") || "[]"); if(!Array.isArray(S.favs)) S.favs = []; }catch(e){ S.favs = []; }
+function isFav(id){ return S.favs.indexOf(id) >= 0; }
+function toggleFav(id){
+  var i = S.favs.indexOf(id);
+  if(i >= 0) S.favs.splice(i, 1); else S.favs.push(id);
+  try{ localStorage.setItem("ws_fav", JSON.stringify(S.favs)); }catch(e){}
+  hap("s");
+  refreshAssetList(true);
+}
+function iconFor(id, size){
+  var a = findAssetC(id) || {id: id, cat: "forex", otc: /-OTC$/.test(id)};
+  return window.AssetIcons ? AssetIcons.render(a, size) : "";
+}
+function assetLabelHtml(){
+  return '<span class="pill-asset">'+iconFor(S.asset, 22)+'<span>'+esc(disp(S.asset))+'</span></span>';
+}
+function setAssetLabel(){ var el = $("lbl-asset"); if(el) el.innerHTML = assetLabelHtml(); }
 
-function renderAssetContent(){
-  var h='<div class="search-box"><input id="asset-srch" placeholder="'+t("searchPlaceholder")+'" value="'+S.assetSearch+'"></div>';
-  h+='<div class="flat-list" id="assets-holder">';
-  
-  h+='<div class="list-group-title">'+t("marketOpen")+'</div>';
-  ASSETS_STD.forEach(function(a){
-    var code = getCode(a);
-    var hide = (S.assetSearch && !a.toLowerCase().includes(S.assetSearch.toLowerCase())) ? 'style="display:none;"' : '';
-    h+='<button data-a="'+a+'" class="list-item '+(a==S.asset?"on":"")+'" '+hide+'><span class="p-code">'+code+'</span><span>'+a+'</span></button>';
+function assetRow(a){
+  var open = isOpen(a);
+  return '<div class="list-item '+(a.id===S.asset?"on ":"")+(open?"":"closed")+'" data-a="'+esc(a.id)+'" role="button" tabindex="0"'+(open?"":' aria-disabled="true"')+'>'
+    + '<button type="button" class="fav-btn'+(isFav(a.id)?" on":"")+'" data-fav="'+esc(a.id)+'" aria-label="'+t("favToggle")+'">'+AssetIcons.tab("fav", 16)+'</button>'
+    + '<span class="it-ico">'+AssetIcons.render(a, 28)+'</span>'
+    + '<span class="it-name">'+esc(a.id.replace("-OTC",""))+(a.otc?'<span class="otc-tag">OTC</span>':'')+'</span>'
+    + '<span class="it-st">'+esc(statusText(a))+'</span></div>';
+}
+function renderAssetRows(){
+  var q = S.assetSearch.toLowerCase();
+  var items = S.assets.filter(function(a){
+    if(q) return disp(a.id).toLowerCase().indexOf(q) >= 0;        // a search looks through every section
+    return S.cat === "fav" ? isFav(a.id) : a.cat === S.cat;
   });
-  
-  h+='<div class="list-group-title">'+t("marketOtc")+'</div>';
-  ASSETS_OTC.forEach(function(a){
-    var code = getCode(a);
-    var hide = (S.assetSearch && !a.toLowerCase().includes(S.assetSearch.toLowerCase())) ? 'style="display:none;"' : '';
-    h+='<button data-a="'+a+'" class="list-item '+(a==S.asset?"on":"")+'" '+hide+'><span class="p-code">'+code+'</span><span>'+a+'</span></button>';
+  var groups = [false, true].map(function(otc){
+    var g = items.filter(function(a){ return a.otc === otc; })
+                 .sort(function(x, y){ return (isOpen(y)?1:0) - (isOpen(x)?1:0); });   // open first (stable)
+    return {otc: otc, items: g, anyOpen: g.some(isOpen)};
+  }).filter(function(g){ return g.items.length; });
+  if(groups.length === 2 && !groups[0].anyOpen && groups[1].anyOpen) groups.reverse();   // e.g. weekend: OTC on top
+  var h = "";
+  groups.forEach(function(g){
+    h += '<div class="list-group-title">'+t(g.otc ? "marketOtc" : "marketOpen")+'</div>';
+    g.items.forEach(function(a){ h += assetRow(a); });
   });
-
-  h+='</div>';
+  if(!h){
+    var msg = S.assets.length ? (S.cat === "fav" && !q ? t("favEmpty") : t("nothingFound")) : (S.assetsErr ? t("assetsErr") : t("loadingText"));
+    h = '<div class="mute center" style="padding:18px 8px">'+msg+'</div>';
+  }
   return h;
+}
+function renderCatTabs(){
+  var h = "";
+  TABS.forEach(function(c){
+    h += '<button type="button" class="cat-tab'+(S.cat===c?" on":"")+'" data-cat="'+c+'" onclick="setCat(\''+c+'\')">'+AssetIcons.tab(c, 16)+'<span>'+t("cat_"+c)+'</span></button>';
+  });
+  h += '<button type="button" class="cat-tab sched" onclick="openSchedule()">'+AssetIcons.tab("sched", 16)+'<span>'+t("schedBtn")+'</span></button>';
+  return h;
+}
+function setCat(c){
+  hap("s"); S.cat = c; S.assetSearch = "";
+  var inp = $("asset-srch"); if(inp) inp.value = "";
+  var strip = $("cat-tabs");
+  document.querySelectorAll("#cat-tabs .cat-tab[data-cat]").forEach(function(b){
+    var on = b.getAttribute("data-cat") === c;
+    b.classList.toggle("on", on);
+    if(on && strip) strip.scrollTo({left: b.offsetLeft - (strip.clientWidth - b.offsetWidth) / 2, behavior: "smooth"});   // keep the active section centred
+  });
+  refreshAssetList();
+  var holder = $("assets-holder"); if(holder) holder.scrollTop = 0;
+}
+function refreshAssetList(keepScroll){
+  var holder = $("assets-holder"); if(!holder) return;
+  var top = holder.scrollTop;
+  holder.innerHTML = renderAssetRows();
+  if(keepScroll) holder.scrollTop = top;
+  var tabs = $("cat-tabs"); if(tabs) tabs.classList.toggle("searching", !!S.assetSearch);
+  bindListEvents();
+}
+function bindSearch(focus){
+  var inp = $("asset-srch"); if(!inp) return;
+  if(focus) inp.focus();
+  inp.oninput = function(e){ S.assetSearch = e.target.value; refreshAssetList(); };
+}
+function renderAssetContent(){
+  return '<div class="search-box"><input id="asset-srch" placeholder="'+t("searchPlaceholder")+'" value="'+esc(S.assetSearch)+'" autocomplete="off"></div>'
+    + '<div class="cat-tabs'+(S.assetSearch?" searching":"")+'" id="cat-tabs">'+renderCatTabs()+'</div>'
+    + '<div class="flat-list" id="assets-holder">'+renderAssetRows()+'</div>';
 }
 
 function renderTFContent(){
@@ -650,18 +914,7 @@ function toggleMenu(targetMenu) {
       if (targetMenu === 'asset') {
         inner.innerHTML = '<div class="inline-dropdown">' + renderAssetContent() + '</div>';
         bindListEvents();
-        var srchInp = $('asset-srch');
-        if (srchInp) {
-          srchInp.focus();
-          srchInp.oninput = function(e) {
-            S.assetSearch = e.target.value;
-            var val = S.assetSearch.toLowerCase();
-            document.querySelectorAll('#assets-holder .list-item').forEach(function(el){
-              var pairText = el.getAttribute('data-a') || '';
-              el.style.display = pairText.toLowerCase().includes(val) ? 'flex' : 'none';
-            });
-          };
-        }
+        bindSearch(true);
       } else if (targetMenu === 'tf') {
         inner.innerHTML = '<div class="inline-dropdown">' + renderTFContent() + '</div>';
         bindListEvents();
@@ -683,8 +936,7 @@ function closeMenuSmoothly() {
 
 function updateSelectedAsset(asset) {
   S.asset = asset;
-  var txt = $("lbl-asset");
-  if (txt) txt.textContent = S.asset;
+  setAssetLabel();
   document.querySelectorAll('#assets-holder .list-item').forEach(function(el){
     if(el.getAttribute('data-a') === asset) {
       el.classList.add('on');
@@ -712,19 +964,24 @@ function updateSelectedTF(tf) {
 }
 
 function bindListEvents(){
-  document.querySelectorAll('#assets-holder button[data-a]').forEach(function(btn){
-    btn.onclick = function(e){
-      e.preventDefault();
-      hap('s');
+  document.querySelectorAll("#assets-holder .list-item[data-a]").forEach(function(row){
+    row.onclick = function(e){
+      if(e.target.closest(".fav-btn")) return;
+      hap("s");
+      if(this.classList.contains("closed")){          // a closed asset explains itself instead of silently ignoring the tap
+        var a = findAssetC(this.dataset.a);
+        if(a) toast(tp("closedToast", {t: a.opensAt ? fmtDT(a.opensAt) : "—"}));
+        return;
+      }
       updateSelectedAsset(this.dataset.a);
     };
+    row.onkeydown = function(e){ if(e.key === "Enter" || e.key === " "){ e.preventDefault(); this.click(); } };
   });
-  document.querySelectorAll('.flat-list button[data-tf]').forEach(function(btn){
-    btn.onclick = function(e){
-      e.preventDefault();
-      hap('s');
-      updateSelectedTF(this.dataset.tf);
-    };
+  document.querySelectorAll("#assets-holder .fav-btn").forEach(function(b){
+    b.onclick = function(e){ e.stopPropagation(); toggleFav(this.getAttribute("data-fav")); };
+  });
+  document.querySelectorAll(".flat-list button[data-tf]").forEach(function(btn){
+    btn.onclick = function(e){ e.preventDefault(); hap("s"); updateSelectedTF(this.dataset.tf); };
   });
 }
 
@@ -748,7 +1005,7 @@ function openStep(step) {
       <div class="modal-desc">${t("modal3Desc")}</div>
       <div class="list-items">
         <div class="list-item-box">${ic("zap", 16)} ${t("modal3Item1")}</div>
-        <div class="list-item-box">${ic("shield", 16)} ${t("modal3Item2")}</div>
+        <div class="list-item-box">${ic("shield", 16)} ${tp("modal3Item2", {n: S.offer.regFreeLimit})}</div>
         <div class="list-item-box">${ic("trending-up", 16)} ${t("modal3Item3")}</div>
       </div>
       <button class="btn" onclick="openStep(4)">${t("modal3Next")}</button>
@@ -795,11 +1052,21 @@ function openStep(step) {
   } else if (step === 7) {
     modal.innerHTML = `
       <button class="modal-close" onclick="finishAuth()">${ic("x", 18)}</button>
-      <div class="modal-icon-box" style="color: var(--ok); border-color: rgba(16, 185, 129, 0.4);">
+      <div class="modal-icon-box pop" style="color: var(--ok); border-color: rgba(16, 185, 129, 0.4);">
         ${ic("check-circle", 24)}
       </div>
       <div class="modal-title">${t("modal7Title")}</div>
-      <div class="modal-desc">${t("modal7Desc")}</div>
+      <div class="modal-desc">${tp("modal7Desc", {n: freeLeft(), m: S.freeLimit})}</div>
+      <button class="btn" onclick="finishAuth()">${t("modal7Done")}</button>
+    `;
+  } else if (step === 8) {
+    modal.innerHTML = `
+      <button class="modal-close" onclick="finishAuth()">${ic("x", 18)}</button>
+      <div class="modal-icon-box pop" style="color: var(--gold); border-color: var(--gold);">
+        ${ic("crown", 24)}
+      </div>
+      <div class="modal-title">${t("modal8Title")}</div>
+      <div class="modal-desc">${t("modal8Desc")}</div>
       <button class="btn" onclick="finishAuth()">${t("modal7Done")}</button>
     `;
   }
@@ -807,9 +1074,50 @@ function openStep(step) {
 }
 
 function finishAuth() {
-  stopPolling();
   closeModal();
+  syncPolling();   // registered users keep being polled until the deposit postback arrives
   R();
+}
+
+/* TRADING SCHEDULE SCREEN */
+function openSchedule() {
+  hap(); track("schedule_open");
+  var overlay = $("modalOverlay"), modal = $("modalContent");
+  overlay.classList.add("active");
+  var now = nowSrv();
+  var srvDow = new Date(now + S.srvOff*60000).getUTCDay();
+  var localNow = t("days")[new Date(now + S.tzOff*60000).getUTCDay()] + " " + fmtT(now);
+  var real = S.assets.filter(function(a){ return !a.otc; }), otc = S.assets.filter(function(a){ return a.otc; });
+  var cnt = tp("schedOpenCnt", {a: real.filter(isOpen).length, b: real.length, c: otc.filter(isOpen).length});
+
+  var rows = "";
+  S.groups.forEach(function(g){
+    var w = S.windows[g.wins[0]]; if(!w) return;
+    var dayHtml = '<div class="day-chips">';
+    [1,2,3,4,5,6,0].forEach(function(d){
+      dayHtml += '<div class="day-chip '+(w.days.indexOf(d) >= 0 ? "on" : "")+(d === srvDow ? " now" : "")+'">'+t("days")[d]+'</div>';
+    });
+    dayHtml += '</div>';
+    var hours = w.always ? t("sched24") : fmtSrvMin(w.o) + " – " + fmtSrvMin(w.c);
+    var extra = "";
+    if(g.wins.length > 1){
+      var w2 = S.windows[g.wins[1]];
+      var ids = S.assets.filter(function(a){ return !a.otc && a.win === g.wins[1]; }).map(function(a){ return a.id; }).join(", ");
+      if(w2 && ids) extra = '<div class="mute" style="margin-top:6px">'+esc(tp("schedLate", {ids: ids, t: fmtSrvMin(w2.o)}))+'</div>';
+    }
+    rows += '<div class="sched-row"><div class="sched-name">'+t("grp_"+g.id)+'</div>'+dayHtml+'<div class="sched-hours">'+hours+'</div>'+extra+'</div>';
+  });
+
+  modal.innerHTML = `
+    <button class="modal-close" onclick="closeModal()">${ic("x", 18)}</button>
+    <div class="modal-icon-box">${ic("clock", 24)}</div>
+    <div class="modal-title">${t("schedTitle")}</div>
+    <div class="modal-desc" style="margin-bottom:10px">${t("schedNow")}: <b class="mono">${localNow}</b><br>${cnt}</div>
+    ${rows}
+    <div class="info-card" style="margin-top:6px">${tp("schedNote", {tz: tzLabel(S.tzOff)})}<br><br>${t("schedFoot")}</div>
+    <button class="btn" onclick="closeModal()">${t("schedDone")}</button>
+  `;
+  if(window.lucide) lucide.createIcons();
 }
 
 function setLanguage(lang) {
@@ -820,6 +1128,29 @@ function setLanguage(lang) {
   if (S.lang == 'en' && S.tf == '3 мин') S.tf = '3 min';
   if (S.lang == 'ru' && S.tf == '3 min') S.tf = '3 мин';
   R();
+}
+
+/* The plate on top of the Signals tab. One per funnel stage; after the first deposit it is gone. */
+function planPlate(){
+  var o = S.offer, h = "";
+  if(S.unlimited) return "";
+  h += '<div class="dep-card"><div class="dep-header"><div class="dep-icon">$</div><div>';
+  if(!S.registered){
+    h += '<div class="dep-title">'+t("accTitleFree")+'</div>';
+    h += '<div class="dep-desc">'+tp("accDescFree", {n: o.regFreeLimit})+'</div>';
+    h += '</div></div><div class="dep-btns"><button class="btn" onclick="openStep(3)">'+t("regBtnText")+'</button></div></div>';
+    return h;
+  }
+  var left = freeLeft();
+  h += '<div class="dep-title">'+(left > 0 ? t("regOkTitle") : t("depTitle"))+' <span class="badge-rec">'+tp("depRec", {rec: o.recDeposit})+'</span></div>';
+  h += '<div class="dep-desc">'+(left > 0 ? tp("regOkDesc", {n: left, m: S.freeLimit}) : t("depNeedDesc"))+'</div>';
+  h += '<div class="dep-desc">'+tp("depOffer", {min: o.minDeposit, rec: o.recDeposit, pct: o.promoBonusPct,
+        code: '<span class="promo-inline" onclick="copyPromo()">'+esc(o.promoCode)+'</span>'})+'</div>';
+  h += '</div></div><div class="dep-btns">';
+  h += '<button class="btn" onclick="openDeposit()">'+ic("dollar-sign", 16)+' '+t("depTopUp")+'</button>';
+  h += '<button class="btn dk" onclick="hap();checkStatus(true)">'+ic("refresh-cw", 14)+' '+t("depCheckBtn")+'</button>';
+  h += '</div></div>';
+  return h;
 }
 
 function R(){
@@ -833,40 +1164,22 @@ function R(){
   }
   var h="";
   if(S.tab=="f"){
-    h+='<div class="dep-card">';
-    h+='<div class="dep-header">';
-    h+='<div class="dep-icon">$</div>';
-    h+='<div>';
-    if(!S.isAuthorized){
-      h+='<div class="dep-title">'+t("accTitleFree")+'</div>';
-      h+='<div class="dep-desc">'+t("accDescFree")+'</div>';
-    } else if(S.srv && S.srv.status==="deposited"){
-      h+='<div class="dep-title">'+t("accTitleDep")+' <span class="badge-rec">'+t("accBadgeOk")+'</span></div>';
-      h+='<div class="dep-desc">'+t("accDescDep")+'</div>';
-    } else {
-      h+='<div class="dep-title">'+t("accTitleReg")+' <span class="badge-rec">'+t("accBadgeOk")+'</span></div>';
-      h+='<div class="dep-desc">'+t("accDescReg")+'</div>';
-    }
-    h+='</div>';
-    h+='</div>';
-    h+='<div class="dep-btns">';
-    if(!S.isAuthorized){
-      h+='<button class="btn" onclick="openStep(3)">'+t("regBtnText")+'</button>';
-    } else if(!(S.srv && S.srv.status==="deposited")){
-      h+='<button class="btn" onclick="hap();openPartner()">'+t("depBtn")+'</button>';
-      h+='<button class="btn dk" onclick="hap();checkStatus(true)">'+t("checkBtn")+'</button>';
-    }
-    h+='</div>';
-    h+='</div>';
+    h+=planPlate();
 
     /* РАМКА И КНОПКИ ВЫБОРА С ПЛАВНЫМ СВОРАЧИВАНИЕМ И БЕЗ ПЕРЕЗАГРУЗОК */
     var gated = isGated();
-    if(!S.isAuthorized && !gated){
+    if(gated){
+      var stg = S.registered ? "registered" : "new";
+      if(S.paywallShown !== stg){ S.paywallShown = stg; track("paywall_view", {stage: stg}); }
+    }
+    if(S.unlimited){
+      h+='<div class="quota">'+ic("infinity", 14)+' <b>'+t("quotaUnlimited")+'</b></div>';
+    } else if(!gated){
       h+='<div class="quota">'+ic("ticket", 14)+' '+t("quotaLeft")+' <b>'+freeLeft()+'/'+S.freeLimit+'</b></div>';
     }
     if(gated){ h+='<div class="gate"><div class="gate-inner" inert>'; }
     h+='<div class="pills" style="margin-top:14px;">';
-    h+='<button id="btn-pill-asset" class="pill '+(S.openMenu=='asset'?'on':'')+'" onclick="hap(\'s\');toggleMenu(\'asset\')"><span id="lbl-asset">'+S.asset+'</span><span class="ic-dn">'+ic("chevron-down", 14)+'</span></button>';
+    h+='<button id="btn-pill-asset" class="pill '+(S.openMenu=='asset'?'on':'')+'" onclick="hap(\'s\');toggleMenu(\'asset\')"><span id="lbl-asset">'+assetLabelHtml()+'</span><span class="ic-dn">'+ic("chevron-down", 14)+'</span></button>';
     h+='<button id="btn-pill-tf" class="pill '+(S.openMenu=='tf'?'on':'')+'" onclick="hap(\'s\');toggleMenu(\'tf\')"><span id="lbl-tf">⏱ '+S.tf+'</span><span class="ic-dn">'+ic("chevron-down", 14)+'</span></button>';
     h+='</div>';
 
@@ -877,6 +1190,8 @@ function R(){
       h+='<div class="inline-dropdown">'+renderTFContent()+'</div>';
     }
     h+='</div></div>';
+
+    h+='<button class="sched-link" onclick="openSchedule()">'+ic("clock", 14)+' '+t("schedBtn")+'</button>';
 
     if(S.ph=="idle"){
       h+='<div class="card center" style="margin-top:12px;border-style:dashed;">';
@@ -891,18 +1206,24 @@ function R(){
 
       h+='<button class="btn" style="margin-top:12px;" onclick="start()">'+t("getSignalBtn")+'</button>';
       if(gated){
-        h+='</div><div class="gate-overlay">'+ic("lock", 26)+'<div class="gate-title">'+t("gateTitle")+'</div><div class="gate-sub">'+t("gateSub")+'</div><button class="btn" onclick="openStep(3)">'+ic("user-plus", 16)+' '+t("regBtnText")+'</button></div></div>';
+        var gDep = S.registered;
+        h+='</div><div class="gate-overlay">'+ic("lock", 26)
+          +'<div class="gate-title">'+(gDep ? t("gateDepTitle") : tp("gateTitle", {n: S.offer.regFreeLimit}))+'</div>'
+          +'<div class="gate-sub">'+t(gDep ? "gateDepSub" : "gateSub")+'</div>'
+          +(gDep ? '<button class="btn" onclick="openDeposit()">'+ic("dollar-sign", 16)+' '+t("depTopUp")+'</button>'
+                 : '<button class="btn" onclick="openStep(3)">'+ic("user-plus", 16)+' '+t("regBtnText")+'</button>')
+          +'</div></div>';
       }
     }else if(S.ph=="load"){
       h+='<div class="card center" style="margin-top:12px;">';
       h+='<div class="spin"></div>';
       h+='<div class="mono" style="font-weight:700;">'+t("analyzing")+'</div>';
-      h+='<div class="mute" style="margin-top:6px;">'+S.asset+' / '+S.tf+'</div>';
+      h+='<div class="mute" style="margin-top:6px;">'+esc(disp(S.asset))+' / '+S.tf+'</div>';
       h+='</div>';
     }else if(S.ph=="res" && S.r){
       h+='<div class="card big" style="margin-top:12px;">';
       h+='<div style="display:flex;justify-content:space-between;align-items:center;">';
-      h+='<div><div class="mute">'+t("setupTitle")+'</div><h3>'+S.r.a+'</h3></div>';
+      h+='<div><div class="mute">'+t("setupTitle")+'</div><h3 class="h-ico" style="margin-top:6px">'+iconFor(S.r.a, 28)+'<span>'+esc(disp(S.r.a))+'</span></h3></div>';
       h+='<div class="tag">'+S.r.tf+'</div>';
       h+='</div>';
       h+='<div class="sand"><span>'+S.r.m[0]+' '+S.r.m[1]+'</span><b style="font-size:13px;margin-top:6px;font-weight:500;color:var(--mute);">'+S.r.m[2]+'</b></div>';
@@ -941,7 +1262,7 @@ function R(){
       S.hist.forEach(function(item){
         h+='<div class="card" style="margin-top:10px;padding:14px;">';
         h+='<div style="display:flex;justify-content:space-between;align-items:center;">';
-        h+='<b>'+item.a+'</b>';
+        h+='<b class="h-ico" style="font-size:14px">'+iconFor(item.a, 24)+'<span>'+esc(disp(item.a))+'</span></b>';
         h+='<span class="tag s">'+item.tf+'</span>';
         h+='</div>';
         h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:13px;">';
@@ -953,7 +1274,7 @@ function R(){
     }
   }
   else if(S.tab=="p"){
-    if (S.isAuthorized) {
+    if (S.registered) {
       h+='<div class="prof-user-card">';
       h+='<div style="display:flex;align-items:center;gap:12px;">';
       h+='<div class="prof-avatar">'+ic("user", 22)+'</div>';
@@ -982,12 +1303,7 @@ function R(){
 
       h+='<div class="prof-section">';
       h+='<div class="prof-sec-title">'+ic("clock", 14)+' '+t("tzTitle")+'</div>';
-      h+='<select class="select-box" onchange="hap();S.tz=this.value">';
-      h+='<option '+(S.tz.includes('UTC+3')?'selected':'')+'>UTC+3 (MSK / Kyiv)</option>';
-      h+='<option '+(S.tz.includes('UTC+2')?'selected':'')+'>UTC+2 (EE_)</option>';
-      h+='<option '+(S.tz.includes('UTC+1')?'selected':'')+'>UTC+1 (CET)</option>';
-      h+='<option '+(S.tz.includes('UTC+0')?'selected':'')+'>UTC+0 (GMT)</option>';
-      h+='</select>';
+      h+=tzSelectHtml();
       h+='</div>';
     } else {
       h+='<div class="prof-user-card">';
@@ -1019,12 +1335,7 @@ function R(){
 
       h+='<div class="prof-section">';
       h+='<div class="prof-sec-title">'+ic("clock", 14)+' '+t("tzTitle")+'</div>';
-      h+='<select class="select-box" onchange="hap();S.tz=this.value">';
-      h+='<option '+(S.tz.includes('UTC+3')?'selected':'')+'>UTC+3 (MSK/Kyiv/Minsk)</option>';
-      h+='<option '+(S.tz.includes('UTC+5')?'selected':'')+'>UTC+5 (Kazahstan/Uzbekistan)</option>';
-      h+='<option '+(S.tz.includes('UTC+1')?'selected':'')+'>UTC+1 (Poland)</option>';
-      h+='<option '+(S.tz.includes('UTC+0')?'selected':'')+'>UTC+0 (GMT)</option>';
-      h+='</select>';
+      h+=tzSelectHtml();
       h+='</div>';
     }
   }
@@ -1084,10 +1395,22 @@ function R(){
 }
 
 R();   // shows "Loading…" until the server answers
+// Optional licensed logos: public/icons/manifest.json maps e.g. "stock:AAPL" -> "aapl.svg" (see README). Missing file = built-in icons.
+fetch("/icons/manifest.json").then(function(r){ return r.ok ? r.json() : {}; }).then(function(m){
+  AssetIcons.setOverrides(m);
+  if(S.loaded){ setAssetLabel(); if(S.openMenu === "asset") refreshAssetList(true); }
+}).catch(function(){});
 api("/api/me?open=1").then(function(r){
-  if(r.status === 200){ applyServer(r.body); S.loaded = true; } else { S.authError = true; }
-  R();
-}).catch(function(){ S.netFail = true; R(); });
+  if(r.status === 200){ applyServer(r.body); S.loaded = true; return loadAssets(); }
+  S.authError = true;
+}).then(function(){ R(); syncPolling(); }).catch(function(){ S.netFail = true; R(); });
+
+// Coming back from the browser (after registering / depositing): check immediately instead of waiting for the next poll.
+document.addEventListener("visibilitychange", function(){
+  if(!document.hidden && S.loaded){ if(S.registered && !S.unlimited) checkStatus(false); refreshAssets(); }
+});
+// Keep open/closed states fresh while the app stays open (markets open and close during the session).
+setInterval(function(){ if(S.loaded && !document.hidden) refreshAssets(); }, 30000);
 </script>
 </body>
 </html>
