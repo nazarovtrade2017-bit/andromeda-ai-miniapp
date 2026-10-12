@@ -52,6 +52,8 @@ api.get('/me', async (req, res) => sendJson(res, await h.me(ctx, req.tgUser, { o
 api.post('/signal', async (req, res) => sendJson(res, await h.signal(ctx, req.tgUser, req.body)));
 api.post('/track', async (req, res) => sendJson(res, await h.track(ctx, req.tgUser, req.body)));
 api.post('/register/start', async (req, res) => sendJson(res, await h.registerStart(ctx, req.tgUser)));
+api.post('/deposit/start', async (req, res) => sendJson(res, await h.depositStart(ctx, req.tgUser)));
+api.get('/assets', (_req, res) => sendJson(res, h.assets(ctx)));
 app.use('/api', api);
 
 // --- Admin view (protected by ADMIN_KEY) ---
@@ -64,6 +66,16 @@ app.get('/admin', async (req, res) => {
   const adminHtml = await renderAdmin(ctx.db, req.query);
   res.type('html').send(adminHtml);
 });
+
+// --- Demo helper (only when ENABLE_DEMO_TOOLS=1): put a user back to "new" to replay the funnel on stage ---
+if (config.enableDemoTools) {
+  app.get('/admin/demo-reset', async (req, res) => {
+    const given = Buffer.from(String(req.query.key ?? ''));
+    const want = Buffer.from(config.adminKey);
+    if (!want.length || given.length !== want.length || !crypto.timingSafeEqual(given, want)) return res.sendStatus(403);
+    send(res, await h.demoReset(ctx, req.query.telegram_id));
+  });
+}
 
 // --- Partner simulator (only when ENABLE_SIM=1) ---
 if (config.enableSim) {
