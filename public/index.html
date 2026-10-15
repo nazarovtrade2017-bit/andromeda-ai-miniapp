@@ -7,6 +7,7 @@
 <title>Andromeda AI signals</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
+<script src="icons.js"></script>
 <style>
 :root {
   --bg: #0E1A14;
@@ -91,7 +92,7 @@ h2,h3{margin:0;font-weight:800;color:var(--text)}h2{font-size:24px;margin-top:6p
 
 .list-group-title{font-size:11px;font-weight:800;color:var(--gold);letter-spacing:.08em;padding:8px 8px 4px;text-transform:uppercase;}
 
-.flat-list{display:flex;flex-direction:column;max-height:260px;overflow-y:auto;padding-right:2px;}
+.flat-list{display:flex;flex-direction:column;max-height:300px;overflow-y:auto;padding-right:2px;}
 .flat-list::-webkit-scrollbar{width:4px}
 .flat-list::-webkit-scrollbar-thumb{background:var(--line-gold);border-radius:4px}
 
@@ -99,8 +100,6 @@ h2,h3{margin:0;font-weight:800;color:var(--text)}h2{font-size:24px;margin-top:6p
 .list-item:last-child{border-bottom:0}
 .list-item:active,.list-item:hover{background:rgba(212, 175, 55, 0.08)}
 .list-item.on{background:rgba(212, 175, 55, 0.18);color:var(--gold);font-weight:700;}
-.list-item .p-code{font-size:10px;font-weight:800;color:var(--gold);background:var(--sand);border:1px solid var(--line);padding:2px 5px;border-radius:5px;text-transform:uppercase;min-width:24px;text-align:center;}
-.list-item.on .p-code{background:var(--gold);color:#0E1A14;border-color:var(--gold);}
 
 .btn{width:100%;border:0;border-radius:16px;padding:14px;font:700 14px system-ui;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;color:#0E1A14;background:linear-gradient(135deg, var(--gold), var(--gold2));box-shadow:var(--halo-strong);transition:transform .15s,box-shadow .2s,filter .2s;text-decoration:none}
 .btn:hover{filter:brightness(1.1);box-shadow:0 0 30px rgba(212,175,55,0.5)}.btn:active{transform:scale(.97)}
@@ -171,19 +170,11 @@ nav .c{margin-top:-26px;color:var(--mute)}nav .c.on{color:var(--gold)}nav .c i.n
 .gate-sub{font-size:12px;color:var(--mute);line-height:1.45}
 
 /* Asset list: schedule state */
-.cat-chips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}
-.cat-chips::-webkit-scrollbar{display:none}
-.cat-chip{flex:none;border:1px solid var(--line);background:var(--card-dark);color:var(--mute);border-radius:999px;padding:6px 11px;font:600 11px system-ui;cursor:pointer}
-.cat-chip.on{background:rgba(212,175,55,.18);border-color:var(--gold);color:var(--gold)}
 .list-item .it-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .list-item .it-st{font-size:10px;font-weight:600;color:var(--ok);white-space:nowrap}
 .list-item .otc-tag{font-size:9px;font-weight:800;color:var(--mute);border:1px solid var(--line);border-radius:5px;padding:1px 4px;margin-left:6px}
-.list-item:disabled{color:var(--text)}
 .list-item.closed{opacity:.5;cursor:default}
 .list-item.closed .it-st{color:var(--mute)}
-.list-item .p-code{min-width:34px}
-.st-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ok);margin-right:7px;box-shadow:0 0 6px rgba(16,185,129,.6);vertical-align:middle}
-.st-dot.off{background:var(--mute2);box-shadow:none}
 .sched-link{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px auto 0;font:600 12px system-ui;color:var(--mute);cursor:pointer;background:none;border:0;padding:6px 10px}
 .sched-link:hover{color:var(--gold)}.sched-link i{display:inline-flex;color:var(--gold)}
 .sched-row{background:var(--card-dark);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px;text-align:left}
@@ -195,6 +186,33 @@ nav .c{margin-top:-26px;color:var(--mute)}nav .c.on{color:var(--gold)}nav .c i.n
 .day-chip.now{box-shadow:0 0 0 1px var(--gold)}
 .promo-inline{display:inline-block;font-family:var(--mono);font-weight:800;color:var(--gold);border:1px dashed var(--gold);border-radius:6px;padding:0 6px;cursor:pointer}
 .pop{animation:pop .6s cubic-bezier(.2,.8,.2,1)}@keyframes pop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+
+/* Asset icons (drawn by icons.js) */
+.ai{position:relative;display:inline-grid;place-items:center;flex:none;border-radius:50%;overflow:hidden;background:var(--sand);box-shadow:inset 0 0 0 1px rgba(255,255,255,.10)}
+.ai>svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.ai-t{position:relative;font-weight:800;color:#fff;letter-spacing:-.02em;line-height:1;white-space:nowrap}
+.ai-img{width:100%;height:100%;object-fit:cover;display:block}
+.ai-pair{display:inline-flex;align-items:center;flex:none}
+.ai-pair .ai-b{box-shadow:0 0 0 2px var(--card),inset 0 0 0 1px rgba(255,255,255,.10)}
+.ai-tab{flex:none;display:block}
+.pill-asset{display:inline-flex;align-items:center;gap:8px;min-width:0}
+.pill-asset>span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#lbl-asset{min-width:0;overflow:hidden}
+.h-ico{display:flex;align-items:center;gap:10px}
+
+/* Asset picker: sections, rows, favourites */
+.cat-tabs{position:relative;display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}
+.cat-tabs::-webkit-scrollbar{display:none}
+.cat-tab{flex:none;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--card-dark);color:var(--mute);border-radius:12px;padding:8px 11px;font:700 11px system-ui;cursor:pointer;white-space:nowrap;transition:border-color .2s,color .2s,background .2s}
+.cat-tab:active{transform:scale(.96)}
+.cat-tab.on{background:rgba(212,175,55,.16);border-color:var(--gold);color:var(--gold)}
+.cat-tab.sched{border-style:dashed}
+.cat-tabs.searching .cat-tab.on{background:var(--card-dark);border-color:var(--line);color:var(--mute)}
+.list-item{user-select:none;-webkit-user-select:none}
+.list-item .it-ico{width:52px;display:flex;align-items:center;flex:none}
+.list-item .fav-btn{background:none;border:0;padding:5px;margin:-5px 0 -5px -6px;color:var(--mute2);cursor:pointer;display:inline-grid;place-items:center;flex:none;transition:color .15s,transform .15s}
+.list-item .fav-btn:active{transform:scale(.8)}
+.list-item .fav-btn.on{color:var(--gold)}.list-item .fav-btn.on svg{fill:currentColor}
 
 /* MODALS */
 .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(11, 20, 16, 0.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:none;justify-content:center;align-items:center;padding:16px;z-index:100;}
@@ -278,8 +296,8 @@ var I18N = {
     enterIdToast: "Введите ваш PocketOption ID",
     modal3Title: "Бесплатные сигналы 🎯",
     modal3Desc: "Калькуляция паттернов: Andromeda AI активирована",
-    modal3Item1: "3 бесплатных сигнала в день",
-    modal3Item2: "+{n} бесплатных сигналов после регистрации",
+    modal3Item1: "3 бесплатных сигнала",
+    modal3Item2: "После регистрации на PocketOption — 1 сигнал в день",
     modal3Item3: "Безлимит после первого пополнения",
     modal3Next: "Как это работает? &rarr;",
     modal4Title: "Как это работает? 🤝",
@@ -300,16 +318,16 @@ var I18N = {
     modal6Submit: "Отправить на проверку &rarr;",
     modalContactSupport: "Связаться с поддержкой",
     modal7Title: "Регистрация успешна! ✅",
-    modal7Desc: "У вас на сегодня есть {n} бесплатных сигналов. После пополнения откроется полный доступ с безлимитными сигналами.",
+    modal7Desc: "Аккаунт подтверждён. У вас 1 бесплатный сигнал в день. После пополнения откроется полный доступ с безлимитными сигналами.",
     modal7MinDep: "Минимальный депозит:",
     modal7Bonus: "—",
     modal7DepBtn: "$ Пополнить баланс",
     modal7CheckBtn: "Проверить баланс",
-    quotaLeft: "Бесплатных попыток сегодня:",
-    gateTitle: "Бесплатные сигналы закончились. Зарегистрируйтесь и получите ещё {n} сегодня",
+    quotaLeft: "Бесплатных попыток:",
+    gateTitle: "Бесплатные сигналы закончились. Зарегистрируйтесь на PocketOption и пополните баланс — откроется безлимит",
     gateSub: "Регистрация на PocketOption занимает около минуты. Лимит без регистрации обновится завтра.",
     accTitleFree: "Бесплатные сигналы",
-    accDescFree: "3 бесплатных сигнала в день. После регистрации на PocketOption — ещё {n} в день, а после пополнения — безлимит.",
+    accDescFree: "3 бесплатных сигнала. После регистрации и пополнения - безлимит.",
     accTitleReg: "Регистрация подтверждена",
     accDescReg: "Сигналы без ограничений открыты. Для комфортной торговли пополните депозит от 11$",
     accTitleDep: "Депозит подтверждён",
@@ -326,7 +344,7 @@ var I18N = {
     statusUpdated: "Статус обновлён",
     statusSame: "Изменений пока нет",
     regOkTitle: "Регистрация успешна ✅",
-    regOkDesc: "У вас на сегодня есть {n} из {m} бесплатных сигналов. После пополнения откроется полный доступ с безлимитными сигналами.",
+    regOkDesc: "Сегодня у вас осталось сигналов: {n} из {m}. После пополнения откроется полный доступ с безлимитными сигналами.",
     depNeedDesc: "Бесплатные сигналы на сегодня закончились. После пополнения откроется полный доступ с безлимитными сигналами.",
     depOffer: "Минимальный депозит для доступа к сигналам — ${min} USD.",
     depTopUp: "Пополнить счёт",
@@ -344,7 +362,8 @@ var I18N = {
     openUntil: "до {t}", opensAt: "откроется {t}", open247: "24/7", openNow: "открыт", closedLbl: "закрыт",
     today: "сегодня", tomorrow: "завтра", days: ["Вс","Пн","Вт","Ср","Чт","Пт","Сб"],
     nothingFound: "Ничего не найдено", assetsErr: "Не удалось загрузить список активов",
-    cat_all: "Все", cat_forex: "Валюты", cat_crypto: "Крипто", cat_index: "Индексы", cat_stock: "Акции", cat_commodity: "Сырьё",
+    cat_forex: "Валюты", cat_crypto: "Криптовалюты", cat_index: "Индексы", cat_commodity: "Сырьевые товары", cat_stock: "Акции", cat_fav: "Избранное",
+    favEmpty: "Здесь появятся активы, отмеченные звёздочкой", favToggle: "В избранное",
     schedBtn: "Расписание торгов", schedTitle: "Расписание торгов",
     schedNow: "Сейчас у вас", schedOpenCnt: "Открыто: {a} из {b} основных · {c} OTC",
     schedNote: "Время пересчитано в ваш часовой пояс ({tz}). PocketOption публикует расписание по серверному времени UTC+2.",
@@ -385,8 +404,8 @@ var I18N = {
     enterIdToast: "Enter your PocketOption ID",
     modal3Title: "Free Signals 🎯",
     modal3Desc: "Pattern calculation: Andromeda AI activated",
-    modal3Item1: "3 free signals per day",
-    modal3Item2: "+{n} free signals after registration",
+    modal3Item1: "3 free signals",
+    modal3Item2: "After signing up on PocketOption — 1 signal per day",
     modal3Item3: "Unlimited after your first deposit",
     modal3Next: "How does it work? &rarr;",
     modal4Title: "How does it work? 🤝",
@@ -407,16 +426,16 @@ var I18N = {
     modal6Submit: "Submit for verification &rarr;",
     modalContactSupport: "Contact Support",
     modal7Title: "Registration Successful! ✅",
-    modal7Desc: "You have {n} free signals for today. After a deposit you get full access with unlimited signals.",
+    modal7Desc: "Account confirmed. You get 1 free signal per day. After a deposit you get full access with unlimited signals.",
     modal7MinDep: "Minimum deposit:",
     modal7Bonus: "—",
     modal7DepBtn: "$ Top up balance",
     modal7CheckBtn: "Check balance",
-    quotaLeft: "Free attempts left today:",
-    gateTitle: "Free signals used up. Sign up and get {n} more today",
+    quotaLeft: "Free attempts left:",
+    gateTitle: "Free signals used up. Sign up on PocketOption and top up to unlock unlimited",
     gateSub: "Signing up on PocketOption takes about a minute. The no-signup limit resets tomorrow.",
     accTitleFree: "Free signals",
-    accDescFree: "3 free signals per day. After signing up on PocketOption — {n} more per day, and unlimited after a deposit.",
+    accDescFree: "3 free signals. After registration and deposit - unlimited.",
     accTitleReg: "Registration Confirmed",
     accDescReg: "Unlimited signals unlocked. For comfortable trading, top up your deposit with $11 or more.",
     accTitleDep: "Deposit Confirmed",
@@ -433,7 +452,7 @@ var I18N = {
     statusUpdated: "Status updated",
     statusSame: "No changes yet",
     regOkTitle: "Registration successful ✅",
-    regOkDesc: "You have {n} of {m} free signals for today. After a deposit you get full access with unlimited signals.",
+    regOkDesc: "Signals left today: {n} of {m}. After a deposit you get full access with unlimited signals.",
     depNeedDesc: "Today's free signals are used up. After a deposit you get full access with unlimited signals.",
     depOffer: "Minimum deposit for signal access is ${min} USD.",
     depTopUp: "Top up account",
@@ -451,7 +470,8 @@ var I18N = {
     openUntil: "until {t}", opensAt: "opens {t}", open247: "24/7", openNow: "open", closedLbl: "closed",
     today: "today", tomorrow: "tomorrow", days: ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
     nothingFound: "Nothing found", assetsErr: "Could not load the asset list",
-    cat_all: "All", cat_forex: "Currencies", cat_crypto: "Crypto", cat_index: "Indices", cat_stock: "Stocks", cat_commodity: "Commodities",
+    cat_forex: "Currencies", cat_crypto: "Cryptocurrencies", cat_index: "Indices", cat_commodity: "Commodities", cat_stock: "Stocks", cat_fav: "Favorites",
+    favEmpty: "Assets you star will appear here", favToggle: "Add to favorites",
     schedBtn: "Trading schedule", schedTitle: "Trading schedule",
     schedNow: "Now for you", schedOpenCnt: "Open: {a} of {b} regular · {c} OTC",
     schedNote: "Times are converted to your time zone ({tz}). PocketOption publishes the schedule in server time, UTC+2.",
@@ -467,7 +487,7 @@ var I18N = {
 };
 
 var FAQ_RU = [
-  ["1. Как работают сигналы?", "Наш AI анализирует рыночные данные реальном времени и генерирует торговые сигналы с направлением и уровнем уверенности."],
+  ["1. Как работают сигналы?", "Наш AI анализирует рыночные данные в реальном времени и генерирует торговые сигналы с направлением и уровнем уверенности."],
   ["2. Какая точность сигналов?", "Наши сигналы имеют среднюю точность 85-92% на основе исторических данных. Всегда используйте правильный риск-менеджмент."],
   ["3. Какие брокеры поддерживаются?", "Сигналы работают только с платформой PocketOption"],
   ["4. Как использовать сигналы?", "Выберите валютную пару и таймфрейм, нажмите «Получить сигнал», затем решите взять или пропустить сигнал. Результаты отслеживаются в Истории."],
@@ -483,7 +503,7 @@ var FAQ_EN = [
   ["4. How to use signals?", "Select a currency pair and timeframe, click 'Get Signal', and then choose whether to take or skip the trade. Results are tracked in your History."],
   ["5. Why do you need my ID?", "Your PocketOption ID is used to verify your account and link the trading signals to your profile. We do not gain access to your funds or account settings."],
   ["6. I already have an account, what to do?", "If you already have a PocketOption account, you'll need to register with a different email address."],
-  ["7. What is the Probability of Success?”, “The Probability of Success is an indicator ranging from 0 to 100 that shows how strong the current market trend is. The higher the value, the more reliable the signal's direction."]
+  ["7. What is the Probability of Success?", "The Probability of Success is an indicator ranging from 0 to 100 that shows how strong the current market trend is. The higher the value, the more reliable the signal's direction."]
 ];
 
 var BOT_RU = ["AI-помощник Andromeda AI анализирует ключевые пулы ликвидности.", "Сила сигнала указывает на математическое преимущество покупателей или продавцов.", "Смените актив или таймфрейм для формирования нового торгового сетапа.", "Не рискуйте более 1-2% от депозита на одну сделку "];
@@ -512,7 +532,7 @@ var S={
   loaded: false, authError: false, netFail: false,
   srv: null, freeLeft: null, freeLimit: 3, partnerUrl: "", busy: false,
   tempInputId: "",
-  assets: [], windows: {}, groups: [], srvOff: 120, clockSkew: 0, assetsErr: false, cat: "all",
+  assets: [], windows: {}, groups: [], srvOff: 120, clockSkew: 0, assetsErr: false, cat: "forex",
   paywallShown: "", tzOff: 180
 };
 
@@ -774,46 +794,84 @@ function decide(st){
   R();
 }
 
-function getCode(id){ return String(id).replace("-OTC","").replace(/[^A-Za-z0-9]/g,"").substring(0,3).toUpperCase(); }
-
+/* ---- Asset picker: sections, icons, favourites ---- */
+var TABS = ["forex", "crypto", "index", "commodity", "stock", "fav"];
+S.favs = [];
+try{ S.favs = JSON.parse(localStorage.getItem("ws_fav") || "[]"); if(!Array.isArray(S.favs)) S.favs = []; }catch(e){ S.favs = []; }
+function isFav(id){ return S.favs.indexOf(id) >= 0; }
+function toggleFav(id){
+  var i = S.favs.indexOf(id);
+  if(i >= 0) S.favs.splice(i, 1); else S.favs.push(id);
+  try{ localStorage.setItem("ws_fav", JSON.stringify(S.favs)); }catch(e){}
+  hap("s");
+  refreshAssetList(true);
+}
+function iconFor(id, size){
+  var a = findAssetC(id) || {id: id, cat: "forex", otc: /-OTC$/.test(id)};
+  return window.AssetIcons ? AssetIcons.render(a, size) : "";
+}
 function assetLabelHtml(){
-  var a = findAssetC(S.asset), on = !a || isOpen(a);
-  return '<span class="st-dot'+(on?'':' off')+'"></span>'+esc(disp(S.asset));
+  return '<span class="pill-asset">'+iconFor(S.asset, 22)+'<span>'+esc(disp(S.asset))+'</span></span>';
 }
 function setAssetLabel(){ var el = $("lbl-asset"); if(el) el.innerHTML = assetLabelHtml(); }
 
+function assetRow(a){
+  var open = isOpen(a);
+  return '<div class="list-item '+(a.id===S.asset?"on ":"")+(open?"":"closed")+'" data-a="'+esc(a.id)+'" role="button" tabindex="0"'+(open?"":' aria-disabled="true"')+'>'
+    + '<button type="button" class="fav-btn'+(isFav(a.id)?" on":"")+'" data-fav="'+esc(a.id)+'" aria-label="'+t("favToggle")+'">'+AssetIcons.tab("fav", 16)+'</button>'
+    + '<span class="it-ico">'+AssetIcons.render(a, 28)+'</span>'
+    + '<span class="it-name">'+esc(a.id.replace("-OTC",""))+(a.otc?'<span class="otc-tag">OTC</span>':'')+'</span>'
+    + '<span class="it-st">'+esc(statusText(a))+'</span></div>';
+}
 function renderAssetRows(){
-  var q = S.assetSearch.toLowerCase(), cat = S.cat;
+  var q = S.assetSearch.toLowerCase();
   var items = S.assets.filter(function(a){
-    return (cat === "all" || a.cat === cat) && (!q || disp(a.id).toLowerCase().indexOf(q) >= 0);
+    if(q) return disp(a.id).toLowerCase().indexOf(q) >= 0;        // a search looks through every section
+    return S.cat === "fav" ? isFav(a.id) : a.cat === S.cat;
   });
+  var groups = [false, true].map(function(otc){
+    var g = items.filter(function(a){ return a.otc === otc; })
+                 .sort(function(x, y){ return (isOpen(y)?1:0) - (isOpen(x)?1:0); });   // open first (stable)
+    return {otc: otc, items: g, anyOpen: g.some(isOpen)};
+  }).filter(function(g){ return g.items.length; });
+  if(groups.length === 2 && !groups[0].anyOpen && groups[1].anyOpen) groups.reverse();   // e.g. weekend: OTC on top
   var h = "";
-  [false, true].forEach(function(otc){
-    var grp = items.filter(function(a){ return a.otc === otc; })
-                   .sort(function(x, y){ return (isOpen(y)?1:0) - (isOpen(x)?1:0); });   // open first, stable
-    if(!grp.length) return;
-    h += '<div class="list-group-title">'+t(otc ? "marketOtc" : "marketOpen")+'</div>';
-    grp.forEach(function(a){
-      var open = isOpen(a);
-      h += '<button data-a="'+esc(a.id)+'" class="list-item '+(a.id===S.asset?"on ":"")+(open?"":"closed")+'"'+(open?"":" disabled")+'>'
-        + '<span class="p-code">'+esc(getCode(a.id))+'</span>'
-        + '<span class="it-name">'+esc(a.id.replace("-OTC",""))+(a.otc?'<span class="otc-tag">OTC</span>':'')+'</span>'
-        + '<span class="it-st">'+esc(statusText(a))+'</span></button>';
-    });
+  groups.forEach(function(g){
+    h += '<div class="list-group-title">'+t(g.otc ? "marketOtc" : "marketOpen")+'</div>';
+    g.items.forEach(function(a){ h += assetRow(a); });
   });
-  if(!h) h = '<div class="mute center" style="padding:14px">'+(S.assets.length ? t("nothingFound") : (S.assetsErr ? t("assetsErr") : t("loadingText")))+'</div>';
+  if(!h){
+    var msg = S.assets.length ? (S.cat === "fav" && !q ? t("favEmpty") : t("nothingFound")) : (S.assetsErr ? t("assetsErr") : t("loadingText"));
+    h = '<div class="mute center" style="padding:18px 8px">'+msg+'</div>';
+  }
   return h;
 }
-function renderCatChips(){
-  return ["all","forex","crypto","index","stock","commodity"].map(function(c){
-    return '<button class="cat-chip '+(S.cat===c?"on":"")+'" onclick="setCat(\''+c+'\')">'+t("cat_"+c)+'</button>';
-  }).join("");
+function renderCatTabs(){
+  var h = "";
+  TABS.forEach(function(c){
+    h += '<button type="button" class="cat-tab'+(S.cat===c?" on":"")+'" data-cat="'+c+'" onclick="setCat(\''+c+'\')">'+AssetIcons.tab(c, 16)+'<span>'+t("cat_"+c)+'</span></button>';
+  });
+  h += '<button type="button" class="cat-tab sched" onclick="openSchedule()">'+AssetIcons.tab("sched", 16)+'<span>'+t("schedBtn")+'</span></button>';
+  return h;
 }
-function setCat(c){ hap("s"); S.cat = c; refreshAssetList(); }
-function refreshAssetList(){
+function setCat(c){
+  hap("s"); S.cat = c; S.assetSearch = "";
+  var inp = $("asset-srch"); if(inp) inp.value = "";
+  var strip = $("cat-tabs");
+  document.querySelectorAll("#cat-tabs .cat-tab[data-cat]").forEach(function(b){
+    var on = b.getAttribute("data-cat") === c;
+    b.classList.toggle("on", on);
+    if(on && strip) strip.scrollTo({left: b.offsetLeft - (strip.clientWidth - b.offsetWidth) / 2, behavior: "smooth"});   // keep the active section centred
+  });
+  refreshAssetList();
+  var holder = $("assets-holder"); if(holder) holder.scrollTop = 0;
+}
+function refreshAssetList(keepScroll){
   var holder = $("assets-holder"); if(!holder) return;
+  var top = holder.scrollTop;
   holder.innerHTML = renderAssetRows();
-  var ch = $("cat-chips"); if(ch) ch.innerHTML = renderCatChips();
+  if(keepScroll) holder.scrollTop = top;
+  var tabs = $("cat-tabs"); if(tabs) tabs.classList.toggle("searching", !!S.assetSearch);
   bindListEvents();
 }
 function bindSearch(focus){
@@ -822,10 +880,9 @@ function bindSearch(focus){
   inp.oninput = function(e){ S.assetSearch = e.target.value; refreshAssetList(); };
 }
 function renderAssetContent(){
-  var h = '<div class="search-box"><input id="asset-srch" placeholder="'+t("searchPlaceholder")+'" value="'+esc(S.assetSearch)+'"></div>';
-  h += '<div class="cat-chips" id="cat-chips">'+renderCatChips()+'</div>';
-  h += '<div class="flat-list" id="assets-holder">'+renderAssetRows()+'</div>';
-  return h;
+  return '<div class="search-box"><input id="asset-srch" placeholder="'+t("searchPlaceholder")+'" value="'+esc(S.assetSearch)+'" autocomplete="off"></div>'
+    + '<div class="cat-tabs'+(S.assetSearch?" searching":"")+'" id="cat-tabs">'+renderCatTabs()+'</div>'
+    + '<div class="flat-list" id="assets-holder">'+renderAssetRows()+'</div>';
 }
 
 function renderTFContent(){
@@ -907,19 +964,24 @@ function updateSelectedTF(tf) {
 }
 
 function bindListEvents(){
-  document.querySelectorAll('#assets-holder button[data-a]').forEach(function(btn){
-    btn.onclick = function(e){
-      e.preventDefault();
-      hap('s');
+  document.querySelectorAll("#assets-holder .list-item[data-a]").forEach(function(row){
+    row.onclick = function(e){
+      if(e.target.closest(".fav-btn")) return;
+      hap("s");
+      if(this.classList.contains("closed")){          // a closed asset explains itself instead of silently ignoring the tap
+        var a = findAssetC(this.dataset.a);
+        if(a) toast(tp("closedToast", {t: a.opensAt ? fmtDT(a.opensAt) : "—"}));
+        return;
+      }
       updateSelectedAsset(this.dataset.a);
     };
+    row.onkeydown = function(e){ if(e.key === "Enter" || e.key === " "){ e.preventDefault(); this.click(); } };
   });
-  document.querySelectorAll('.flat-list button[data-tf]').forEach(function(btn){
-    btn.onclick = function(e){
-      e.preventDefault();
-      hap('s');
-      updateSelectedTF(this.dataset.tf);
-    };
+  document.querySelectorAll("#assets-holder .fav-btn").forEach(function(b){
+    b.onclick = function(e){ e.stopPropagation(); toggleFav(this.getAttribute("data-fav")); };
+  });
+  document.querySelectorAll(".flat-list button[data-tf]").forEach(function(btn){
+    btn.onclick = function(e){ e.preventDefault(); hap("s"); updateSelectedTF(this.dataset.tf); };
   });
 }
 
@@ -1161,7 +1223,7 @@ function R(){
     }else if(S.ph=="res" && S.r){
       h+='<div class="card big" style="margin-top:12px;">';
       h+='<div style="display:flex;justify-content:space-between;align-items:center;">';
-      h+='<div><div class="mute">'+t("setupTitle")+'</div><h3>'+esc(disp(S.r.a))+'</h3></div>';
+      h+='<div><div class="mute">'+t("setupTitle")+'</div><h3 class="h-ico" style="margin-top:6px">'+iconFor(S.r.a, 28)+'<span>'+esc(disp(S.r.a))+'</span></h3></div>';
       h+='<div class="tag">'+S.r.tf+'</div>';
       h+='</div>';
       h+='<div class="sand"><span>'+S.r.m[0]+' '+S.r.m[1]+'</span><b style="font-size:13px;margin-top:6px;font-weight:500;color:var(--mute);">'+S.r.m[2]+'</b></div>';
@@ -1200,7 +1262,7 @@ function R(){
       S.hist.forEach(function(item){
         h+='<div class="card" style="margin-top:10px;padding:14px;">';
         h+='<div style="display:flex;justify-content:space-between;align-items:center;">';
-        h+='<b>'+esc(disp(item.a))+'</b>';
+        h+='<b class="h-ico" style="font-size:14px">'+iconFor(item.a, 24)+'<span>'+esc(disp(item.a))+'</span></b>';
         h+='<span class="tag s">'+item.tf+'</span>';
         h+='</div>';
         h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:13px;">';
@@ -1333,6 +1395,11 @@ function R(){
 }
 
 R();   // shows "Loading…" until the server answers
+// Optional licensed logos: public/icons/manifest.json maps e.g. "stock:AAPL" -> "aapl.svg" (see README). Missing file = built-in icons.
+fetch("/icons/manifest.json").then(function(r){ return r.ok ? r.json() : {}; }).then(function(m){
+  AssetIcons.setOverrides(m);
+  if(S.loaded){ setAssetLabel(); if(S.openMenu === "asset") refreshAssetList(true); }
+}).catch(function(){});
 api("/api/me?open=1").then(function(r){
   if(r.status === 200){ applyServer(r.body); S.loaded = true; return loadAssets(); }
   S.authError = true;
