@@ -716,12 +716,20 @@ function strHash(s) {
   return Math.abs(h);
 }
 
-function calc(asset, tf){
-  var x = strHash(asset + tf + new Date().toDateString());
-  var moods = S.lang=="en"? MOODS_EN : MOODS_RU;
-  return {a:asset, tf:tf, p:35+x%64, e:(x>>>5)%101, m:moods[(x>>>9)%moods.length]};
+function h01(s){
+  var x = strHash(s);
+  x ^= x>>>16; x = Math.imul(x,0x45d9f3b); x ^= x>>>16; x = Math.imul(x,0x45d9f3b); x ^= x>>>16;
+  return (x>>>0)/4294967296;
 }
 
+function calc(asset, tf){
+  var m = Date.now()/60000, K = 3;
+  var k = Math.floor(m/K), f = m/K - k, u = f*f*(3-2*f);
+  var a = h01(asset+"|"+tf+"|"+k)*2-1, b = h01(asset+"|"+tf+"|"+(k+1))*2-1;
+  var s = a + (b-a)*u;
+  var moods = S.lang=="en"? MOODS_EN : MOODS_RU;
+  return {a:asset, tf:tf, p:58+Math.round(20*Math.abs(s)), e:Math.round(40+60*Math.abs(s)), m:moods[s>=0?0:1]};
+}
 function getDailyWinrate() {
     const now = new Date();
     const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
