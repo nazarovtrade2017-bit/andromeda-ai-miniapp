@@ -5,6 +5,7 @@ import { openDb } from './lib/db.js';
 import { makeAuth } from './lib/auth.js';
 import * as h from './lib/handlers.js';
 import { renderAdmin } from './lib/admin.js';
+import { spStatus } from './lib/sp.js';
 
 const config = loadConfig();
 
@@ -55,6 +56,16 @@ api.post('/register/start', async (req, res) => sendJson(res, await h.registerSt
 api.post('/deposit/start', async (req, res) => sendJson(res, await h.depositStart(ctx, req.tgUser)));
 api.get('/assets', (_req, res) => sendJson(res, h.assets(ctx)));
 app.use('/api', api);
+
+app.get('/sp/status', async (req, res) => {
+  try {
+    const r = await spStatus(ctx, req.query);
+    res.status(r.status).json(r.body);
+  } catch (err) {
+    console.error('sp/status error:', err);
+    res.status(500).json({ error: 'server' });
+  }
+});
 
 // --- Admin view (protected by ADMIN_KEY) ---
 app.get('/admin', async (req, res) => {
