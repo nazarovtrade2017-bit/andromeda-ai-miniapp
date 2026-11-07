@@ -6,7 +6,7 @@ import { makeAuth } from './lib/auth.js';
 import * as h from './lib/handlers.js';
 import { renderAdmin } from './lib/admin.js';
 import { spStatus } from './lib/sp.js';
-import { spFindContact, contactIdOf } from './lib/spApi.js';
+import { spFindContact, contactIdOf, spPush } from './lib/spApi.js';
 
 const config = loadConfig();
 
@@ -76,6 +76,15 @@ app.get('/sp/ping', async (req, res) => {
     console.error('sp/ping error:', err);
     res.status(500).json({ error: String(err.message || err).slice(0, 200) });
   }
+});
+app.get('/sp/push', async (req, res) => {
+  if (!ctx.config.spKey || req.query.key !== ctx.config.spKey) return res.status(403).json({ error: 'forbidden' });
+  const flows = { tz6: config.spFlowTz6, tz11: config.spFlowTz11, signals: config.spFlowSignals, open: config.spFlowOpen, regstart: config.spFlowRegStart };
+  const name = String(req.query.flow || '');
+  const tg = Number(req.query.tg);
+  if (!flows[name] || !Number.isSafeInteger(tg) || tg <= 0) return res.status(400).json({ error: 'bad flow or tg' });
+  await spPush(ctx, tg, flows[name], name);
+  res.json({ ok: 1, flow: name });
 });
 
 // --- Admin view (protected by ADMIN_KEY) ---
