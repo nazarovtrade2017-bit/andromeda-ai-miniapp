@@ -6,6 +6,7 @@ import { makeAuth } from './lib/auth.js';
 import * as h from './lib/handlers.js';
 import { renderAdmin } from './lib/admin.js';
 import { spStatus } from './lib/sp.js';
+import { spFindContact, contactIdOf } from './lib/spApi.js';
 
 const config = loadConfig();
 
@@ -64,6 +65,16 @@ app.get('/sp/status', async (req, res) => {
   } catch (err) {
     console.error('sp/status error:', err);
     res.status(500).json({ error: 'server' });
+  }
+});
+app.get('/sp/ping', async (req, res) => {
+  try {
+    if (!ctx.config.spKey || req.query.key !== ctx.config.spKey) return res.status(403).json({ error: 'forbidden' });
+    const c = await spFindContact(ctx, Number(req.query.tg));
+    res.json({ found: c ? 1 : 0, contact_id: contactIdOf(c) });
+  } catch (err) {
+    console.error('sp/ping error:', err);
+    res.status(500).json({ error: String(err.message || err).slice(0, 200) });
   }
 });
 
